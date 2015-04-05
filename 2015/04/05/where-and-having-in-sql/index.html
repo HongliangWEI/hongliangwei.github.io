@@ -1,0 +1,728 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>SQL中WHERE与HAVING用法 | FreeMinds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="HongliangWEI">
+    
+
+    
+    <meta name="description" content="在查询数据库表时，需要对表中的记录进行筛选，SQL提供了两个约束子句，即WHERE与HAVING，二者效果有雷同，但用法有区别。
+
+语法区别WHERE1SELECT column_name FROM table_name WHERE column operator value
+HAVING12345SELECT column_name, aggregate_function(column_name">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL中WHERE与HAVING用法">
+<meta property="og:url" content="http://whlminds.com/2015/04/05/where-and-having-in-sql/index.html">
+<meta property="og:site_name" content="FreeMinds">
+<meta property="og:description" content="在查询数据库表时，需要对表中的记录进行筛选，SQL提供了两个约束子句，即WHERE与HAVING，二者效果有雷同，但用法有区别。
+
+语法区别WHERE1SELECT column_name FROM table_name WHERE column operator value
+HAVING12345SELECT column_name, aggregate_function(column_name">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SQL中WHERE与HAVING用法">
+<meta name="twitter:description" content="在查询数据库表时，需要对表中的记录进行筛选，SQL提供了两个约束子句，即WHERE与HAVING，二者效果有雷同，但用法有区别。
+
+语法区别WHERE1SELECT column_name FROM table_name WHERE column operator value
+HAVING12345SELECT column_name, aggregate_function(column_name">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="FreeMinds" title="FreeMinds"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="FreeMinds">FreeMinds</a></h1>
+				<h2 class="blog-motto">大 胆 假 设，小 心 求 证</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:whlminds.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/04/05/where-and-having-in-sql/" title="SQL中WHERE与HAVING用法" itemprop="url">SQL中WHERE与HAVING用法</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-04-05T07:49:52.000Z" itemprop="datePublished"> 发表于 2015-04-05</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#语法区别"><span class="toc-number">1.</span> <span class="toc-text">语法区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WHERE"><span class="toc-number">1.1.</span> <span class="toc-text">WHERE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HAVING"><span class="toc-number">1.2.</span> <span class="toc-text">HAVING</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用区别"><span class="toc-number">2.</span> <span class="toc-text">使用区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子说明"><span class="toc-number">3.</span> <span class="toc-text">例子说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WHERE实例"><span class="toc-number">3.1.</span> <span class="toc-text">WHERE实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HAVING实例"><span class="toc-number">3.2.</span> <span class="toc-text">HAVING实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WHERE与HAVING综合例子"><span class="toc-number">3.3.</span> <span class="toc-text">WHERE与HAVING综合例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结论"><span class="toc-number">4.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
+		
+		</div>
+		
+		<blockquote>
+<p>在查询数据库表时，需要对表中的记录进行筛选，<code>SQL</code>提供了两个约束子句，即<code>WHERE</code>与<code>HAVING</code>，二者效果有雷同，但用法有区别。</p>
+</blockquote>
+<h2 id="语法区别">语法区别</h2><h3 id="WHERE">WHERE</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> column_name <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> <span class="keyword">column</span> operator <span class="keyword">value</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="HAVING">HAVING</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> column_name, aggregate_function(column_name)</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">WHERE</span> column_name operator <span class="keyword">value</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> column_name</span><br><span class="line"><span class="keyword">HAVING</span> aggregate_function(column_name) operator <span class="keyword">value</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="使用区别">使用区别</h2><ul>
+<li><p><code>WHERE</code>作用对象为数据库表、视图，<code>HAVING</code>作用对象为于组（<code>Group</code>）;</p>
+</li>
+<li><p><code>WHERE</code>在分组和聚集计算之前选取输入行（因此，它控制哪些行进入聚集计算），而<code>HAVING</code>在分组和聚集之后选取分组的行。因此，<code>WHERE</code>子句不能包含聚集函数；因为试图用聚集函数判断那些行输入给聚集运算是没有意义的。相反，<code>HAVING</code>子句总是包含聚集函数。（严格说来，你可以写不使用聚集的<code>HAVING</code>子句， 但这样做只是白费劲。同样的条件可以更有效地用于<code>WHERE</code>阶段。）</p>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="例子说明">例子说明</h2><h3 id="WHERE实例">WHERE实例</h3><p>如果只希望选取居住在城市 <em>“Beijing”</em> 中的人，我们需要向<code>SELECT</code>语句添加<code>WHERE</code>子句：</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> City=<span class="string">'Beijing'</span></span><br></pre></td></tr></table></figure>
+<p><em>“Persons”</em>表</p>
+<table>
+<thead>
+<tr>
+<th>LastName</th>
+<th style="text-align:left">FirstName</th>
+<th style="text-align:left">Address</th>
+<th style="text-align:left">City</th>
+<th style="text-align:center">Year</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Adams</td>
+<td style="text-align:left">John</td>
+<td style="text-align:left">Oxford Street</td>
+<td style="text-align:left">London</td>
+<td style="text-align:center">1970</td>
+</tr>
+<tr>
+<td>Bush</td>
+<td style="text-align:left">George</td>
+<td style="text-align:left">Fifth Avenue</td>
+<td style="text-align:left">New York</td>
+<td style="text-align:center">1975</td>
+</tr>
+<tr>
+<td>Carter</td>
+<td style="text-align:left">Thomas</td>
+<td style="text-align:left">Changan Street</td>
+<td style="text-align:left">Beijing</td>
+<td style="text-align:center">1980</td>
+</tr>
+<tr>
+<td>Gates</td>
+<td style="text-align:left">Bill</td>
+<td style="text-align:left">Xuanwumen 10</td>
+<td style="text-align:left">Beijing</td>
+<td style="text-align:center">1985</td>
+</tr>
+</tbody>
+</table>
+<p>结果：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">LastName</th>
+<th style="text-align:left">FirstName</th>
+<th style="text-align:left">Address</th>
+<th style="text-align:left">City</th>
+<th style="text-align:center">Year</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Carter</td>
+<td style="text-align:left">Thomas</td>
+<td style="text-align:left">Changan Street</td>
+<td style="text-align:left">Beijing</td>
+<td style="text-align:center">1980</td>
+</tr>
+<tr>
+<td style="text-align:center">Gates</td>
+<td style="text-align:left">Bill</td>
+<td style="text-align:left">Xuanwumen 10</td>
+<td style="text-align:left">Beijing</td>
+<td style="text-align:center">1985</td>
+</tr>
+</tbody>
+</table>
+<h3 id="HAVING实例">HAVING实例</h3><p>我们拥有下面这个<em>“Orders”</em>表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">O_Id</th>
+<th>OrderDate</th>
+<th>OrderPrice</th>
+<th>Customer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td>2008/12/29</td>
+<td>1000</td>
+<td>Bush</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td>2008/11/23</td>
+<td>1600</td>
+<td>Carter</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td>2008/10/05</td>
+<td>700</td>
+<td>Bush</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td>2008/09/28</td>
+<td>300</td>
+<td>Bush</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td>2008/08/06</td>
+<td>2000</td>
+<td>Adams</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td>2008/07/21</td>
+<td>100</td>
+<td>Carter</td>
+</tr>
+</tbody>
+</table>
+<p>现在，我们希望查找订单总金额少于 2000 的客户。</p>
+<p>我们使用如下<code>SQL</code>语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> Customer,<span class="keyword">SUM</span>(OrderPrice) <span class="keyword">FROM</span> Orders</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> Customer</span><br><span class="line"><span class="keyword">HAVING</span> <span class="keyword">SUM</span>(OrderPrice)&lt;<span class="number">2000</span></span></span><br></pre></td></tr></table></figure>
+<p>结果集类似：</p>
+<table>
+<thead>
+<tr>
+<th>Customer</th>
+<th>SUM(OrderPrice)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Carter</td>
+<td>1700</td>
+</tr>
+</tbody>
+</table>
+<h3 id="WHERE与HAVING综合例子">WHERE与HAVING综合例子</h3><p>接<code>HAVING</code>中例子，现在我们希望查找客户 <em>“Bush”</em> 或 <em>“Adams”</em> 拥有超过 1500 的订单总金额。</p>
+<p>我们在<code>SQL</code>语句中增加了一个普通的<code>WHERE</code>子句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> Customer,<span class="keyword">SUM</span>(OrderPrice) <span class="keyword">FROM</span> Orders</span><br><span class="line"><span class="keyword">WHERE</span> Customer=<span class="string">'Bush'</span> <span class="keyword">OR</span> Customer=<span class="string">'Adams'</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> Customer</span><br><span class="line"><span class="keyword">HAVING</span> <span class="keyword">SUM</span>(OrderPrice)&gt;<span class="number">1500</span></span></span><br></pre></td></tr></table></figure>
+<p>结果集：</p>
+<table>
+<thead>
+<tr>
+<th>Customer</th>
+<th>SUM(OrderPrice)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bush</td>
+<td>2000</td>
+</tr>
+<tr>
+<td>Adams</td>
+<td>2000</td>
+</tr>
+</tbody>
+</table>
+<h2 id="结论">结论</h2><ol>
+<li><code>WHERE</code>子句用来筛选<code>FROM</code>子句中指定的操作所产生的行。</li>
+<li><code>GROUP BY</code>子句用来分组<code>WHERE</code>子句的输出。</li>
+<li><code>HAVING</code>子句用来从分组的结果中筛选行。</li>
+</ol>
+<blockquote>
+<p>注</p>
+<p>下面的运算符可在<code>WHERE</code>子句中使用：</p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th style="text-align:right">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>=</td>
+<td style="text-align:right">等于</td>
+</tr>
+<tr>
+<td>&lt;&gt;</td>
+<td style="text-align:right">不等于</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td style="text-align:right">大于</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td style="text-align:right">小于</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td style="text-align:right">大于等于</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td style="text-align:right">小于等于</td>
+</tr>
+<tr>
+<td>BETWEEN</td>
+<td style="text-align:right">在某个范围内</td>
+</tr>
+<tr>
+<td>LIKE</td>
+<td style="text-align:right">搜索某种模式</td>
+</tr>
+</tbody>
+</table>
+<p><code>SQL</code>使用单引号来环绕文本值（大部分数据库系统也接受双引号）。如果是数值，请不要使用引号。</p>
+<p>这是正确的：<br> <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> FirstName = <span class="string">'Bush'</span></span><br></pre></td></tr></table></figure></p>
+<p>这是错误的：<br> <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> FirstName = Bush</span><br></pre></td></tr></table></figure></p>
+<p>这是正确的：<br> <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> <span class="keyword">Year</span> &gt; <span class="number">1965</span></span></span><br></pre></td></tr></table></figure></p>
+<p>这是错误的：<br> <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> <span class="keyword">Year</span> &gt; <span class="string">'1965'</span></span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="参考资料">参考资料</h2><ol>
+<li>W3CShool, <a href="http://www.w3school.com.cn/sql/index.asp" target="_blank" rel="external">http://www.w3school.com.cn/sql/index.asp</a></li>
+<li>王丹小筑, <a href="http://www.cnblogs.com/aivdesign/articles/1217204.html" target="_blank" rel="external">http://www.cnblogs.com/aivdesign/articles/1217204.html</a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/数据库/">数据库</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/SQL/">SQL</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://whlminds.com/2015/04/05/where-and-having-in-sql/" data-title="SQL中WHERE与HAVING用法 | FreeMinds" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/04/05/Baby's-First-Garbage-Collector/" title="简易的垃圾回收器">
+  <strong>上一篇：</strong><br/>
+  <span>
+  简易的垃圾回收器</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/04/05/Min-Number-in-Rotated-Array/"  title="旋转数组中的最小值">
+ <strong>下一篇：</strong><br/> 
+ <span>旋转数组中的最小值
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/04/05/where-and-having-in-sql/" data-title="SQL中WHERE与HAVING用法" data-url="http://whlminds.com/2015/04/05/where-and-having-in-sql/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#语法区别"><span class="toc-number">1.</span> <span class="toc-text">语法区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WHERE"><span class="toc-number">1.1.</span> <span class="toc-text">WHERE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HAVING"><span class="toc-number">1.2.</span> <span class="toc-text">HAVING</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用区别"><span class="toc-number">2.</span> <span class="toc-text">使用区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子说明"><span class="toc-number">3.</span> <span class="toc-text">例子说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WHERE实例"><span class="toc-number">3.1.</span> <span class="toc-text">WHERE实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HAVING实例"><span class="toc-number">3.2.</span> <span class="toc-text">HAVING实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WHERE与HAVING综合例子"><span class="toc-number">3.3.</span> <span class="toc-text">WHERE与HAVING综合例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结论"><span class="toc-number">4.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>1</sup></a></li>
+			
+		
+			
+		
+		</ul>
+</div>
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
+		  
+		
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 10px;">booknotes</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://fangjb.me" target="_blank" title="Fice&#39;s Blog">Fice&#39;s Blog</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://dangfan.me" target="_blank" title="有一说一">有一说一</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="120" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=250&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1907586883&verifier=50d45b85&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m HongliangWEI. <br/>
+			This is my blog. Believe it or not!</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:helloweihl@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"whlminds"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F9c533e8f9930cffc806c36de6a517fbe' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
