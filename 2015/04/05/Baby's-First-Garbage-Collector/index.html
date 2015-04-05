@@ -4,22 +4,37 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>FreeMinds</title>
+    <title>垃圾回收器 | FreeMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="HongliangWEI">
     
 
     
-    <meta name="description" content="HongliangWEI&apos;s blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="FreeMinds">
-<meta property="og:url" content="http://whlminds.com/index.html">
+    <meta name="description" content="导语
+在伯乐在线上看到这篇Google工程师教你编写你的第一个垃圾回收器文章，着实被作者Bob Nystrom深入浅出、娓娓道来讲述垃圾回收机制的思路所吸引，必须收藏与分享；）
+
+Bob Nystrom的话
+每当我倍感压力以及有很多事情要做的时候，我总是有这样一种反常的反应，那就是希望做一些其他的事情来摆脱这种状况。通常情况下，这些事情都是些我能够编写并实现的独立的小程序。
+一天早上，我几乎要被一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="垃圾回收器">
+<meta property="og:url" content="http://whlminds.com/2015/04/05/Baby's-First-Garbage-Collector/index.html">
 <meta property="og:site_name" content="FreeMinds">
-<meta property="og:description" content="HongliangWEI&apos;s blog">
+<meta property="og:description" content="导语
+在伯乐在线上看到这篇Google工程师教你编写你的第一个垃圾回收器文章，着实被作者Bob Nystrom深入浅出、娓娓道来讲述垃圾回收机制的思路所吸引，必须收藏与分享；）
+
+Bob Nystrom的话
+每当我倍感压力以及有很多事情要做的时候，我总是有这样一种反常的反应，那就是希望做一些其他的事情来摆脱这种状况。通常情况下，这些事情都是些我能够编写并实现的独立的小程序。
+一天早上，我几乎要被一">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FreeMinds">
-<meta name="twitter:description" content="HongliangWEI&apos;s blog">
+<meta name="twitter:title" content="垃圾回收器">
+<meta name="twitter:description" content="导语
+在伯乐在线上看到这篇Google工程师教你编写你的第一个垃圾回收器文章，着实被作者Bob Nystrom深入浅出、娓娓道来讲述垃圾回收机制的思路所吸引，必须收藏与分享；）
+
+Bob Nystrom的话
+每当我倍感压力以及有很多事情要做的时候，我总是有这样一种反常的反应，那就是希望做一些其他的事情来摆脱这种状况。通常情况下，这些事情都是些我能够编写并实现的独立的小程序。
+一天早上，我几乎要被一">
 
     
     
@@ -70,12 +85,10 @@
 </div>
     </header>
     <div id="container">
-      <div id="main">
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/2015/04/05/Baby's-First-Garbage-Collector/" title="垃圾回收器" itemprop="url">垃圾回收器</a>
@@ -89,9 +102,16 @@
     
   </p>
 </header>
-    <div class="article-content">
-        
-        <h4 id="导语">导语</h4><blockquote>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#导语"><span class="toc-number">1.</span> <span class="toc-text">导语</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bob_Nystrom的话"><span class="toc-number"></span> <span class="toc-text">Bob Nystrom的话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#精简、复用、再复用"><span class="toc-number"></span> <span class="toc-text">精简、复用、再复用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标记并清理"><span class="toc-number"></span> <span class="toc-text">标记并清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象对"><span class="toc-number"></span> <span class="toc-text">对象对</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小虚拟机"><span class="toc-number"></span> <span class="toc-text">小虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标记"><span class="toc-number"></span> <span class="toc-text">标记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#清理"><span class="toc-number"></span> <span class="toc-text">清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后"><span class="toc-number"></span> <span class="toc-text">最后</span></a>
+		
+		</div>
+		
+		<h4 id="导语">导语</h4><blockquote>
 <p>在<a href="http://blog.jobbole.com/" target="_blank" rel="external">伯乐在线</a>上看到这篇<a href="http://blog.jobbole.com/53376/" target="_blank" rel="external">Google工程师教你编写你的第一个垃圾回收器</a>文章，着实被作者<a href="http://www.stuffwithstuff.com/bob-nystrom.html" target="_blank" rel="external">Bob Nystrom</a>深入浅出、娓娓道来讲述垃圾回收机制的思路所吸引，必须收藏与分享；）</p>
 </blockquote>
 <h2 id="Bob_Nystrom的话">Bob Nystrom的话</h2><blockquote>
@@ -167,14 +187,9 @@
 <p>每次回收之后，我们更新<code>maxObjects</code>——以进行回收后仍在活动的对象为基准。乘法器让我们的堆随着活动中的对象数量的增加而增加。同样，也会随着一些对象最终被释放掉而自动减少。</p>
 <h2 id="最后">最后</h2><p>你成功了！如果你全部照做了，那你现在已经理解了一个简单的垃圾回收算法。如果你想看完整的代码，在这里。我再强调一点，尽管这个回收器很简单，但它可不是一个玩具。</p>
 <p>你可以在这上面做一大堆的优化（像在<code>GC</code>和程序设计语言这些事情中，90%的努力都在优化上），但它的核心代码可是真正的<code>GC</code>。它与目前<code>Ruby</code>和<code>Lua</code>中的回收器非常的相似。你可以使用一些类似的代码到你的项目中。去做些很酷的事情吧！</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
+  
+	</div>
+		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
@@ -192,119 +207,47 @@
 
 
 
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://whlminds.com/2015/04/05/Baby's-First-Garbage-Collector/" data-title="垃圾回收器 | FreeMinds" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
 
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/04/05/Baby's-First-Garbage-Collector/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/05/Baby's-First-Garbage-Collector/" data-count-type="comments">&nbsp;</a>
-	
-</div>
 
 </footer>
 
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/02/my-favourite-books/" title="我喜欢的书" itemprop="url">我喜欢的书</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-02T13:24:32.000Z" itemprop="datePublished"> 发表于 2015-04-02</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="信息科技">信息科技</h3><ul>
-<li><em>《浪潮之巅》</em></li>
-<li><em>《文明之光》</em>（三册）</li>
-<li><em>《数学之美》</em></li>
-<li><em>《黑客与画家》</em></li>
-</ul>
-<h3 id="数学">数学</h3><ul>
-<li><em>《<a href="http://book.douban.com/subject/10779597/" target="_blank" rel="external">思考的乐趣</a>》</em></li>
-<li><em>《<a href="http://book.douban.com/subject/4291764/" target="_blank" rel="external">概率论基础教程</a>》</em></li>
-</ul>
-<h3 id="文学小说传记">文学小说传记</h3><ul>
-<li><em>《明朝那些事儿》</em></li>
-<li><em>《平凡的世界》</em></li>
-<li><em>《百年孤独》</em></li>
-<li><em>《听杨绛谈往事》</em></li>
-<li><em>《走到人生边上》</em></li>
-<li><em>《我们仨》</em></li>
-<li><em>《杰克·韦尔奇自传》</em></li>
-<li><em>《野心优雅》</em></li>
-<li><em>《人类的群星闪耀时》</em></li>
-<li><em>《乡土中国》</em></li>
-</ul>
-<h3 id="其他">其他</h3><ul>
-<li><em>《天才在左，疯子在右》</em></li>
-<li><em>《<a href="http://book.douban.com/subject/24523169/" target="_blank" rel="external">策略思维</a>》</em></li>
-<li><em>《写给大家看的设计书》</em></li>
-<li><em>《影响力》</em></li>
-<li><em>《<a href="http://book.douban.com/subject/1012611/" target="_blank" rel="external">乌合之众</a>》</em></li>
-<li><em>《<a href="http://book.douban.com/subject/1032501/" target="_blank" rel="external">心理学与生活</a>》</em></li>
-</ul>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/booknotes/">booknotes</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/读书笔记/">读书笔记</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
+   	       
+	</article>
 	
-	  	<span></span>
-		<a href="/2015/04/02/my-favourite-books/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/02/my-favourite-books/" data-count-type="comments">&nbsp;</a>
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/04/02/my-favourite-books/"  title="我喜欢的书">
+ <strong>下一篇：</strong><br/> 
+ <span>我喜欢的书
+</span>
+</a>
+</div>
+
+</nav>
+
 	
-</div>
-
-</footer>
-
-
-    </article>
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/04/05/Baby's-First-Garbage-Collector/" data-title="垃圾回收器" data-url="http://whlminds.com/2015/04/05/Baby's-First-Garbage-Collector/"></div>
+</section>
 
 
-
-
-
-
-
-</div>
+</div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#导语"><span class="toc-number">1.</span> <span class="toc-text">导语</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bob_Nystrom的话"><span class="toc-number"></span> <span class="toc-text">Bob Nystrom的话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#精简、复用、再复用"><span class="toc-number"></span> <span class="toc-text">精简、复用、再复用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标记并清理"><span class="toc-number"></span> <span class="toc-text">标记并清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象对"><span class="toc-number"></span> <span class="toc-text">对象对</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小虚拟机"><span class="toc-number"></span> <span class="toc-text">小虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标记"><span class="toc-number"></span> <span class="toc-text">标记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#清理"><span class="toc-number"></span> <span class="toc-text">清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后"><span class="toc-number"></span> <span class="toc-text">最后</span></a>
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -463,12 +406,69 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
 });
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
 
 
 
@@ -489,6 +489,27 @@ $(document).ready(function(){
 
 
 
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
 
 
 
@@ -525,4 +546,4 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!-- Tiny_search End -->
 
   </body>
- </html>
+</html>
