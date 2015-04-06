@@ -11,15 +11,30 @@
     
 
     
-    <meta name="description" content="Waiting ….">
+    <meta name="description" content="题目来自LeetCode的第172道算法题Factorial Trailing Zeroes：
+
+Given an integer n, return the number of trailing zeroes in n!.
+Note: Your solution should be in logarithmic time complexity.
+
+即给一个整数 n, 给出 n 的阶乘 n! 中有">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Factorial-Trailing-Zeroes">
 <meta property="og:url" content="http://whlminds.com/2015/04/05/Factorial-Trailing-Zeroes/index.html">
 <meta property="og:site_name" content="FreeMinds">
-<meta property="og:description" content="Waiting ….">
+<meta property="og:description" content="题目来自LeetCode的第172道算法题Factorial Trailing Zeroes：
+
+Given an integer n, return the number of trailing zeroes in n!.
+Note: Your solution should be in logarithmic time complexity.
+
+即给一个整数 n, 给出 n 的阶乘 n! 中有">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Factorial-Trailing-Zeroes">
-<meta name="twitter:description" content="Waiting ….">
+<meta name="twitter:description" content="题目来自LeetCode的第172道算法题Factorial Trailing Zeroes：
+
+Given an integer n, return the number of trailing zeroes in n!.
+Note: Your solution should be in logarithmic time complexity.
+
+即给一个整数 n, 给出 n 的阶乘 n! 中有">
 
     
     
@@ -92,12 +107,40 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#证明"><span class="toc-number">3.</span> <span class="toc-text">证明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法_1"><span class="toc-number">4.</span> <span class="toc-text">解法 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法_2"><span class="toc-number">5.</span> <span class="toc-text">解法 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
 		
 		</div>
 		
-		<p>Waiting ….</p>
-<a id="more"></a>  
+		<h2 id="题目">题目</h2><p>来自<a href="https://leetcode.com/" target="_blank" rel="external">LeetCode</a>的第172道算法题<a href="https://leetcode.com/problems/factorial-trailing-zeroes/" target="_blank" rel="external">Factorial Trailing Zeroes</a>：</p>
+<blockquote>
+<p>Given an integer n, return the number of trailing zeroes in n!.</p>
+<p><strong><em>Note</em></strong>: Your solution should be in logarithmic time complexity.</p>
+</blockquote>
+<p>即给一个整数 <code>n</code>, 给出 <code>n</code> 的阶乘 <code>n!</code> 中有多少个 0，要求算法时间复杂度是 <code>O(log(n))</code></p>
+<h2 id="思路">思路</h2><p>看到题目后，有人直接拔“刀”切“菜”，先 ‘％’ 再 ‘/‘ ，各种挥舞之后，发现提示 “Out of Range” 的错误，然后绞尽脑汁，回忆各种数据结构与算法，尝试是否能够尽快“吞”下，最后发现还是被“噎”住了:(</p>
+<p>要拿下这个题目，要考验基本数学功底了。。。看了网上许多分析解决的思路，觉得<a href="http://www.cnblogs.com/ganganloveu/p/4193373.html" target="_blank" rel="external">陆草纯</a>的分析很透彻，思路原来酱紫的。</p>
+<h2 id="证明">证明</h2><p>对 <code>n!</code> 做质因数分解 <code>n! = 2^x * 3^y * 5^z * ...</code></p>
+<p>由于所有的质因数中，只有<code>2 * 5</code> 得到的结果中才会有 0 出现，因此，只需要根据质因数 2 或 5 的幂次就可以知道 0 的个数了，那么，到底是 2 的幂次，还是 5 的幂次才是 0 出现的个数呢？</p>
+<a id="more"></a>
+<p>显然 0 的个数等于 <code>min(x, z)</code>，并且 <code>min(x, z) == z</code></p>
+<p>对于阶乘而言，也就是<code>1 * 2 * 3 * ... * n</code></p>
+<p><code>[n/k]</code> 代表 <code>1 ~ n</code> 中能被 <code>k</code> 整除的个数</p>
+<p>那么很显然</p>
+<p><code>[n/2] &gt; [n/5]</code> (左边是逢2增1，右边是逢5增1)</p>
+<p><code>[n/2^2] &gt; [n/5^2]</code>(左边是逢4增1，右边是逢25增1)</p>
+<p><code>...</code></p>
+<p><code>[n/2^p] &gt; [n/5^p]</code>(左边是逢 <code>2^p</code> 增1，右边是逢 <code>5^p</code> 增1)</p>
+<p>随着幂次<code>p</code>的上升，出现<code>2^p</code>的概率会远大于出现<code>2^p</code>的概率。</p>
+<p>即 2 的各个幂次的加和一定大于 5 的各个幂次的加和，也就是 <code>n!</code> 质因数分解中，2 的次幂一定大于 5 的次幂；）</p>
+<h2 id="解法_1">解法 1</h2><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">trailingZeroes</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123; </span><br><span class="line">    <span class="keyword">int</span> ret = <span class="number">0</span>; </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123; </span><br><span class="line">        <span class="keyword">int</span> tmp = i; </span><br><span class="line">        <span class="keyword">while</span>(tmp % <span class="number">5</span> == <span class="number">0</span>) &#123; </span><br><span class="line">            ret++; </span><br><span class="line">            tmp /= <span class="number">5</span>; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> ret; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解法1还有优化的空间…….</p>
+<h2 id="解法_2">解法 2</h2><p>根据上面的证明过程分析可以看出，起作用的只有被5整除的那些数。能不能只对这些数进行计数呢？</p>
+<p>存在这样的规律：<code>[n/k]</code> 代表 <code>1~n</code> 中能被 <code>k</code> 整除的个数。有一点要注意的就是25这种，5和5相乘的结果，所以，还要看 <code>n/5</code> 里面有多少个5，也就相当于看n里面有多少个25，还有125，625…..</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int trailingZeroes(int <span class="keyword">n</span>) &#123;</span><br><span class="line">    int <span class="keyword">ret</span> = 0;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">n</span>) &#123;</span><br><span class="line">        <span class="keyword">ret</span> += <span class="keyword">n</span> / 5;</span><br><span class="line">        <span class="keyword">n</span> /= 5;</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">ret</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到解法2这么简洁优美的代码，我已经醉了…</p>
+<h2 id="总结">总结</h2><p>数学功底很关键，很重要！</p>
+<p>突然想到“我是歌手3”里歌手李健看到数字 2 后，第一个反应是 “2 是质数里面的第一个啊，挺好的”，也是醉了；）</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -163,7 +206,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#证明"><span class="toc-number">3.</span> <span class="toc-text">证明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法_1"><span class="toc-number">4.</span> <span class="toc-text">解法 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法_2"><span class="toc-number">5.</span> <span class="toc-text">解法 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
  
   </div>
 
@@ -471,6 +514,35 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <!-- MathJax Begin -->
 <!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 <!-- MathJax End -->

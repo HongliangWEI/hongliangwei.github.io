@@ -240,7 +240,18 @@
 </header>
     <div class="article-content">
         
-        <p>waiting …</p>
+        <h2 id="题目">题目</h2><p>来自《剑指Offer》中的一道面试题：</p>
+<p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。</p>
+<p>理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）</p>
+<h2 id="Naive解法">Naive解法</h2><p>在 <code>O(n)</code> 时间范围内遍历旋转后的数组，可以找到最小的元素。但是，这种解法没有利用旋转数组的特点，即数组内部元素间部分有序，因此，查找效率不高。</p>
+<h2 id="改进的解法">改进的解法</h2><p>旋转数组是对非递增的排序的数组进行旋转的结果，因此，数组内部元素被分为了2个区间，在各区间内部是有序的，例如 {3, 4, 5, 1, 2} ，被分为了 {3, 4, 5 } 和 { 1, 2} 两个有序的子区间，对于有序的数组的查找问题，可以考虑二分查找算法，时间复杂度 <code>O(log(n))</code>。</p>
+<p>那么，如何对旋转的数组采用二分查找法寻找最小的元素呢，基本思路如下：</p>
+<ol>
+<li>对旋转数组二分， 必然有一个区间内的元素间是严格的非递增有序的；</li>
+<li>比较中间的元素与二分后两个区间的元素，可以筛选掉一个区间的元素；</li>
+<li>再二分，再重复第二步骤，直到中间的元素都不大于二分后两个区间内的元素。</li>
+</ol>
+<p>呃，感觉还是confusing，上菜：</p>
         
         
         <p class="article-more-link">
@@ -304,7 +315,16 @@
 </header>
     <div class="article-content">
         
-        <p>Waiting ….</p>
+        <h2 id="题目">题目</h2><p>来自<a href="https://leetcode.com/">LeetCode</a>的第172道算法题<a href="https://leetcode.com/problems/factorial-trailing-zeroes/">Factorial Trailing Zeroes</a>：</p>
+<blockquote>
+<p>Given an integer n, return the number of trailing zeroes in n!.</p>
+<p><strong><em>Note</em></strong>: Your solution should be in logarithmic time complexity.</p>
+</blockquote>
+<p>即给一个整数 <code>n</code>, 给出 <code>n</code> 的阶乘 <code>n!</code> 中有多少个 0，要求算法时间复杂度是 <code>O(log(n))</code></p>
+<h2 id="思路">思路</h2><p>看到题目后，有人直接拔“刀”切“菜”，先 ‘％’ 再 ‘/‘ ，各种挥舞之后，发现提示 “Out of Range” 的错误，然后绞尽脑汁，回忆各种数据结构与算法，尝试是否能够尽快“吞”下，最后发现还是被“噎”住了:(</p>
+<p>要拿下这个题目，要考验基本数学功底了。。。看了网上许多分析解决的思路，觉得<a href="http://www.cnblogs.com/ganganloveu/p/4193373.html">陆草纯</a>的分析很透彻，思路原来酱紫的。</p>
+<h2 id="证明">证明</h2><p>对 <code>n!</code> 做质因数分解 <code>n! = 2^x * 3^y * 5^z * ...</code></p>
+<p>由于所有的质因数中，只有<code>2 * 5</code> 得到的结果中才会有 0 出现，因此，只需要根据质因数 2 或 5 的幂次就可以知道 0 的个数了，那么，到底是 2 的幂次，还是 5 的幂次才是 0 出现的个数呢？</p>
         
         
         <p class="article-more-link">
