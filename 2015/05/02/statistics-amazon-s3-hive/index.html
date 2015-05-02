@@ -106,29 +106,20 @@
 <p>这时，可以将业务数据存储到 HDFS 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。</p>
 <h2 id="大数据统计思路">大数据统计思路</h2><p>当统计任务越来越多，并且数据量日益庞大，需要能够管理逻辑复杂的多个Hadoop作业。统计任务大致步骤如下：</p>
 <ol>
-<li><p>通过 Sqoop 先将业务数据同步到 HDFS 上；</p>
-</li>
-<li><p>对 HDFS 上的业务数据，以分区表的形式存储到多张 Hive 表中；</p>
-</li>
-<li><p>进行 JOIN 处理，得到一个明细数据Hive大表（此步骤可选）；</p>
-</li>
-<li><p>借助 MapReduce 计算框架，对 Hive 中的表数据进行复杂的统计分析，得到统计后的的报表信息；</p>
-</li>
-<li><p>需要将统计分析得到的结果数据同步到业务系统中，供业务调用使用。</p>
-</li>
+<li>通过 Sqoop 先将业务数据同步到 HDFS 上；</li>
+<li>对 HDFS 上的业务数据，以分区表的形式存储到多张 Hive 表中；</li>
+<li>进行 JOIN 处理，得到一个明细数据Hive大表（此步骤可选）；</li>
+<li>借助 MapReduce 计算框架，对 Hive 中的表数据进行复杂的统计，得到统计后的的报表信息；</li>
+<li>需要将统计分析得到的结果数据同步到业务系统中，供业务调用使用。</li>
 </ol>
 <a id="more"></a>
 <p>上述过程可以通过 workflow 系统来编排任务，最终生成一个 workflow 实例，然后每天定时启动运行这个实例即可。</p>
 <p>这里假设业务数据存储在线上业务数据库 MySql 从库 mysql-slave-00 中，而 HDFS 选择 Amazon S3， 经过统计后，结果存储到本地文本，或 MySql(mysql-statistics) 中，数据流向如下：</p>
 <ol>
-<li><p>从 MySql ( mysql-slave-00 ) 到 Amazon S3</p>
-</li>
-<li><p>从 Amazon S3 到 Hive</p>
-</li>
-<li><p>Statistics on Hive</p>
-</li>
-<li><p>从 Hive 到 MySql ( mysql-statistics ) or local text</p>
-</li>
+<li>从 MySql ( mysql-slave-00 ) 到 Amazon S3</li>
+<li>从 Amazon S3 到 Hive</li>
+<li>Statistics on Hive</li>
+<li>从 Hive 到 MySql ( mysql-statistics ) or local text</li>
 </ol>
 <p>后面各部分将从第 1 步骤开始说明。</p>
 <h2 id="从_MySql(_mysql-slave-00_)_到_Amazon_S3">从 MySql( mysql-slave-00 ) 到 Amazon S3</h2><p>最新业务数据存储在 MySql ( mysql-slave-00 ) 中，需要 <strong>upload</strong> 到 Amazon S3。</p>
@@ -307,21 +298,15 @@
 			
 		
 			
+				<li><a href="/tags/Hive/" title="Hive">Hive<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Hive/" title="Hive">Hive<sup>1</sup></a></li>
-			
-		
-			
-		
-			
-		
 			
 		
 		</ul>
