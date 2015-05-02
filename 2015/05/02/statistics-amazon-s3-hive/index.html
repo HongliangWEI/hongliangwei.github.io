@@ -1,0 +1,619 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>基于 HDFS 和 HIVE 的统计 | FreeMinds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="HongliangWEI">
+    
+
+    
+    <meta name="description" content="大数据统计问题当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。
+这时，可以将业务数据存储到 HDFS 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。
+大数据统计思路当统计任务越来越">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于 HDFS 和 HIVE 的统计">
+<meta property="og:url" content="http://whlminds.com/2015/05/02/statistics-amazon-s3-hive/index.html">
+<meta property="og:site_name" content="FreeMinds">
+<meta property="og:description" content="大数据统计问题当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。
+这时，可以将业务数据存储到 HDFS 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。
+大数据统计思路当统计任务越来越">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于 HDFS 和 HIVE 的统计">
+<meta name="twitter:description" content="大数据统计问题当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。
+这时，可以将业务数据存储到 HDFS 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。
+大数据统计思路当统计任务越来越">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="FreeMinds" title="FreeMinds"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="FreeMinds">FreeMinds</a></h1>
+				<h2 class="blog-motto">大 胆 假 设，小 心 求 证</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:whlminds.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/02/statistics-amazon-s3-hive/" title="基于 HDFS 和 HIVE 的统计" itemprop="url">基于 HDFS 和 HIVE 的统计</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-02T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-05-02</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#大数据统计问题"><span class="toc-number">1.</span> <span class="toc-text">大数据统计问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#大数据统计思路"><span class="toc-number">2.</span> <span class="toc-text">大数据统计思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从_MySql(_mysql-slave-00_)_到_Amazon_S3"><span class="toc-number">3.</span> <span class="toc-text">从 MySql( mysql-slave-00 ) 到 Amazon S3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从Amazon_S3_到_Hive"><span class="toc-number">4.</span> <span class="toc-text">从Amazon S3 到 Hive</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hive_中创建表"><span class="toc-number">4.1.</span> <span class="toc-text">Hive 中创建表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#向Hive表中导入数据"><span class="toc-number">4.2.</span> <span class="toc-text">向Hive表中导入数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Statistics_on_Hive"><span class="toc-number">5.</span> <span class="toc-text">Statistics on Hive</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从_Hive_到_MySql_(_mysql-statistics_)_or_local_text"><span class="toc-number">6.</span> <span class="toc-text">从 Hive 到 MySql ( mysql-statistics ) or local text</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#统计结果存入本地"><span class="toc-number">6.1.</span> <span class="toc-text">统计结果存入本地</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计结果导入_MySql"><span class="toc-number">6.2.</span> <span class="toc-text">统计结果导入 MySql</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-_参考资料"><span class="toc-number">8.</span> <span class="toc-text">6. 参考资料</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="大数据统计问题">大数据统计问题</h2><p>当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。</p>
+<p>这时，可以将业务数据存储到 HDFS 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。</p>
+<h2 id="大数据统计思路">大数据统计思路</h2><p>当统计任务越来越多，并且数据量日益庞大，需要能够管理逻辑复杂的多个Hadoop作业。统计任务大致步骤如下：</p>
+<ol>
+<li><p>通过 Sqoop 先将业务数据同步到 HDFS 上；</p>
+</li>
+<li><p>对 HDFS 上的业务数据，以分区表的形式存储到多张 Hive 表中；</p>
+</li>
+<li><p>进行 JOIN 处理，得到一个明细数据Hive大表（此步骤可选）；</p>
+</li>
+<li><p>借助 MapReduce 计算框架，对 Hive 中的表数据进行复杂的统计分析，得到统计后的的报表信息；</p>
+</li>
+<li><p>需要将统计分析得到的结果数据同步到业务系统中，供业务调用使用。</p>
+</li>
+</ol>
+<a id="more"></a>
+<p>上述过程可以通过 workflow 系统来编排任务，最终生成一个 workflow 实例，然后每天定时启动运行这个实例即可。</p>
+<p>这里假设业务数据存储在线上业务数据库 MySql 从库 mysql-slave-00 中，而 HDFS 选择 Amazon S3， 经过统计后，结果存储到本地文本，或 MySql(mysql-statistics) 中，数据流向如下：</p>
+<ol>
+<li><p>从 MySql ( mysql-slave-00 ) 到 Amazon S3</p>
+</li>
+<li><p>从 Amazon S3 到 Hive</p>
+</li>
+<li><p>Statistics on Hive</p>
+</li>
+<li><p>从 Hive 到 MySql ( mysql-statistics ) or local text</p>
+</li>
+</ol>
+<p>后面各部分将从第 1 步骤开始说明。</p>
+<h2 id="从_MySql(_mysql-slave-00_)_到_Amazon_S3">从 MySql( mysql-slave-00 ) 到 Amazon S3</h2><p>最新业务数据存储在 MySql ( mysql-slave-00 ) 中，需要 <strong>upload</strong> 到 Amazon S3。</p>
+<p>假设要上传表 <code>thu_student</code> 中数据，在安装并配置好 Sqoop 好后，可以在 Shell 脚本中编辑好上传程序，如 <code>sqoopMySqlThuStudent2S3</code>。</p>
+<p><strong>注：</strong> 这里上传数据到 Amazon S3 使用了 <a href="http://sqoop.apache.org/" target="_blank" rel="external">Sqoop</a>。Sqoop是一个用来将 Hadoop 和关系型数据库中的数据相互转移的工具，可以将一个关系型数据库（例如 ： MySQL, Oracle, Postgres等）中的数据导进到 Hadoop 的 HDFS 中，也可以将 HDFS 的数据导进到关系型数据库中。</p>
+<p>若要上传 <code>2015/04/01</code> 的数据，在 <code>CLI</code> 中 <code>cd</code> 到 <code>/home/whlminds/bin/</code> 目录（假设 Shell 脚本放置在此目录下），在  <code>CLI</code> 中执行下面命令：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./sqoopMySqlThuStudent2S3<span class="class">.sh</span> <span class="number">2015</span>/<span class="number">04</span>/<span class="number">01</span></span><br></pre></td></tr></table></figure>
+<p>数据成功上传到 Amazon S3 后，假设将存在于存储桶 <code>thu.whlminds.com</code> 中，存储路径为 <code>thu.whlminds.com/mysql/thu_student/2015/04/01</code> , 上传后结果类似：</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby"> _SUCESS</span><br><span class="line"></span>-<span class="ruby"> part-m-<span class="number">00000</span></span><br><span class="line"></span>-<span class="ruby"> part-m-<span class="number">00001</span></span><br><span class="line"></span>-<span class="ruby"> part-m-<span class="number">00002</span></span><br><span class="line"></span>-<span class="ruby"> part-m-<span class="number">00003</span></span></span><br></pre></td></tr></table></figure>
+<p><code>part</code> 中内容由多条原数据库表中记录组成，每一条记录中，字段值之间通过 <code>\t</code> 来间隔：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5597092</span>	150401235913fze459278	<span class="number">6459278</span>	<span class="number">4045</span> <span class="keyword">...</span></span><br></pre></td></tr></table></figure>
+<h2 id="从Amazon_S3_到_Hive">从Amazon S3 到 Hive</h2><p>OK，数据到了 Amazon S3 ，下面就要导入 Hive 的表中为统计准备了，在导入 Hive 前需要在 Hive 中根据结构化的 Amazon S3 中记录，创建对应的 Hive 表。</p>
+<h3 id="Hive_中创建表">Hive 中创建表</h3><p>如果不指定数据库，Hive 会把表创建在 default 数据库下，假设有一个 Hive 的数据库 mydb，要创建表到 mydb,如下:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> mydb.pokes(foo <span class="built_in">INT</span>,bar <span class="keyword">STRING</span>);</span></span><br></pre></td></tr></table></figure>
+<p>或者是</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">use</span> mydb;</span> <span class="comment">--把当前数据库指向mydb</span></span><br><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> pokes(foo <span class="built_in">INT</span>,bar <span class="keyword">STRING</span>);</span></span><br></pre></td></tr></table></figure>
+<p>在 Hive 中有两种表，外部表与内部表；</p>
+<ul>
+<li>创建表，有指定 EXTERNAL 就是外部表，没有指定就是内部表；</li>
+<li>内部表数据存储在本地，在 drop 的时候会删除数据；</li>
+<li>外部表在创建表时，指定了数据在 HDFS 上的存储位置，并通过 metadata 描述了对应 HDFS 上的数据在 Hive 外部表存储的细节，Hive 通过 mysql 存储 metadata，删除外部表时，仅删除了 metadata；</li>
+<li>外部表和内部表一样，都可以有分区；</li>
+</ul>
+<p>创建外部表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">EXTERNAL</span> <span class="keyword">TABLE</span> thu_student_s3(</span><br><span class="line">     id <span class="built_in">INT</span>, </span><br><span class="line">     stu_no <span class="built_in">BIGINT</span>,</span><br><span class="line">     name <span class="keyword">STRING</span>, </span><br><span class="line">     age <span class="built_in">INT</span>,</span><br><span class="line">     gender TINYINT)</span><br><span class="line"> COMMENT <span class="string">'This is the student info table'</span></span><br><span class="line"> <span class="keyword">ROW</span> <span class="keyword">FORMAT</span> DELIMITED <span class="keyword">FIELDS</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">'\t'</span></span><br><span class="line"> STORED <span class="keyword">AS</span> TEXTFILE</span><br><span class="line"> LOCATION <span class="string">'s3://thu.whlminds.com/mysql/thu_student'</span>;</span></span><br></pre></td></tr></table></figure>
+<p>创建内部表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> thu_student_intl(</span><br><span class="line">     id <span class="built_in">INT</span>, </span><br><span class="line">     stu_no <span class="built_in">BIGINT</span>,</span><br><span class="line">     name <span class="keyword">STRING</span>, </span><br><span class="line">     age <span class="built_in">INT</span>,</span><br><span class="line">     gender TINYINT)</span><br><span class="line"> PARTITIONED <span class="keyword">BY</span>(major TINYINT)</span><br><span class="line"> <span class="keyword">ROW</span> <span class="keyword">FORMAT</span> DELIMITED</span><br><span class="line">   <span class="keyword">FIELDS</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">'\t'</span></span><br><span class="line"> STORED <span class="keyword">AS</span> TEXTFILE;</span></span><br></pre></td></tr></table></figure>
+<h3 id="向Hive表中导入数据">向Hive表中导入数据</h3><p>向 Hive 的表中上传数据时，可以在建表时指定数据源，也可以在建好表之后在通过 <code>Hive QL</code> 再 load。</p>
+<ul>
+<li>建外部表时指定数据源</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">EXTERNAL</span> <span class="keyword">TABLE</span> thu_student_s3(</span><br><span class="line">    id <span class="built_in">INT</span>, </span><br><span class="line">    stu_no <span class="built_in">BIGINT</span>,</span><br><span class="line">    name <span class="keyword">STRING</span>, </span><br><span class="line">    age <span class="built_in">INT</span>,</span><br><span class="line">    gender TINYINT) </span><br><span class="line"><span class="keyword">ROW</span> <span class="keyword">FORMAT</span> DELIMITED <span class="keyword">FIELDS</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">'\t'</span> STORED <span class="keyword">AS</span> TEXTFILE </span><br><span class="line">LOCATION <span class="string">'s3://thu.whlminds.com/mysql/thu_student/2015/04/01/'</span>;</span></span><br></pre></td></tr></table></figure>
+<p>上面建外部表程序中，最后一句 <code>LOCATION &#39;s3://thu.whlminds.com/mysql/thu_student/2015/04/01/&#39;</code> ，即指定了 <code>S3</code>上的数据位置，其中，<code>thu.whlminds.com</code> 为存储桶，<code>/mysql/thu_student/2015/04/01/</code> 为桶中存储目录。</p>
+<ul>
+<li>建表后再 load 数据</li>
+</ul>
+<p>导入本地数据：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive<span class="subst">&gt;</span> load <span class="built_in">data</span> <span class="built_in">local</span> inpath <span class="string">'/home/hadoop/hive/data_stu'</span> <span class="keyword">into</span> table thu_student_s3;</span><br></pre></td></tr></table></figure>
+<p>导入 <code>S3</code> 数据：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">load</span> <span class="keyword">data</span> inpath <span class="string">'s3://thu.whlminds.com/mysql/thu_student/2015/04/01/'</span> <span class="keyword">into</span> <span class="keyword">table</span> thu_student_s3</span></span><br></pre></td></tr></table></figure>
+<p>其中，<code>data_stu</code> 为存储了数据的文本文件，<code>thu_student_s3</code> 为 Hive 中的表。</p>
+<h2 id="Statistics_on_Hive">Statistics on Hive</h2><p>终于 Hive 中有表了，表中有数据了；）</p>
+<p>关于如何对 Hive 表中数据通过 <code>Hive QL</code> 进行统计，请前往 <a href="https://cwiki.apache.org/confluence/display/Hive/GettingStarted#GettingStarted-SQLOperations" target="_blank" rel="external">GettingStarted-SQLOperations</a> 学习使用，这里说明一点注意问题：</p>
+<ul>
+<li><strong>在 Hive 中，空值 <code>NULL</code> 在底层默认是用 <code>\N</code> 来存储的</strong></li>
+</ul>
+<p>可以看到底层数据将 <code>NULL</code> 存储成了 <code>\N</code> 。</p>
+<p>这样的设计存在一个问题是如果实际想存储 <code>\N</code>，那么实际查询出来的也是 <code>NULL</code> 而不是 <code>\N</code> 。</p>
+<p>Hive 给出一种并非完美的解决方法就是可以自定义底层用什么字符来表示 <code>NULL</code>。</p>
+<p>例如我想用字符 <code>a</code> 来表示 <code>NULL</code> ：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive&#62; alter table thu_student_s3 SET SERDEPROPERTIES(&#39;serialization.null.format&#39; = &#39;a&#39;);</span><br></pre></td></tr></table></figure>
+<p>这时候底层的存储就变成了 <code>a</code> ，今后插入到这张表中的 <code>a</code> 查询出来就变成了 <code>NULL</code> 而不是 <code>a</code> 。</p>
+<p>其实上面说的这个假 <code>NULL</code> 出现的原因就是在默认情况下（即用 <code>\N</code> 表示 <code>NULL</code>），插入了 <code>NULL</code> 值，然后又用  <code>SET SERDEPROPERTIES</code> 语句修改了存储NULL的字符串。这时候表的属性修改了，但是底层存储的文件并没有修改。而 <code>\N</code> 显示为 <code>NULL</code> 在 <code>Hive</code> 中又是一个特例，于是就出现了这个假 <code>NULL</code>，在开发过程中一定要注意。</p>
+<h2 id="从_Hive_到_MySql_(_mysql-statistics_)_or_local_text">从 Hive 到 MySql ( mysql-statistics ) or local text</h2><p>统计得到结果后，假设结果存储在 Hive 的 thu_student_result 表中，可以将结果导到 mysql 数据库，或者存在本地文件中。</p>
+<h3 id="统计结果存入本地">统计结果存入本地</h3><ul>
+<li>方法一</li>
+</ul>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive<span class="subst">&gt;</span> insert overwrite <span class="built_in">local</span> directory <span class="string">'/home/hadoop/hive/thu_student_result_000'</span> </span><br><span class="line"><span class="subst">&gt;</span> row format delimited fields terminated <span class="keyword">by</span> <span class="string">'\t'</span> </span><br><span class="line"><span class="subst">&gt;</span> <span class="keyword">select</span> <span class="subst">*</span> from thu_student_result;</span><br></pre></td></tr></table></figure>
+<p>其中，得到的结果 <code>thu_student_result_000</code> 中每一条记录的字段间是用 <code>\t</code> 分割的:</p>
+<ul>
+<li>方法二</li>
+</ul>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>hive -e <span class="string">"select * from thu_student_result"</span> &gt;&gt; <span class="regexp">/home/hadoop</span><span class="regexp">/hive/thu</span>_student_result_001</span><br></pre></td></tr></table></figure>
+<p>在 <code>thu_student_result_001</code> 查看统计结果，其中，得到的结果中每一条记录的字段间也是用 <code>\t</code> 分割的:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="operator">less</span> thu_student_result_001</span><br></pre></td></tr></table></figure>
+<ul>
+<li>方法三</li>
+</ul>
+<p>首先 <code>touch</code> 一个 <code>sql</code> 文件，写好统计程序，然后在 <code>CLI</code> 中执行如下命令：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>hive -f stat_student.sql &gt;&gt; <span class="regexp">/home/hadoop</span><span class="regexp">/hive/thu</span>_student_result_002</span><br></pre></td></tr></table></figure>
+<p>在 <code>thu_student_result_002</code> 中查看统计结果，其中，得到的结果也是用 <code>\t</code> 分割的：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="operator">less</span> thu_student_result_0002</span><br></pre></td></tr></table></figure>
+<h3 id="统计结果导入_MySql">统计结果导入 MySql</h3><p>在向 <code>mysql</code>中导入数据时，需要根据以下步骤进行相关配置，Session级别：</p>
+<ul>
+<li>添加JaR包</li>
+</ul>
+<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; add jar /<span class="literal">home</span>/hadoop/hive/lib/hive-contrib-<span class="number">0</span>.<span class="number">13.1</span>.jar</span><br><span class="line"><span class="constant">Added</span> /<span class="literal">home</span>/hadoop/hive/lib/hive-contrib-<span class="number">0</span>.<span class="number">13.1</span>.jar to <span class="keyword"><span class="keyword">class</span> <span class="title">path</span></span></span><br><span class="line"><span class="constant">Added</span> resource: /<span class="literal">home</span>/hadoop/hive/lib/hive-contrib-<span class="number">0</span>.<span class="number">13.1</span>.jar</span><br><span class="line"></span><br><span class="line">hive&gt; add jar /<span class="literal">home</span>/ec2-<span class="keyword">user</span>/sqoop/lib/mysql-connector-java-<span class="number">5.1</span>.<span class="number">13</span>.jar;</span><br><span class="line"><span class="constant">Added</span> /<span class="literal">home</span>/ec2-<span class="keyword">user</span>/sqoop/lib/mysql-connector-java-<span class="number">5.1</span>.<span class="number">13</span>.jar to <span class="keyword"><span class="keyword">class</span> <span class="title">path</span></span></span><br><span class="line"><span class="constant">Added</span> resource: /<span class="literal">home</span>/ec2-<span class="keyword">user</span>/sqoop/lib/mysql-connector-java-<span class="number">5.1</span>.<span class="number">13</span>.jar</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在 Hive 中建立 <code>UDF</code>：</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive&#62; CREATE TEMPORARY FUNCTION dboutput AS &#39;org.apache.hadoop.hive.contrib.genericudf.example.GenericUDFDBOutput&#39;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在 Hive 中通过 <code>UDF</code> 导出数据到 mysql:</li>
+</ul>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; <span class="function"><span class="keyword">select</span> <span class="title">dboutput</span><span class="params">(<span class="string">'jdbc:mysql://xxxxxx.amazonaws.com.cn/thu_university'</span>,<span class="string">'$username'</span>,<span class="string">'$password'</span>,</span><br><span class="line">&gt; <span class="string">'INSERT INTO thu_student_result_from_s3(id, stu_no, name) VALUES (?,?,?)'</span>, id, stu_no, name)</span> <span class="keyword">from</span> thu_student_result</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>注：</strong> <code>thu_university</code> 为 mysql 业务数据库名，<code>thu_student_result_from_s3</code> 为数据库 <code>thu_university</code> 中的表名。 <code>thu_student_result_from_s3(id, stu_no, name)</code>，括号中的字段为 mysql 表 <code>thu_student_result_from_s3</code> 字段，<code>values(?,?,?)</code> 对应 Hive 统计结果的值，后面的 <code>id</code>, <code>stu_no</code>, <code>name</code> 为 hive 表中的字段，<code>thu_student_result</code> 表示 Hive 中的表名称。</p>
+<p>另外，<code>$username</code> 和 <code>$password</code> 是 <code>thu_university</code> 用户名和密码。</p>
+<p>通过以上步骤即可将 Hive 统计结果直接导入到 mysql 数据库中。 </p>
+<h2 id="总结">总结</h2><p>大数据量统计通过在数据库中写SQL语句已经力所不及，可以通过将线上数据同步到 HDFS，并使用 HVIE 进行统计分析，最后，将统计结果同步到业务数据库供使用。</p>
+<h2 id="6-_参考资料">6. 参考资料</h2><ol>
+<li><a href="https://cwiki.apache.org/confluence/display/Hive/GettingStarted" target="_blank" rel="external">HIVE-GettingStarted</a></li>
+<li><a href="http://sqoop.apache.org/" target="_blank" rel="external">Sqoop</a></li>
+<li><a href="http://www.cnblogs.com/ggjucheng/archive/2013/01/04/2844393.html" target="_blank" rel="external">hive 创建/删除/截断 表(翻译自Hive wiki)</a></li>
+<li><a href="http://blog.csdn.net/lifuxiangcaohui/article/details/40588929" target="_blank" rel="external">Hive总结（七）Hive四种数据导入方式</a></li>
+<li><a href="http://blog.csdn.net/lifuxiangcaohui/article/details/40589881" target="_blank" rel="external">Hive总结（八）Hive四种数据导出方式</a></li>
+<li><a href="http://blog.sina.com.cn/s/blog_6ff05a2c010131sh.html" target="_blank" rel="external">Hive中的一种假NULL</a></li>
+<li><a href="http://blog.csdn.net/jiedushi/article/details/8609019" target="_blank" rel="external">利用udf函数将hive统计结果直接插入到mysql</a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/大数据/">大数据</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Hive/">Hive</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://whlminds.com/2015/05/02/statistics-amazon-s3-hive/" data-title="基于 HDFS 和 HIVE 的统计 | FreeMinds" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/04/05/Baby's-First-Garbage-Collector/"  title="简易的垃圾回收器">
+ <strong>下一篇：</strong><br/> 
+ <span>简易的垃圾回收器
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/05/02/statistics-amazon-s3-hive/" data-title="基于 HDFS 和 HIVE 的统计" data-url="http://whlminds.com/2015/05/02/statistics-amazon-s3-hive/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#大数据统计问题"><span class="toc-number">1.</span> <span class="toc-text">大数据统计问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#大数据统计思路"><span class="toc-number">2.</span> <span class="toc-text">大数据统计思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从_MySql(_mysql-slave-00_)_到_Amazon_S3"><span class="toc-number">3.</span> <span class="toc-text">从 MySql( mysql-slave-00 ) 到 Amazon S3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从Amazon_S3_到_Hive"><span class="toc-number">4.</span> <span class="toc-text">从Amazon S3 到 Hive</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hive_中创建表"><span class="toc-number">4.1.</span> <span class="toc-text">Hive 中创建表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#向Hive表中导入数据"><span class="toc-number">4.2.</span> <span class="toc-text">向Hive表中导入数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Statistics_on_Hive"><span class="toc-number">5.</span> <span class="toc-text">Statistics on Hive</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从_Hive_到_MySql_(_mysql-statistics_)_or_local_text"><span class="toc-number">6.</span> <span class="toc-text">从 Hive 到 MySql ( mysql-statistics ) or local text</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#统计结果存入本地"><span class="toc-number">6.1.</span> <span class="toc-text">统计结果存入本地</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计结果导入_MySql"><span class="toc-number">6.2.</span> <span class="toc-text">统计结果导入 MySql</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-_参考资料"><span class="toc-number">8.</span> <span class="toc-text">6. 参考资料</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hive/" title="Hive">Hive<sup>1</sup></a></li>
+			
+		
+			
+		
+			
+		
+			
+		
+		</ul>
+</div>
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/大数据/" title="大数据">大数据<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hive/" style="font-size: 10px;">Hive</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 10px;">booknotes</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://fangjb.me" target="_blank" title="Fice&#39;s Blog">Fice&#39;s Blog</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://dangfan.me" target="_blank" title="有一说一">有一说一</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="120" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=250&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1907586883&verifier=50d45b85&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m HongliangWEI. <br/>
+			This is my blog. Believe it or not!</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:helloweihl@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"whlminds"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F9c533e8f9930cffc806c36de6a517fbe' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
