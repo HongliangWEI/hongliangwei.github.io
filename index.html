@@ -78,7 +78,7 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/05/02/statistics-amazon-s3-hive/" title="基于 HDFS 和 HIVE 的统计" itemprop="url">基于 HDFS 和 HIVE 的统计</a>
+      <a href="/2015/05/02/statistics-amazon-s3-hive/" title="基于 Amazon S3 和 HIVE 的统计" itemprop="url">基于 Amazon S3 和 HIVE 的统计</a>
   </h1>
   <p class="article-author">By
        
@@ -92,11 +92,11 @@
     <div class="article-content">
         
         <h2 id="大数据统计问题">大数据统计问题</h2><p>当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。</p>
-<p>这时，可以将业务数据存储到 HDFS 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。</p>
+<p>这时，可以将业务数据存储到 Hadoop文件系统 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。</p>
 <h2 id="大数据统计思路">大数据统计思路</h2><p>当统计任务越来越多，并且数据量日益庞大，需要能够管理逻辑复杂的多个Hadoop作业。统计任务大致步骤如下：</p>
 <ol>
-<li>通过 Sqoop 先将业务数据同步到 HDFS 上；</li>
-<li>对 HDFS 上的业务数据，以分区表的形式存储到多张 Hive 表中；</li>
+<li>通过 Sqoop 先将业务数据同步到 Hadoop文件系统 上；</li>
+<li>对 Hadoop文件系统 上的业务数据，以分区表的形式存储到多张 Hive 表中；</li>
 <li>进行 JOIN 处理，得到一个明细数据Hive大表（此步骤可选）；</li>
 <li>借助 MapReduce 计算框架，对 Hive 中的表数据进行复杂的统计，得到统计后的的报表信息；</li>
 <li>需要将统计分析得到的结果数据同步到业务系统中，供业务调用使用。</li>
