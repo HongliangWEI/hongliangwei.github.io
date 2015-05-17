@@ -4,46 +4,27 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>我喜欢的书 | FreeMinds</title>
+    <title>Sqoop 简介 | FreeMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="HongliangWEI">
     
 
     
-    <meta name="description" content="信息科技
-《浪潮之巅》
-《文明之光》（三册）
-《数学之美》
-《黑客与画家》
-
-数学
-《思考的乐趣》
-《概率论基础教程》">
+    <meta name="description" content="Sqoop 是什么Sqoop 是一个在结构化、半结构化和非结构化数据源之间进行有效数据传输的工具。各种数据源中，例如，关系型数据库（RDBMS）中存储的数据都有数据模式（Schema），是结构化数据源；Cassandra 和 Hbase 是半结构化数据源；而 HDFS 是非结构化的数据源。
+以 RDBMS 和 HDFS 之间数据传输为例，借助于 Sqoop，可以从 RDBMS 如 MySQL 或">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我喜欢的书">
-<meta property="og:url" content="http://whlminds.com/2015/04/02/my-favourite-books/index.html">
+<meta property="og:title" content="Sqoop 简介">
+<meta property="og:url" content="http://whlminds.com/2015/05/17/a-simple-introduction-to-sqoop2/index.html">
 <meta property="og:site_name" content="FreeMinds">
-<meta property="og:description" content="信息科技
-《浪潮之巅》
-《文明之光》（三册）
-《数学之美》
-《黑客与画家》
-
-数学
-《思考的乐趣》
-《概率论基础教程》">
+<meta property="og:description" content="Sqoop 是什么Sqoop 是一个在结构化、半结构化和非结构化数据源之间进行有效数据传输的工具。各种数据源中，例如，关系型数据库（RDBMS）中存储的数据都有数据模式（Schema），是结构化数据源；Cassandra 和 Hbase 是半结构化数据源；而 HDFS 是非结构化的数据源。
+以 RDBMS 和 HDFS 之间数据传输为例，借助于 Sqoop，可以从 RDBMS 如 MySQL 或">
+<meta property="og:image" content="/illustration/sqoop-request.png">
+<meta property="og:image" content="/illustration/sqoop-frameowork.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我喜欢的书">
-<meta name="twitter:description" content="信息科技
-《浪潮之巅》
-《文明之光》（三册）
-《数学之美》
-《黑客与画家》
-
-数学
-《思考的乐趣》
-《概率论基础教程》">
+<meta name="twitter:title" content="Sqoop 简介">
+<meta name="twitter:description" content="Sqoop 是什么Sqoop 是一个在结构化、半结构化和非结构化数据源之间进行有效数据传输的工具。各种数据源中，例如，关系型数据库（RDBMS）中存储的数据都有数据模式（Schema），是结构化数据源；Cassandra 和 Hbase 是半结构化数据源；而 HDFS 是非结构化的数据源。
+以 RDBMS 和 HDFS 之间数据传输为例，借助于 Sqoop，可以从 RDBMS 如 MySQL 或">
 
     
     
@@ -100,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/04/02/my-favourite-books/" title="我喜欢的书" itemprop="url">我喜欢的书</a>
+      <a href="/2015/05/17/a-simple-introduction-to-sqoop2/" title="Sqoop 简介" itemprop="url">Sqoop 简介</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
 		
   <p class="article-time">
-    <time datetime="2015-04-02T13:24:32.000Z" itemprop="datePublished"> 发表于 2015-04-02</time>
+    <time datetime="2015-05-16T17:13:55.000Z" itemprop="datePublished"> 发表于 2015-05-17</time>
     
   </p>
 </header>
@@ -116,55 +97,37 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#信息科技"><span class="toc-number">1.</span> <span class="toc-text">信息科技</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数学"><span class="toc-number">2.</span> <span class="toc-text">数学</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文学小说传记"><span class="toc-number">3.</span> <span class="toc-text">文学小说传记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">4.</span> <span class="toc-text">其他</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_是什么"><span class="toc-number">1.</span> <span class="toc-text">Sqoop 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_安装"><span class="toc-number">2.</span> <span class="toc-text">Sqoop 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_如何工作"><span class="toc-number">3.</span> <span class="toc-text">Sqoop 如何工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_例子"><span class="toc-number">4.</span> <span class="toc-text">Sqoop 例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="信息科技">信息科技</h3><ul>
-<li><em>《浪潮之巅》</em></li>
-<li><em>《文明之光》</em>（三册）</li>
-<li><em>《数学之美》</em></li>
-<li><em>《黑客与画家》</em></li>
-</ul>
-<h3 id="数学">数学</h3><ul>
-<li><em>《<a href="http://book.douban.com/subject/10779597/" target="_blank" rel="external">思考的乐趣</a>》</em></li>
-<li><em>《<a href="http://book.douban.com/subject/4291764/" target="_blank" rel="external">概率论基础教程</a>》</em></li>
-</ul>
+		<h2 id="Sqoop_是什么">Sqoop 是什么</h2><p>Sqoop 是一个在结构化、半结构化和非结构化数据源之间进行有效数据传输的工具。各种数据源中，例如，关系型数据库（RDBMS）中存储的数据都有数据模式（Schema），是结构化数据源；Cassandra 和 Hbase 是半结构化数据源；而 HDFS 是非结构化的数据源。</p>
+<p>以 RDBMS 和 HDFS 之间数据传输为例，借助于 Sqoop，可以从 RDBMS 如 MySQL 或 Oracle 中导入数据到HDFS 中，通过 Hadoop 的 MapReduce 模型计算完之后，将结果导回 RDBMS。</p>
+<p>根据被导入数据在数据库中定义的数据模式，Sqoop 将会自动完成整个过程中的大部分，其中，Sqoop 借助于 MapReduce 导入和导出数据，并提供容错和并行化操作。</p>
 <a id="more"></a>
-<h3 id="文学小说传记">文学小说传记</h3><ul>
-<li><em>《明朝那些事儿》</em></li>
-<li><em>《平凡的世界》</em></li>
-<li><em>《百年孤独》</em></li>
-<li><em>《听杨绛谈往事》</em></li>
-<li><em>《走到人生边上》</em></li>
-<li><em>《我们仨》</em></li>
-<li><em>《杰克·韦尔奇自传》</em></li>
-<li><em>《野心优雅》</em></li>
-<li><em>《人类的群星闪耀时》</em></li>
-<li><em>《乡土中国》</em></li>
-</ul>
-<h3 id="其他">其他</h3><ul>
-<li><em>《天才在左，疯子在右》</em></li>
-<li><em>《<a href="http://book.douban.com/subject/24523169/" target="_blank" rel="external">策略思维</a>》</em></li>
-<li><em>《写给大家看的设计书》</em></li>
-<li><em>《影响力》</em></li>
-<li><em>《<a href="http://book.douban.com/subject/1012611/" target="_blank" rel="external">乌合之众</a>》</em></li>
-<li><em>《<a href="http://book.douban.com/subject/1032501/" target="_blank" rel="external">心理学与生活</a>》</em></li>
-</ul>
-  
+<h2 id="Sqoop_安装">Sqoop 安装</h2><p>Sqoop 需要安装两部分，即 Server 端和 Client 端。Server 端可以安装在集群中一个节点上，该节点可以作为其他需要连接的 Client 端的接入点，并且，将作为一个 MapReduce 算子请求客户端，因而，在提供有 Sqoop Server 的节点上须安装有 Hadoop。而 Sqoop Client 可以安装在集群中任意节点上。</p>
+<p>具体安装细节请移步至 <a href="http://sqoop.apache.org/docs/1.99.6/Installation.html" target="_blank" rel="external">sqoop-installation</a>。</p>
+<h2 id="Sqoop_如何工作">Sqoop 如何工作</h2><p>当用户在 Sqoop Client 端提交一个请求时， Sqoop Client 通过 <code>REST</code> 方式，以 <code>JSON</code> 格式仅向 Sqoop Server 发出请求。Sqoop Server 在收到请求之后，从数据源中抽取元数据（metadata），并向执行引擎授权执行请求，这里，执行引擎及 Hadoop 的 MapReduce 算子。在执行时，MapReduce 算子以平行化方式完成请求。</p>
+<p><img src="/illustration/sqoop-request.png" class="img-center"></p>
+<p>具体的，用户在使用 Sqoop 在不同数据源间导数据时，Sqoop Client 提供了 <code>CLI</code> 和浏览器两种方式提交请求，然后 Sqoop Server 收到请求后，授权 MapReduce 执行，如下图所示。</p>
+<p><img src="/illustration/sqoop-frameowork.png" class="img-center"></p>
+<p>以利用 Sqoop 在关系型数据库和 HDFS 间传输数据为例。其中，导入过程的输入是一个数据库表，Sqoop 将会从表中一行一行的读入到 HDFS，导入过程的输出是一组包含被导入表数据的文件。因为导入过程是并行的，所以将会产生多个输出文件。这些文件可以是文本文件，文件中每一行对应一条数据库表中的记录，记录中每个域之间通过逗号或 <code>\t</code> 分割，也可以是二进制的 <code>Avro</code>，或包含序列化的数据的序列化文件。</p>
+<p>在对导入的记录使用 MapReduce 或 Hive 等计算完后，可以讲计算结果导回关系型数据库。Sqoop 的导出过程将会并行的从 HDFS 中读取一组文本文件，解析为记录，并插入到数据库表中，供其他业务或用户使用。</p>
+<p>其中，导入和导出的过程的许多方面都可以被个性化定制。用户可以控制数据库表中需要导入的具体行和列，也可以指定文件的格式、列的分隔符和导入到文件后需要过滤的字符（如 <code>\r\n</code>）。</p>
+<h2 id="Sqoop_例子">Sqoop 例子</h2><h2 id="总结">总结</h2><h2 id="参考资料">参考资料</h2>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
+  <a class="article-category-link" href="/categories/BigData/">BigData</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/booknotes/">booknotes</a>
+  <span></span> <a href="/tags/Sqoop/">Sqoop</a>
   </div>
 
 </div>
@@ -173,7 +136,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2015/04/02/my-favourite-books/" data-title="我喜欢的书 | FreeMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2015/05/17/a-simple-introduction-to-sqoop2/" data-title="Sqoop 简介 | FreeMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -187,19 +150,27 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/04/05/Factorial-Trailing-Zeroes/" title="Factorial-Trailing-Zeroes">
+ <a href="/2015/05/17/Sqoop2-Connector/" title="Sqoop2 Connector">
   <strong>上一篇：</strong><br/>
   <span>
-  Factorial-Trailing-Zeroes</span>
+  Sqoop2 Connector</span>
 </a>
 </div>
 
+
+<div class="next">
+<a href="/2015/05/02/statistics-amazon-s3-hive/"  title="基于 Amazon S3 和 HIVE 的统计">
+ <strong>下一篇：</strong><br/> 
+ <span>基于 Amazon S3 和 HIVE 的统计
+</span>
+</a>
+</div>
 
 </nav>
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/04/02/my-favourite-books/" data-title="我喜欢的书" data-url="http://whlminds.com/2015/04/02/my-favourite-books/"></div>
+	<div class="ds-thread" data-thread-key="2015/05/17/a-simple-introduction-to-sqoop2/" data-title="Sqoop 简介" data-url="http://whlminds.com/2015/05/17/a-simple-introduction-to-sqoop2/"></div>
 </section>
 
 
@@ -209,7 +180,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#信息科技"><span class="toc-number">1.</span> <span class="toc-text">信息科技</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数学"><span class="toc-number">2.</span> <span class="toc-text">数学</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文学小说传记"><span class="toc-number">3.</span> <span class="toc-text">文学小说传记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">4.</span> <span class="toc-text">其他</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_是什么"><span class="toc-number">1.</span> <span class="toc-text">Sqoop 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_安装"><span class="toc-number">2.</span> <span class="toc-text">Sqoop 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_如何工作"><span class="toc-number">3.</span> <span class="toc-text">Sqoop 如何工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_例子"><span class="toc-number">4.</span> <span class="toc-text">Sqoop 例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
  
   </div>
 
