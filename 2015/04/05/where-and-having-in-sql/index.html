@@ -12,23 +12,20 @@
 
     
     <meta name="description" content="在查询数据库表时，需要对表中的记录进行筛选，SQL提供了两个约束子句，即WHERE与HAVING，二者效果有雷同，但用法有区别。
-
 语法区别WHERE1SELECT column_name FROM table_name WHERE column operator value
-HAVING12345SELECT column_name, aggregate_function(column_name">
+HAVING12345SELECT column_name, aggregate_function(column_name)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL中WHERE与HAVING用法">
 <meta property="og:url" content="http://whlminds.com/2015/04/05/where-and-having-in-sql/index.html">
 <meta property="og:site_name" content="FreeMinds">
 <meta property="og:description" content="在查询数据库表时，需要对表中的记录进行筛选，SQL提供了两个约束子句，即WHERE与HAVING，二者效果有雷同，但用法有区别。
-
 语法区别WHERE1SELECT column_name FROM table_name WHERE column operator value
-HAVING12345SELECT column_name, aggregate_function(column_name">
+HAVING12345SELECT column_name, aggregate_function(column_name)">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL中WHERE与HAVING用法">
 <meta name="twitter:description" content="在查询数据库表时，需要对表中的记录进行筛选，SQL提供了两个约束子句，即WHERE与HAVING，二者效果有雷同，但用法有区别。
-
 语法区别WHERE1SELECT column_name FROM table_name WHERE column operator value
-HAVING12345SELECT column_name, aggregate_function(column_name">
+HAVING12345SELECT column_name, aggregate_function(column_name)">
 
     
     
@@ -105,18 +102,16 @@ HAVING12345SELECT column_name, aggregate_function(column_name">
 		
 		</div>
 		
-		<blockquote>
-<p>在查询数据库表时，需要对表中的记录进行筛选，<code>SQL</code>提供了两个约束子句，即<code>WHERE</code>与<code>HAVING</code>，二者效果有雷同，但用法有区别。</p>
-</blockquote>
+		<p>在查询数据库表时，需要对表中的记录进行筛选，<code>SQL</code>提供了两个约束子句，即<code>WHERE</code>与<code>HAVING</code>，二者效果有雷同，但用法有区别。</p>
 <h2 id="语法区别">语法区别</h2><h3 id="WHERE">WHERE</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> column_name <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> <span class="keyword">column</span> operator <span class="keyword">value</span></span></span><br></pre></td></tr></table></figure>
 <h3 id="HAVING">HAVING</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> column_name, aggregate_function(column_name)</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">WHERE</span> column_name operator <span class="keyword">value</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> column_name</span><br><span class="line"><span class="keyword">HAVING</span> aggregate_function(column_name) operator <span class="keyword">value</span></span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="使用区别">使用区别</h2><ul>
 <li><p><code>WHERE</code>作用对象为数据库表、视图，<code>HAVING</code>作用对象为于组（<code>Group</code>）;</p>
 </li>
 <li><p><code>WHERE</code>在分组和聚集计算之前选取输入行（因此，它控制哪些行进入聚集计算），而<code>HAVING</code>在分组和聚集之后选取分组的行。因此，<code>WHERE</code>子句不能包含聚集函数；因为试图用聚集函数判断那些行输入给聚集运算是没有意义的。相反，<code>HAVING</code>子句总是包含聚集函数。（严格说来，你可以写不使用聚集的<code>HAVING</code>子句， 但这样做只是白费劲。同样的条件可以更有效地用于<code>WHERE</code>阶段。）</p>
 </li>
 </ul>
-<a id="more"></a>
 <h2 id="例子说明">例子说明</h2><h3 id="WHERE实例">WHERE实例</h3><p>如果只希望选取居住在城市 <em>“Beijing”</em> 中的人，我们需要向<code>SELECT</code>语句添加<code>WHERE</code>子句：</p>
 <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> City=<span class="string">'Beijing'</span></span><br></pre></td></tr></table></figure>
 <p><em>“Persons”</em>表</p>
@@ -285,7 +280,8 @@ HAVING12345SELECT column_name, aggregate_function(column_name">
 </ol>
 <blockquote>
 <p>注</p>
-<p>下面的运算符可在<code>WHERE</code>子句中使用：</p>
+</blockquote>
+<p> 下面的运算符可在<code>WHERE</code>子句中使用：</p>
 <table>
 <thead>
 <tr>
@@ -328,15 +324,14 @@ HAVING12345SELECT column_name, aggregate_function(column_name">
 </tr>
 </tbody>
 </table>
-<p><code>SQL</code>使用单引号来环绕文本值（大部分数据库系统也接受双引号）。如果是数值，请不要使用引号。</p>
-<p>这是正确的：<br> <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> FirstName = <span class="string">'Bush'</span></span><br></pre></td></tr></table></figure></p>
-<p>这是错误的：<br> <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> FirstName = Bush</span><br></pre></td></tr></table></figure></p>
-<p>这是正确的：<br> <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> <span class="keyword">Year</span> &gt; <span class="number">1965</span></span></span><br></pre></td></tr></table></figure></p>
-<p>这是错误的：<br> <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> <span class="keyword">Year</span> &gt; <span class="string">'1965'</span></span></span><br></pre></td></tr></table></figure></p>
-</blockquote>
+<p> <code>SQL</code>使用单引号来环绕文本值（大部分数据库系统也接受双引号）。如果是数值，请不要使用引号。</p>
+<p> 这是正确的：<br> <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> FirstName = <span class="string">'Bush'</span></span><br></pre></td></tr></table></figure></p>
+<p> 这是错误的：<br> <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> FirstName = Bush</span><br></pre></td></tr></table></figure></p>
+<p> 这是正确的：<br> <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> <span class="keyword">Year</span> &gt; <span class="number">1965</span></span></span><br></pre></td></tr></table></figure></p>
+<p> 这是错误的：<br> <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> <span class="keyword">Year</span> &gt; <span class="string">'1965'</span></span></span><br></pre></td></tr></table></figure></p>
 <h2 id="参考资料">参考资料</h2><ol>
-<li>W3CShool, <a href="http://www.w3school.com.cn/sql/index.asp" target="_blank" rel="external">http://www.w3school.com.cn/sql/index.asp</a></li>
-<li>王丹小筑, <a href="http://www.cnblogs.com/aivdesign/articles/1217204.html" target="_blank" rel="external">http://www.cnblogs.com/aivdesign/articles/1217204.html</a></li>
+<li><a href="http://www.w3school.com.cn/sql/index.asp" target="_blank" rel="external">W3CShool</a></li>
+<li><a href="http://www.cnblogs.com/aivdesign/articles/1217204.html" target="_blank" rel="external">王丹小筑</a></li>
 </ol>
   
 	</div>
@@ -374,10 +369,10 @@ HAVING12345SELECT column_name, aggregate_function(column_name">
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/04/05/Baby's-First-Garbage-Collector/" title="简易的垃圾回收器">
+ <a href="/2015/05/02/statistics-amazon-s3-hive/" title="基于 Amazon S3 和 HIVE 的统计">
   <strong>上一篇：</strong><br/>
   <span>
-  简易的垃圾回收器</span>
+  基于 Amazon S3 和 HIVE 的统计</span>
 </a>
 </div>
 
@@ -430,6 +425,10 @@ HAVING12345SELECT column_name, aggregate_function(column_name">
 			
 		
 			
+				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Hive/" title="Hive">Hive<sup>1</sup></a></li>
 			
 		
@@ -439,10 +438,6 @@ HAVING12345SELECT column_name, aggregate_function(column_name">
 		
 			
 				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -460,8 +455,6 @@ HAVING12345SELECT column_name, aggregate_function(column_name">
 		
 		  
 			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
-		  
-		
 		  
 		
 		  

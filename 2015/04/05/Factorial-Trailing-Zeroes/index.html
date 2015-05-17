@@ -11,30 +11,30 @@
     
 
     
-    <meta name="description" content="题目来自LeetCode的第172道算法题Factorial Trailing Zeroes：
+    <meta name="description" content="来自LeetCode的第172道算法题Factorial Trailing Zeroes：
 
 Given an integer n, return the number of trailing zeroes in n!.
 Note: Your solution should be in logarithmic time complexity.
 
-即给一个整数 n, 给出 n 的阶乘 n! 中有">
+即给一个整数 n, 给出 n 的阶乘 n! 中有多少">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Factorial-Trailing-Zeroes">
 <meta property="og:url" content="http://whlminds.com/2015/04/05/Factorial-Trailing-Zeroes/index.html">
 <meta property="og:site_name" content="FreeMinds">
-<meta property="og:description" content="题目来自LeetCode的第172道算法题Factorial Trailing Zeroes：
+<meta property="og:description" content="来自LeetCode的第172道算法题Factorial Trailing Zeroes：
 
 Given an integer n, return the number of trailing zeroes in n!.
 Note: Your solution should be in logarithmic time complexity.
 
-即给一个整数 n, 给出 n 的阶乘 n! 中有">
+即给一个整数 n, 给出 n 的阶乘 n! 中有多少">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Factorial-Trailing-Zeroes">
-<meta name="twitter:description" content="题目来自LeetCode的第172道算法题Factorial Trailing Zeroes：
+<meta name="twitter:description" content="来自LeetCode的第172道算法题Factorial Trailing Zeroes：
 
 Given an integer n, return the number of trailing zeroes in n!.
 Note: Your solution should be in logarithmic time complexity.
 
-即给一个整数 n, 给出 n 的阶乘 n! 中有">
+即给一个整数 n, 给出 n 的阶乘 n! 中有多少">
 
     
     
@@ -107,21 +107,21 @@ Note: Your solution should be in logarithmic time complexity.
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#证明"><span class="toc-number">3.</span> <span class="toc-text">证明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法_1"><span class="toc-number">4.</span> <span class="toc-text">解法 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法_2"><span class="toc-number">5.</span> <span class="toc-text">解法 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路"><span class="toc-number">1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#证明"><span class="toc-number">2.</span> <span class="toc-text">证明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法_1"><span class="toc-number">3.</span> <span class="toc-text">解法 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法_2"><span class="toc-number">4.</span> <span class="toc-text">解法 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="题目">题目</h2><p>来自<a href="https://leetcode.com/" target="_blank" rel="external">LeetCode</a>的第172道算法题<a href="https://leetcode.com/problems/factorial-trailing-zeroes/" target="_blank" rel="external">Factorial Trailing Zeroes</a>：</p>
+		<p>来自<a href="https://leetcode.com/" target="_blank" rel="external">LeetCode</a>的第172道算法题<a href="https://leetcode.com/problems/factorial-trailing-zeroes/" target="_blank" rel="external">Factorial Trailing Zeroes</a>：</p>
 <blockquote>
 <p>Given an integer n, return the number of trailing zeroes in n!.</p>
 <p><strong><em>Note</em></strong>: Your solution should be in logarithmic time complexity.</p>
 </blockquote>
 <p>即给一个整数 <code>n</code>, 给出 <code>n</code> 的阶乘 <code>n!</code> 中有多少个 0，要求算法时间复杂度是 <code>O(log(n))</code></p>
 <h2 id="思路">思路</h2><p>看到题目后，有人直接拔“刀”切“菜”，先 ‘％’ 再 ‘/‘ ，各种挥舞之后，发现提示 “Out of Range” 的错误，然后绞尽脑汁，回忆各种数据结构与算法，尝试是否能够尽快“吞”下，最后发现还是被“噎”住了:(</p>
+<a id="more"></a>
 <p>要拿下这个题目，要考验基本数学功底了。。。看了网上许多分析解决的思路，觉得<a href="http://www.cnblogs.com/ganganloveu/p/4193373.html" target="_blank" rel="external">陆草纯</a>的分析很透彻，思路原来酱紫的。</p>
 <h2 id="证明">证明</h2><p>对 <code>n!</code> 做质因数分解 <code>n! = 2^x * 3^y * 5^z * ...</code></p>
 <p>由于所有的质因数中，只有<code>2 * 5</code> 得到的结果中才会有 0 出现，因此，只需要根据质因数 2 或 5 的幂次就可以知道 0 的个数了，那么，到底是 2 的幂次，还是 5 的幂次才是 0 出现的个数呢？</p>
-<a id="more"></a>
 <p>显然 0 的个数等于 <code>min(x, z)</code>，并且 <code>min(x, z) == z</code></p>
 <p>对于阶乘而言，也就是<code>1 * 2 * 3 * ... * n</code></p>
 <p><code>[n/k]</code> 代表 <code>1 ~ n</code> 中能被 <code>k</code> 整除的个数</p>
@@ -185,9 +185,9 @@ Note: Your solution should be in logarithmic time complexity.
 
 
 <div class="next">
-<a href="/2015/04/02/my-favourite-books/"  title="我喜欢的书">
+<a href="/2015/04/02/Baby's-First-Garbage-Collector/"  title="简易的垃圾回收器">
  <strong>下一篇：</strong><br/> 
- <span>我喜欢的书
+ <span>简易的垃圾回收器
 </span>
 </a>
 </div>
@@ -206,7 +206,7 @@ Note: Your solution should be in logarithmic time complexity.
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#证明"><span class="toc-number">3.</span> <span class="toc-text">证明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法_1"><span class="toc-number">4.</span> <span class="toc-text">解法 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法_2"><span class="toc-number">5.</span> <span class="toc-text">解法 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路"><span class="toc-number">1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#证明"><span class="toc-number">2.</span> <span class="toc-text">证明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法_1"><span class="toc-number">3.</span> <span class="toc-text">解法 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法_2"><span class="toc-number">4.</span> <span class="toc-text">解法 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
  
   </div>
 
@@ -232,6 +232,10 @@ Note: Your solution should be in logarithmic time complexity.
 			
 		
 			
+				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Hive/" title="Hive">Hive<sup>1</sup></a></li>
 			
 		
@@ -241,10 +245,6 @@ Note: Your solution should be in logarithmic time complexity.
 		
 			
 				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -262,8 +262,6 @@ Note: Your solution should be in logarithmic time complexity.
 		
 		  
 			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
-		  
-		
 		  
 		
 		  

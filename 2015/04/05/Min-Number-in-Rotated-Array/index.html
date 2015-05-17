@@ -11,24 +11,24 @@
     
 
     
-    <meta name="description" content="题目来自《剑指Offer》中的一道面试题：
+    <meta name="description" content="来自《剑指Offer》中的一道面试题：
 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。
 理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）
-Naive解法在 O(n">
+Naive解法在 O(n)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="旋转数组中的最小值">
 <meta property="og:url" content="http://whlminds.com/2015/04/05/Min-Number-in-Rotated-Array/index.html">
 <meta property="og:site_name" content="FreeMinds">
-<meta property="og:description" content="题目来自《剑指Offer》中的一道面试题：
+<meta property="og:description" content="来自《剑指Offer》中的一道面试题：
 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。
 理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）
-Naive解法在 O(n">
+Naive解法在 O(n)">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="旋转数组中的最小值">
-<meta name="twitter:description" content="题目来自《剑指Offer》中的一道面试题：
+<meta name="twitter:description" content="来自《剑指Offer》中的一道面试题：
 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。
 理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）
-Naive解法在 O(n">
+Naive解法在 O(n)">
 
     
     
@@ -101,14 +101,15 @@ Naive解法在 O(n">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Naive解法"><span class="toc-number">2.</span> <span class="toc-text">Naive解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改进的解法"><span class="toc-number">3.</span> <span class="toc-text">改进的解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Naive解法"><span class="toc-number">1.</span> <span class="toc-text">Naive解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改进的解法"><span class="toc-number">2.</span> <span class="toc-text">改进的解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="题目">题目</h2><p>来自《剑指Offer》中的一道面试题：</p>
+		<p>来自《剑指Offer》中的一道面试题：</p>
 <p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。</p>
 <p>理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）</p>
 <h2 id="Naive解法">Naive解法</h2><p>在 <code>O(n)</code> 时间范围内遍历旋转后的数组，可以找到最小的元素。但是，这种解法没有利用旋转数组的特点，即数组内部元素间部分有序，因此，查找效率不高。</p>
+<a id="more"></a>
 <h2 id="改进的解法">改进的解法</h2><p>旋转数组是对非递增的排序的数组进行旋转的结果，因此，数组内部元素被分为了2个区间，在各区间内部是有序的，例如 {3, 4, 5, 1, 2} ，被分为了 {3, 4, 5 } 和 { 1, 2} 两个有序的子区间，对于有序的数组的查找问题，可以考虑二分查找算法，时间复杂度 <code>O(log(n))</code>。</p>
 <p>那么，如何对旋转的数组采用二分查找法寻找最小的元素呢，基本思路如下：</p>
 <ol>
@@ -117,7 +118,6 @@ Naive解法在 O(n">
 <li>再二分，再重复第二步骤，直到中间的元素都不大于二分后两个区间内的元素。</li>
 </ol>
 <p>呃，感觉还是confusing，上菜：</p>
-<a id="more"></a>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> findMin(<span class="keyword">int</span> numbers[], <span class="keyword">int</span> <span class="keyword">size</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(numbers == <span class="keyword">NULL</span> || <span class="keyword">size</span> == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> exception(<span class="string">"Invalid parameters"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> low = <span class="number">0</span>, high = <span class="keyword">size</span> - <span class="number">1</span>, mid = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">while</span>(low &lt; high)&#123;</span><br><span class="line">	    mid = (low + high) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">	</span><br><span class="line">	    <span class="keyword">if</span>(A[low] &lt; A[high])&#123; <span class="comment">//数组是严格非递增排序的</span></span><br><span class="line">		    <span class="keyword">break</span>;</span><br><span class="line">	    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(A[low] == A[high])&#123; <span class="comment">// 见下方 `dateset6` 情况</span></span><br><span class="line">		    high--;</span><br><span class="line">	    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(A[low] &gt; A[high])&#123; </span><br><span class="line">		    <span class="keyword">if</span>(A[mid] &gt;= A[low])&#123; <span class="comment">// 最小元素必在 mid 位置后的子区间，因为包括mid索引的元素之前的元素排序是递增的</span></span><br><span class="line">			    low = mid + <span class="number">1</span>;</span><br><span class="line">		    &#125;<span class="keyword">else</span>&#123;                 </span><br><span class="line">				high = mid; <span class="comment">// 有可能 mid 索引的元素就是最小元素</span></span><br><span class="line">		    &#125;	</span><br><span class="line">	    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">return</span> A[low];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>测试数据：</p>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">dataset1</span>: <span class="string">&#123;4, 5, 1, 2, 3&#125;</span></span><br><span class="line"><span class="attribute">dataset2</span>: <span class="string">&#123;5, 1, 2, 3, 4&#125;</span></span><br><span class="line"><span class="attribute">dataset3</span>: <span class="string">&#123;1, 2, 3, 4, 5&#125;</span></span><br><span class="line"><span class="attribute">dataset4</span>: <span class="string">&#123;2, 3, 4, 5, 1&#125;</span></span><br><span class="line"><span class="attribute">dataset5</span>: <span class="string">&#123;3, 4, 5, 1, 2&#125;</span></span><br><span class="line"><span class="attribute">dataset6</span>: <span class="string">&#123;1, 1, 1, 0, 1&#125;</span></span><br></pre></td></tr></table></figure>
@@ -189,7 +189,7 @@ Naive解法在 O(n">
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Naive解法"><span class="toc-number">2.</span> <span class="toc-text">Naive解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改进的解法"><span class="toc-number">3.</span> <span class="toc-text">改进的解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Naive解法"><span class="toc-number">1.</span> <span class="toc-text">Naive解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改进的解法"><span class="toc-number">2.</span> <span class="toc-text">改进的解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
  
   </div>
 
@@ -215,6 +215,10 @@ Naive解法在 O(n">
 			
 		
 			
+				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Hive/" title="Hive">Hive<sup>1</sup></a></li>
 			
 		
@@ -224,10 +228,6 @@ Naive解法在 O(n">
 		
 			
 				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -245,8 +245,6 @@ Naive解法在 O(n">
 		
 		  
 			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
-		  
-		
 		  
 		
 		  

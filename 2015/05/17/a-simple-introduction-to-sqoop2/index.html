@@ -11,20 +11,21 @@
     
 
     
-    <meta name="description" content="Sqoop 是什么Sqoop 是一个在结构化、半结构化和非结构化数据源之间进行有效数据传输的工具。各种数据源中，例如，关系型数据库（RDBMS）中存储的数据都有数据模式（Schema），是结构化数据源；Cassandra 和 Hbase 是半结构化数据源；而 HDFS 是非结构化的数据源。
-以 RDBMS 和 HDFS 之间数据传输为例，借助于 Sqoop，可以从 RDBMS 如 MySQL 或">
+    <meta name="description" content="Sqoop 是一个在结构化、半结构化和非结构化数据源之间进行有效数据传输的工具。各种数据源中，例如，关系型数据库（RDBMS）中存储的数据都有数据模式（Schema），是结构化数据源；Cassandra 和 Hbase 是半结构化数据源；而 HDFS 是非结构化的数据源。
+以 RDBMS 和 HDFS 之间数据传输为例，借助于 Sqoop，可以从 RDBMS 如 MySQL 或 Oracle 中导">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sqoop 简介">
 <meta property="og:url" content="http://whlminds.com/2015/05/17/a-simple-introduction-to-sqoop2/index.html">
 <meta property="og:site_name" content="FreeMinds">
-<meta property="og:description" content="Sqoop 是什么Sqoop 是一个在结构化、半结构化和非结构化数据源之间进行有效数据传输的工具。各种数据源中，例如，关系型数据库（RDBMS）中存储的数据都有数据模式（Schema），是结构化数据源；Cassandra 和 Hbase 是半结构化数据源；而 HDFS 是非结构化的数据源。
-以 RDBMS 和 HDFS 之间数据传输为例，借助于 Sqoop，可以从 RDBMS 如 MySQL 或">
+<meta property="og:description" content="Sqoop 是一个在结构化、半结构化和非结构化数据源之间进行有效数据传输的工具。各种数据源中，例如，关系型数据库（RDBMS）中存储的数据都有数据模式（Schema），是结构化数据源；Cassandra 和 Hbase 是半结构化数据源；而 HDFS 是非结构化的数据源。
+以 RDBMS 和 HDFS 之间数据传输为例，借助于 Sqoop，可以从 RDBMS 如 MySQL 或 Oracle 中导">
+<meta property="og:image" content="/illustration/sqoop-image.png">
 <meta property="og:image" content="/illustration/sqoop-request.png">
 <meta property="og:image" content="/illustration/sqoop-frameowork.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sqoop 简介">
-<meta name="twitter:description" content="Sqoop 是什么Sqoop 是一个在结构化、半结构化和非结构化数据源之间进行有效数据传输的工具。各种数据源中，例如，关系型数据库（RDBMS）中存储的数据都有数据模式（Schema），是结构化数据源；Cassandra 和 Hbase 是半结构化数据源；而 HDFS 是非结构化的数据源。
-以 RDBMS 和 HDFS 之间数据传输为例，借助于 Sqoop，可以从 RDBMS 如 MySQL 或">
+<meta name="twitter:description" content="Sqoop 是一个在结构化、半结构化和非结构化数据源之间进行有效数据传输的工具。各种数据源中，例如，关系型数据库（RDBMS）中存储的数据都有数据模式（Schema），是结构化数据源；Cassandra 和 Hbase 是半结构化数据源；而 HDFS 是非结构化的数据源。
+以 RDBMS 和 HDFS 之间数据传输为例，借助于 Sqoop，可以从 RDBMS 如 MySQL 或 Oracle 中导">
 
     
     
@@ -97,24 +98,47 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_是什么"><span class="toc-number">1.</span> <span class="toc-text">Sqoop 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_安装"><span class="toc-number">2.</span> <span class="toc-text">Sqoop 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_如何工作"><span class="toc-number">3.</span> <span class="toc-text">Sqoop 如何工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_例子"><span class="toc-number">4.</span> <span class="toc-text">Sqoop 例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_安装"><span class="toc-number">1.</span> <span class="toc-text">Sqoop 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_如何工作"><span class="toc-number">2.</span> <span class="toc-text">Sqoop 如何工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_例子"><span class="toc-number">3.</span> <span class="toc-text">Sqoop 例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="Sqoop_是什么">Sqoop 是什么</h2><p>Sqoop 是一个在结构化、半结构化和非结构化数据源之间进行有效数据传输的工具。各种数据源中，例如，关系型数据库（RDBMS）中存储的数据都有数据模式（Schema），是结构化数据源；Cassandra 和 Hbase 是半结构化数据源；而 HDFS 是非结构化的数据源。</p>
+		<p><img src="/illustration/sqoop-image.png" class="img-logo"></p>
+<p>Sqoop 是一个在结构化、半结构化和非结构化数据源之间进行有效数据传输的工具。各种数据源中，例如，关系型数据库（RDBMS）中存储的数据都有数据模式（Schema），是结构化数据源；Cassandra 和 Hbase 是半结构化数据源；而 HDFS 是非结构化的数据源。</p>
 <p>以 RDBMS 和 HDFS 之间数据传输为例，借助于 Sqoop，可以从 RDBMS 如 MySQL 或 Oracle 中导入数据到HDFS 中，通过 Hadoop 的 MapReduce 模型计算完之后，将结果导回 RDBMS。</p>
 <p>根据被导入数据在数据库中定义的数据模式，Sqoop 将会自动完成整个过程中的大部分，其中，Sqoop 借助于 MapReduce 导入和导出数据，并提供容错和并行化操作。</p>
 <a id="more"></a>
-<h2 id="Sqoop_安装">Sqoop 安装</h2><p>Sqoop 需要安装两部分，即 Server 端和 Client 端。Server 端可以安装在集群中一个节点上，该节点可以作为其他需要连接的 Client 端的接入点，并且，将作为一个 MapReduce 算子请求客户端，因而，在提供有 Sqoop Server 的节点上须安装有 Hadoop。而 Sqoop Client 可以安装在集群中任意节点上。</p>
+<p>Sqoop 有俩版本，即 Sqoop1 和 Sqoop2，最新的 Sqoop2 版本为 <code>1.99.6</code>，本文中介绍的 Sqoop 均为 Sqoop2。</p>
+<h2 id="Sqoop_安装">Sqoop 安装</h2><p>Sqoop 需要安装两部分，即 Server 端和 Client 端。Server 端可以安装在集群中一个节点上，该节点可以作为其他需要连接的 Client 端的接入点，并且，将作为一个 MapReduce 算子的请求客户端，因而，在提供有 Sqoop Server 的节点上须安装有 Hadoop。而 Sqoop Client 可以安装在集群中任意节点上。</p>
 <p>具体安装细节请移步至 <a href="http://sqoop.apache.org/docs/1.99.6/Installation.html" target="_blank" rel="external">sqoop-installation</a>。</p>
-<h2 id="Sqoop_如何工作">Sqoop 如何工作</h2><p>当用户在 Sqoop Client 端提交一个请求时， Sqoop Client 通过 <code>REST</code> 方式，以 <code>JSON</code> 格式仅向 Sqoop Server 发出请求。Sqoop Server 在收到请求之后，从数据源中抽取元数据（metadata），并向执行引擎授权执行请求，这里，执行引擎及 Hadoop 的 MapReduce 算子。在执行时，MapReduce 算子以平行化方式完成请求。</p>
+<h2 id="Sqoop_如何工作">Sqoop 如何工作</h2><p>当用户在 Sqoop Client 端提交一个请求时， Sqoop Client 通过 <code>REST</code> 方式，以 <code>JSON</code> 格式仅向 Sqoop Server 发出请求。Sqoop Server 在收到请求之后，从数据源中抽取元数据（metadata），并向执行引擎授权执行请求，这里，执行引擎即 Hadoop 的 MapReduce 算子。在执行时，MapReduce 算子以并行化方式完成请求。整个请求过程如下图所示。</p>
 <p><img src="/illustration/sqoop-request.png" class="img-center"></p>
 <p>具体的，用户在使用 Sqoop 在不同数据源间导数据时，Sqoop Client 提供了 <code>CLI</code> 和浏览器两种方式提交请求，然后 Sqoop Server 收到请求后，授权 MapReduce 执行，如下图所示。</p>
 <p><img src="/illustration/sqoop-frameowork.png" class="img-center"></p>
 <p>以利用 Sqoop 在关系型数据库和 HDFS 间传输数据为例。其中，导入过程的输入是一个数据库表，Sqoop 将会从表中一行一行的读入到 HDFS，导入过程的输出是一组包含被导入表数据的文件。因为导入过程是并行的，所以将会产生多个输出文件。这些文件可以是文本文件，文件中每一行对应一条数据库表中的记录，记录中每个域之间通过逗号或 <code>\t</code> 分割，也可以是二进制的 <code>Avro</code>，或包含序列化的数据的序列化文件。</p>
-<p>在对导入的记录使用 MapReduce 或 Hive 等计算完后，可以讲计算结果导回关系型数据库。Sqoop 的导出过程将会并行的从 HDFS 中读取一组文本文件，解析为记录，并插入到数据库表中，供其他业务或用户使用。</p>
+<p>在对导入的记录使用 MapReduce 或 Hive 等计算完后，可以将计算结果导回关系型数据库。Sqoop 的导出过程将会并行的从 HDFS 中读取一组文本文件，解析为记录，并插入到数据库表中，供其他业务或用户使用。</p>
 <p>其中，导入和导出的过程的许多方面都可以被个性化定制。用户可以控制数据库表中需要导入的具体行和列，也可以指定文件的格式、列的分隔符和导入到文件后需要过滤的字符（如 <code>\r\n</code>）。</p>
-<h2 id="Sqoop_例子">Sqoop 例子</h2><h2 id="总结">总结</h2><h2 id="参考资料">参考资料</h2>  
+<p>Sqoop 将每一个请求定义为一个 <code>Sqoop Job</code>，每一个 <code>Sqoop Job</code> 的生命周期由 <code>sqoop connector API</code> 定义，即在数据的 <code>Extract/Load</code> 过程对应于 MapReduce 引擎的 <code>Map/Reduce</code> 过程。这部分将在 <a href="http://whlminds.com/2015/05/17/Sqoop2-Connector/" target="_blank" rel="external">Sqoop2 Connector</a> 中介绍。</p>
+<h2 id="Sqoop_例子">Sqoop 例子</h2><p>具体的，如何利用 Sqoop 进行导入数据呢，这里以从 MySQL 导入数据到 Amazon S3 为例。</p>
+<p>数据库 <code>thu</code> 中表 <code>student</code> 定义如下。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">use</span> thu</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> student(</span><br><span class="line">id <span class="built_in">int</span> <span class="keyword">not</span> <span class="literal">null</span> <span class="keyword">primary</span> <span class="keyword">key</span>,</span><br><span class="line">name <span class="built_in">varchar</span>(<span class="number">30</span>)<span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">gender <span class="built_in">bit</span> <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">age <span class="built_in">int</span>(<span class="number">10</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">grade <span class="built_in">int</span>(<span class="number">10</span>) <span class="keyword">not</span> <span class="literal">null</span>)</span></span><br></pre></td></tr></table></figure>
+<p>将表 <code>student</code> 导入 Amazon S3 的存储桶 <code>thu.whlminds.com</code> 中的 Shell 脚本如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span><br><span class="line"></span></span><br><span class="line">JdbcURI=<span class="string">"jdbc:mysql://student.whlminds.com:3306/thu?tinyInt1isBit=false&amp;autoReconnect=true&amp;NetTimeoutForStreamingResults=3600&amp;characterEncoding=UTF-8"</span></span><br><span class="line">UserName=<span class="string">"root"</span></span><br><span class="line">PassWD=<span class="string">"whlminds"</span></span><br><span class="line">S3Bucket=<span class="string">"s3n://&lt;your_account&gt;:&lt;your_password&gt;@thu.whlminds.com"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> student &#123;</span><br><span class="line">/home/whlminds/sqoop/bin/sqoop import --connect <span class="variable">$JdbcURI</span> --username <span class="variable">$UserName</span> --password <span class="variable">$PassWD</span> \</span><br><span class="line">--query <span class="string">"select st.id, st.name, st.gender from student st where <span class="variable">$CONDITIONS</span>"</span> \</span><br><span class="line">--split-by st.id \</span><br><span class="line">--mapreduce-job-name StudentImport \</span><br><span class="line">--target-dir <span class="variable">$S3Bucket</span>//student --fields-terminated-by <span class="string">'\t'</span> -hive-drop-import-delims</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上例 Shell 脚本中，将 MySQL 数据库 <code>thu</code> 中表 <code>student</code> 导入 Amazon S3 的存储桶 <code>thu.whlminds.com</code> 中。其中，选择了表部分字段 <code>id</code> 、<code>name</code> 和 <code>gender</code>。</p>
+<p>其中，<code>$CONDITIONS</code> 是在并行导入数据时分隔数据源的条件。即如果想并行的导入查询的结果，则每一个 <code>Map</code> 任务需要执行一个查询的拷贝，每一个拷贝中，根据 <code>$CONDITIONS</code> 不同，每一个 <code>Map</code> 任务导入的数据不同，每一个 <code>Map</code> 任务在执行时会将 <code>$CONDITIONS</code> 替换成一个唯一的条件表达式，同时，需要通过 <code>--split-by</code> 来指定根据哪一列数据将需要导入的数据源分割，供多个并行的<code>Map</code> 任务导入。</p>
+<p>而 <code>--hive-drop-import-delims</code> 指定在导数据时丢弃字符串中的 <code>\n</code>，<code>\r</code> 和 <code>\01</code> 供 Hive 查询。 </p>
+<p>具体的，关于 Sqoop 的语法，请参考 <a href="http://sqoop.apache.org/docs/1.4.5/SqoopUserGuide.html" target="_blank" rel="external">SqoopUserGuide</a>。</p>
+<h2 id="总结">总结</h2><p>从 Sqoop 是什么，到如何安装，再到 Sqoop 导入数据的原理，本篇博客给出了简要的说明，最后，通过一个简单的例子简要的说明如何利用 Sqoop 编写数据在 RDBMS 和 Hadoop 文件系统间导入数据。</p>
+<p>关于每一个 <code>Sqoop Job</code> 如何具体的通过 <code>sqoop connector API</code> 导数据，将在<a href="http://whlminds.com/2015/05/17/Sqoop2-Connector/" target="_blank" rel="external">Sqoop2 Connector</a> 中介绍。</p>
+<h2 id="参考资料">参考资料</h2><ol>
+<li><a href="http://sqoop.apache.org/docs/1.99.6/index.html" target="_blank" rel="external">Sqoop-Apache</a></li>
+<li><a href="http://sqoop.apache.org/docs/1.99.6/Installation.html" target="_blank" rel="external">Sqoop-Installation</a></li>
+<li><a href="http://sqoop.apache.org/docs/1.4.5/SqoopUserGuide.html" target="_blank" rel="external">SqoopUserGuide</a></li>
+<li><a href="https://cwiki.apache.org/confluence/display/SQOOP/Home" target="_blank" rel="external">Sqoop-Home</a></li>
+<li><a href="https://cwiki.apache.org/confluence/display/SQOOP/Sqoop2+Design+FAQ" target="_blank" rel="external">Sqoop-Cwiki</a></li>
+<li><a href="http://doc.mapr.com/display/MapR40x/Sqoop2" target="_blank" rel="external">Sqoop-MapR</a></li>
+<li><a href="http://www.slideshare.net/aaamase/sqoop2-refactoring-for-generic-data-transfer-hadoop-strata" target="_blank" rel="external">Hadoop World 2014</a></li>
+</ol>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -180,7 +204,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_是什么"><span class="toc-number">1.</span> <span class="toc-text">Sqoop 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_安装"><span class="toc-number">2.</span> <span class="toc-text">Sqoop 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_如何工作"><span class="toc-number">3.</span> <span class="toc-text">Sqoop 如何工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_例子"><span class="toc-number">4.</span> <span class="toc-text">Sqoop 例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_安装"><span class="toc-number">1.</span> <span class="toc-text">Sqoop 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_如何工作"><span class="toc-number">2.</span> <span class="toc-text">Sqoop 如何工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sqoop_例子"><span class="toc-number">3.</span> <span class="toc-text">Sqoop 例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
  
   </div>
 
@@ -206,6 +230,10 @@
 			
 		
 			
+				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Hive/" title="Hive">Hive<sup>1</sup></a></li>
 			
 		
@@ -215,10 +243,6 @@
 		
 			
 				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -236,8 +260,6 @@
 		
 		  
 			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
-		  
-		
 		  
 		
 		  

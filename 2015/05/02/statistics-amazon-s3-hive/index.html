@@ -11,21 +11,21 @@
     
 
     
-    <meta name="description" content="大数据统计问题当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。
+    <meta name="description" content="当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。
 这时，可以将业务数据存储到 Hadoop文件系统 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。
-大数据统计思路当统">
+大数据统计思路当统计任务越来越多">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于 Amazon S3 和 HIVE 的统计">
 <meta property="og:url" content="http://whlminds.com/2015/05/02/statistics-amazon-s3-hive/index.html">
 <meta property="og:site_name" content="FreeMinds">
-<meta property="og:description" content="大数据统计问题当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。
+<meta property="og:description" content="当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。
 这时，可以将业务数据存储到 Hadoop文件系统 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。
-大数据统计思路当统">
+大数据统计思路当统计任务越来越多">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于 Amazon S3 和 HIVE 的统计">
-<meta name="twitter:description" content="大数据统计问题当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。
+<meta name="twitter:description" content="当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。
 这时，可以将业务数据存储到 Hadoop文件系统 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。
-大数据统计思路当统">
+大数据统计思路当统计任务越来越多">
 
     
     
@@ -98,11 +98,11 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#大数据统计问题"><span class="toc-number">1.</span> <span class="toc-text">大数据统计问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#大数据统计思路"><span class="toc-number">2.</span> <span class="toc-text">大数据统计思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从_MySql(_mysql-slave-00_)_到_Amazon_S3"><span class="toc-number">3.</span> <span class="toc-text">从 MySql( mysql-slave-00 ) 到 Amazon S3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从Amazon_S3_到_Hive"><span class="toc-number">4.</span> <span class="toc-text">从Amazon S3 到 Hive</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hive_中创建表"><span class="toc-number">4.1.</span> <span class="toc-text">Hive 中创建表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#向Hive表中导入数据"><span class="toc-number">4.2.</span> <span class="toc-text">向Hive表中导入数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Statistics_on_Hive"><span class="toc-number">5.</span> <span class="toc-text">Statistics on Hive</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从_Hive_到_MySql_(_mysql-statistics_)_or_local_text"><span class="toc-number">6.</span> <span class="toc-text">从 Hive 到 MySql ( mysql-statistics ) or local text</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#统计结果存入本地"><span class="toc-number">6.1.</span> <span class="toc-text">统计结果存入本地</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计结果导入_MySql"><span class="toc-number">6.2.</span> <span class="toc-text">统计结果导入 MySql</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">8.</span> <span class="toc-text">参考资料</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#大数据统计思路"><span class="toc-number">1.</span> <span class="toc-text">大数据统计思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从_MySql(_mysql-slave-00_)_到_Amazon_S3"><span class="toc-number">2.</span> <span class="toc-text">从 MySql( mysql-slave-00 ) 到 Amazon S3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从Amazon_S3_到_Hive"><span class="toc-number">3.</span> <span class="toc-text">从Amazon S3 到 Hive</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hive_中创建表"><span class="toc-number">3.1.</span> <span class="toc-text">Hive 中创建表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#向Hive表中导入数据"><span class="toc-number">3.2.</span> <span class="toc-text">向Hive表中导入数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Statistics_on_Hive"><span class="toc-number">4.</span> <span class="toc-text">Statistics on Hive</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从_Hive_到_MySql_(_mysql-statistics_)_or_local_text"><span class="toc-number">5.</span> <span class="toc-text">从 Hive 到 MySql ( mysql-statistics ) or local text</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#统计结果存入本地"><span class="toc-number">5.1.</span> <span class="toc-text">统计结果存入本地</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计结果导入_MySql"><span class="toc-number">5.2.</span> <span class="toc-text">统计结果导入 MySql</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">7.</span> <span class="toc-text">参考资料</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="大数据统计问题">大数据统计问题</h2><p>当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。</p>
+		<p>当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。</p>
 <p>这时，可以将业务数据存储到 Hadoop文件系统 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。</p>
 <h2 id="大数据统计思路">大数据统计思路</h2><p>当统计任务越来越多，并且数据量日益庞大，需要能够管理逻辑复杂的多个Hadoop作业。统计任务大致步骤如下：</p>
 <ol>
@@ -263,9 +263,9 @@
 
 
 <div class="next">
-<a href="/2015/04/05/Baby's-First-Garbage-Collector/"  title="简易的垃圾回收器">
+<a href="/2015/04/05/where-and-having-in-sql/"  title="SQL中WHERE与HAVING用法">
  <strong>下一篇：</strong><br/> 
- <span>简易的垃圾回收器
+ <span>SQL中WHERE与HAVING用法
 </span>
 </a>
 </div>
@@ -284,7 +284,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#大数据统计问题"><span class="toc-number">1.</span> <span class="toc-text">大数据统计问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#大数据统计思路"><span class="toc-number">2.</span> <span class="toc-text">大数据统计思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从_MySql(_mysql-slave-00_)_到_Amazon_S3"><span class="toc-number">3.</span> <span class="toc-text">从 MySql( mysql-slave-00 ) 到 Amazon S3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从Amazon_S3_到_Hive"><span class="toc-number">4.</span> <span class="toc-text">从Amazon S3 到 Hive</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hive_中创建表"><span class="toc-number">4.1.</span> <span class="toc-text">Hive 中创建表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#向Hive表中导入数据"><span class="toc-number">4.2.</span> <span class="toc-text">向Hive表中导入数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Statistics_on_Hive"><span class="toc-number">5.</span> <span class="toc-text">Statistics on Hive</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从_Hive_到_MySql_(_mysql-statistics_)_or_local_text"><span class="toc-number">6.</span> <span class="toc-text">从 Hive 到 MySql ( mysql-statistics ) or local text</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#统计结果存入本地"><span class="toc-number">6.1.</span> <span class="toc-text">统计结果存入本地</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计结果导入_MySql"><span class="toc-number">6.2.</span> <span class="toc-text">统计结果导入 MySql</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">8.</span> <span class="toc-text">参考资料</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#大数据统计思路"><span class="toc-number">1.</span> <span class="toc-text">大数据统计思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从_MySql(_mysql-slave-00_)_到_Amazon_S3"><span class="toc-number">2.</span> <span class="toc-text">从 MySql( mysql-slave-00 ) 到 Amazon S3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从Amazon_S3_到_Hive"><span class="toc-number">3.</span> <span class="toc-text">从Amazon S3 到 Hive</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hive_中创建表"><span class="toc-number">3.1.</span> <span class="toc-text">Hive 中创建表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#向Hive表中导入数据"><span class="toc-number">3.2.</span> <span class="toc-text">向Hive表中导入数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Statistics_on_Hive"><span class="toc-number">4.</span> <span class="toc-text">Statistics on Hive</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从_Hive_到_MySql_(_mysql-statistics_)_or_local_text"><span class="toc-number">5.</span> <span class="toc-text">从 Hive 到 MySql ( mysql-statistics ) or local text</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#统计结果存入本地"><span class="toc-number">5.1.</span> <span class="toc-text">统计结果存入本地</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计结果导入_MySql"><span class="toc-number">5.2.</span> <span class="toc-text">统计结果导入 MySql</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">7.</span> <span class="toc-text">参考资料</span></a></li></ol>
  
   </div>
 
@@ -310,6 +310,10 @@
 			
 		
 			
+				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Hive/" title="Hive">Hive<sup>1</sup></a></li>
 			
 		
@@ -319,10 +323,6 @@
 		
 			
 				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -340,8 +340,6 @@
 		
 		  
 			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
-		  
-		
 		  
 		
 		  
