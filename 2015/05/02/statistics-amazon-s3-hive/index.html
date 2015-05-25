@@ -196,7 +196,10 @@
 <ul>
 <li>添加JaR包</li>
 </ul>
-<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; add jar /<span class="literal">home</span>/hadoop/hive/lib/hive-contrib-<span class="number">0</span>.<span class="number">13.1</span>.jar</span><br><span class="line"><span class="constant">Added</span> /<span class="literal">home</span>/hadoop/hive/lib/hive-contrib-<span class="number">0</span>.<span class="number">13.1</span>.jar to <span class="keyword"><span class="keyword">class</span> <span class="title">path</span></span></span><br><span class="line"><span class="constant">Added</span> resource: /<span class="literal">home</span>/hadoop/hive/lib/hive-contrib-<span class="number">0</span>.<span class="number">13.1</span>.jar</span><br><span class="line"></span><br><span class="line">hive&gt; add jar /<span class="literal">home</span>/ec2-<span class="keyword">user</span>/sqoop/lib/mysql-connector-java-<span class="number">5.1</span>.<span class="number">13</span>.jar;</span><br><span class="line"><span class="constant">Added</span> /<span class="literal">home</span>/ec2-<span class="keyword">user</span>/sqoop/lib/mysql-connector-java-<span class="number">5.1</span>.<span class="number">13</span>.jar to <span class="keyword"><span class="keyword">class</span> <span class="title">path</span></span></span><br><span class="line"><span class="constant">Added</span> resource: /<span class="literal">home</span>/ec2-<span class="keyword">user</span>/sqoop/lib/mysql-connector-java-<span class="number">5.1</span>.<span class="number">13</span>.jar</span><br></pre></td></tr></table></figure>
+<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; add jar /<span class="literal">home</span>/hadoop/hive/lib/hive-contrib-<span class="number">0</span>.<span class="number">13.1</span>.jar</span><br><span class="line"><span class="constant">Added</span> /<span class="literal">home</span>/hadoop/hive/lib/hive-contrib-<span class="number">0</span>.<span class="number">13.1</span>.jar to <span class="keyword"><span class="keyword">class</span> <span class="title">path</span></span></span><br><span class="line"><span class="constant">Added</span> resource: /<span class="literal">home</span>/hadoop/hive/lib/hive-contrib-<span class="number">0</span>.<span class="number">13.1</span>.jar</span><br><span class="line"></span><br><span class="line">hive&gt; add jar /<span class="literal">home</span>/whlminds/sqoop/lib/mysql-connector-java-<span class="number">5.1</span>.<span class="number">13</span>.jar;</span><br><span class="line"><span class="constant">Added</span> /<span class="literal">home</span>/ec2-<span class="keyword">user</span>/sqoop/lib/mysql-connector-java-<span class="number">5.1</span>.<span class="number">13</span>.jar to <span class="keyword"><span class="keyword">class</span> <span class="title">path</span></span></span><br><span class="line"><span class="constant">Added</span> resource: /<span class="literal">home</span>/whlminds/sqoop/lib/mysql-connector-java-<span class="number">5.1</span>.<span class="number">13</span>.jar</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里，假定上述两个 jar 分别存在上述对应的路径下。</p>
+</blockquote>
 <ul>
 <li>在 Hive 中建立 <code>UDF</code>：</li>
 </ul>
@@ -340,8 +343,6 @@
 		
 		  
 			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>6</sup></a></li>
-		  
-		
 		  
 		
 		  
