@@ -78,6 +78,210 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/05/24/oozie-wf-action-node/" title="Oozie Workflow Action Nodes" itemprop="url">Oozie Workflow Action Nodes</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-24T14:34:16.000Z" itemprop="datePublished"> 发表于 2015-05-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Oozie 工作流中，Action节点包括即 Oozie 支持的 jobs 和 sub-workflows。其中，Oozie 支持的 Hadoop jobs 类型有 <strong>Map Reduce</strong>、<strong>Pig</strong>、<strong>Hive</strong> 和 <strong>Sqoop</strong>。另外，Oozie 还支持的 jobs 类型还有 <strong>Java</strong>、<strong>Streaming</strong>、<strong>Fs(Hadoop File System 操作)</strong>、<strong>Ssh</strong>、<strong>Shell</strong>、<strong>Email</strong> 和 <strong>DistCp</strong>。</p>
+<h2 id="Sqoop">Sqoop</h2><p>Sqoop action 执行一个 Sqoop job。工作流一直等待直到 Sqoop job 完成后才会进入到工作流中的下一个 action。在运行 Sqoop action 之前，须要设置 <code>job-tracker</code>、<code>name-node</code>、<code>Sqoop command</code> 和 <code>arg elements</code>。Sqoop action 在执行 Sqoop job 前可以创建或删除 HDFS 目录。</p>
+<p>通过 <code>job-xml</code> 可以指定 Sqoop action 配置文件，或通过 <code>configuration</code> 元素在线对 Sqoop action 配置。其中，可以在在线配置中使用 <code>EL</code> 表达式，并且在线配置的值会覆盖在通过 <code>job-xml</code> 的配置值。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/05/24/oozie-wf-action-node/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Oozie/">Oozie</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/05/24/oozie-wf-action-node/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/05/24/oozie-wf-action-node/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/24/oozie-wf-control-node/" title="Oozie Workflow Control Nodes" itemprop="url">Oozie Workflow Control Nodes</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-24T14:34:07.000Z" itemprop="datePublished"> 发表于 2015-05-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Oozie 工作流中，控制节点包括工作流的开始和结束节点，即 start 节点、end 节点和 kill 节点，并提供了控制工作流执行路径的节点，即 decison 节点、fork 节点和 join 节点。</p>
+<h2 id="Start_Control_Node">Start Control Node</h2><p>start 节点是一个工作流的入口节点，当工作流开始执行时，将会自动的过渡到由 start 节点 指向的节点。一个工作流必须有一个 start 节点。</p>
+<p>语法:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;workflow-app name=<span class="string">"[WF-DEF-NAME]"</span> xmlns=<span class="string">"uri:oozie:workflow:0.1"</span>&gt;</span><br><span class="line">  <span class="keyword">...</span></span><br><span class="line">  &lt;start to=<span class="string">"[NODE-NAME]"</span>/&gt;</span><br><span class="line">  <span class="keyword">...</span></span><br><span class="line">&lt;/workflow-app&gt;</span><br></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/05/24/oozie-wf-control-node/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Oozie/">Oozie</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/05/24/oozie-wf-control-node/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/05/24/oozie-wf-control-node/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/18/Oozie-introduction/" title="Oozie简介" itemprop="url">Oozie简介</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-18T15:15:07.000Z" itemprop="datePublished"> 发表于 2015-05-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p><img src="/illustration/oozie-logo.png" class="img-logo" /></p>
+<p>Oozie 是一个用于管理 Hadoop jobs 的工作流调度平台。Oozie 可以将多个 jobs 按照一定的逻辑顺序组合起来运行。Oozie 整合 Hadoop 栈，以 YARN 作为它的架构中心，支持的 Hadoop jobs 类型有 <strong>Map Reduce</strong>、<strong>Pig</strong>、<strong>Hive</strong> 和 <strong>Sqoop</strong>。另外，Oozie 还支持的 jobs 类型还有 <strong>Java</strong>、<strong>Streaming</strong>、<strong>Fs(Hadoop File System 操作)</strong>、<strong>Ssh</strong>、<strong>Shell</strong>、<strong>Email</strong> 和 <strong>DistCp</strong>。</p>
+<p>通过 Oozie 平台，用户可以在 Hadoop 集群上完成由多项子任务组合在一起的复杂数据计算过程。在 Oozie 中，共有俩种类型的 task：</p>
+<ul>
+<li><strong><em>Oozie Workflow</em></strong>，即工作流，是一个有向无环图（DAGs），描述了需要执行的 Actions 序列；</li>
+<li><strong><em>Oozie Coordinator</em></strong>，即协调器，是依赖于时间或数据是否可用，周期性运行的 Oozie 工作流。</li>
+</ul>
+<p><strong><em>Oozie Bundle</em></strong> 提供了一种打包多个协调器和工作流的方式，并可以管理这些 tasks 的生命周期。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/05/18/Oozie-introduction/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Oozie/">Oozie</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/05/18/Oozie-introduction/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/05/18/Oozie-introduction/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/05/17/Sqoop2-Connector/" title="Sqoop2 Connector" itemprop="url">Sqoop2 Connector</a>
   </h1>
   <p class="article-author">By
@@ -104,7 +308,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/BigData/">BigData</a>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
 </div>
 
 
@@ -154,7 +358,7 @@
 </header>
     <div class="article-content">
         
-        <p><img src="/illustration/sqoop-image.png" class="img-logo" /></p>
+        <p><img src="/illustration/sqoop-logo.png" class="img-logo" /></p>
 <p>Sqoop 是一个在结构化、半结构化和非结构化数据源之间进行有效数据传输的工具。各种数据源中，例如，关系型数据库（RDBMS）中存储的数据都有数据模式（Schema），是结构化数据源；Cassandra 和 Hbase 是半结构化数据源；而 HDFS 是非结构化的数据源。</p>
 <p>以 RDBMS 和 HDFS 之间数据传输为例，借助于 Sqoop，可以从 RDBMS 如 MySQL 或 Oracle 中导入数据到HDFS 中，通过 Hadoop 的 MapReduce 模型计算完之后，将结果导回 RDBMS。</p>
 <p>根据被导入数据在数据库中定义的数据模式，Sqoop 将会自动完成整个过程中的大部分，其中，Sqoop 借助于 MapReduce 导入和导出数据，并提供容错和并行化操作。</p>
@@ -171,7 +375,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/BigData/">BigData</a>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
 </div>
 
 
@@ -244,7 +448,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/BigData/">BigData</a>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
 </div>
 
 
@@ -551,79 +755,10 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/01/my-favourite-books/" title="我喜欢的书" itemprop="url">我喜欢的书</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-01T13:24:32.000Z" itemprop="datePublished"> 发表于 2015-04-01</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="信息科技">信息科技</h3><ul>
-<li><em>《浪潮之巅》</em></li>
-<li><em>《文明之光》</em>（三册）</li>
-<li><em>《数学之美》</em></li>
-<li><em>《黑客与画家》</em></li>
-</ul>
-<h3 id="数学">数学</h3><ul>
-<li><em>《<a href="http://book.douban.com/subject/10779597/">思考的乐趣</a>》</em></li>
-<li><em>《<a href="http://book.douban.com/subject/4291764/">概率论基础教程</a>》</em></li>
-</ul>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/04/01/my-favourite-books/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/booknotes/">booknotes</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/04/01/my-favourite-books/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/01/my-favourite-books/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
+  <nav id="page-nav" class="clearfix">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
+  </nav>
 
 </div>
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
@@ -639,6 +774,10 @@
 		
 			
 				<li><a href="/tags/Sqoop/" title="Sqoop">Sqoop<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Oozie/" title="Oozie">Oozie<sup>3</sup></a></li>
 			
 		
 			
@@ -675,7 +814,9 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/BigData/" title="BigData">BigData<sup>3</sup></a></li>
+			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>6</sup></a></li>
+		  
+		
 		  
 		
 		  
@@ -702,7 +843,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 10px;">Hive</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 20px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 10px;">booknotes</a>
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 10px;">Hive</a><a href="/tags/Oozie/" style="font-size: 20px;">Oozie</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 20px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 10px;">booknotes</a>
     </div>
   </div>
 

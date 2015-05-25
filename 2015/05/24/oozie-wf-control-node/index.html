@@ -1,0 +1,549 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Oozie Workflow Control Nodes | FreeMinds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="HongliangWEI">
+    
+
+    
+    <meta name="description" content="Oozie 工作流中，控制节点包括工作流的开始和结束节点，即 start 节点、end 节点和 kill 节点，并提供了控制工作流执行路径的节点，即 decison 节点、fork 节点和 join 节点。
+Start Control Nodestart 节点是一个工作流的入口节点，当工作流开始执行时，将会自动的过渡到由 start 节点 指向的节点。一个工作流必须有一个 start 节点。
+语法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oozie Workflow Control Nodes">
+<meta property="og:url" content="http://whlminds.com/2015/05/24/oozie-wf-control-node/index.html">
+<meta property="og:site_name" content="FreeMinds">
+<meta property="og:description" content="Oozie 工作流中，控制节点包括工作流的开始和结束节点，即 start 节点、end 节点和 kill 节点，并提供了控制工作流执行路径的节点，即 decison 节点、fork 节点和 join 节点。
+Start Control Nodestart 节点是一个工作流的入口节点，当工作流开始执行时，将会自动的过渡到由 start 节点 指向的节点。一个工作流必须有一个 start 节点。
+语法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Oozie Workflow Control Nodes">
+<meta name="twitter:description" content="Oozie 工作流中，控制节点包括工作流的开始和结束节点，即 start 节点、end 节点和 kill 节点，并提供了控制工作流执行路径的节点，即 decison 节点、fork 节点和 join 节点。
+Start Control Nodestart 节点是一个工作流的入口节点，当工作流开始执行时，将会自动的过渡到由 start 节点 指向的节点。一个工作流必须有一个 start 节点。
+语法">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="FreeMinds" title="FreeMinds"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="FreeMinds">FreeMinds</a></h1>
+				<h2 class="blog-motto">大 胆 假 设，小 心 求 证</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:whlminds.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/24/oozie-wf-control-node/" title="Oozie Workflow Control Nodes" itemprop="url">Oozie Workflow Control Nodes</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-24T14:34:07.000Z" itemprop="datePublished"> 发表于 2015-05-24</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Start_Control_Node"><span class="toc-number">1.</span> <span class="toc-text">Start Control Node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#End_Control_Node"><span class="toc-number">2.</span> <span class="toc-text">End Control Node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kill_Control_Node"><span class="toc-number">3.</span> <span class="toc-text">Kill Control Node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Decision_Control_Node"><span class="toc-number">4.</span> <span class="toc-text">Decision Control Node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fork_and_Join_Control_Nodes"><span class="toc-number">5.</span> <span class="toc-text">Fork and Join Control Nodes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">7.</span> <span class="toc-text">参考资料</span></a></li></ol>
+		
+		</div>
+		
+		<p>Oozie 工作流中，控制节点包括工作流的开始和结束节点，即 start 节点、end 节点和 kill 节点，并提供了控制工作流执行路径的节点，即 decison 节点、fork 节点和 join 节点。</p>
+<h2 id="Start_Control_Node">Start Control Node</h2><p>start 节点是一个工作流的入口节点，当工作流开始执行时，将会自动的过渡到由 start 节点 指向的节点。一个工作流必须有一个 start 节点。</p>
+<p>语法:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;workflow-app name=<span class="string">"[WF-DEF-NAME]"</span> xmlns=<span class="string">"uri:oozie:workflow:0.1"</span>&gt;</span><br><span class="line">  <span class="keyword">...</span></span><br><span class="line">  &lt;start to=<span class="string">"[NODE-NAME]"</span>/&gt;</span><br><span class="line">  <span class="keyword">...</span></span><br><span class="line">&lt;/workflow-app&gt;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>其中，<code>to</code> 属性即是工作流执行的第一个节点的名字。 </p>
+<p>例子:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;workflow-app name=<span class="string">"foo-wf"</span> xmlns=<span class="string">"uri:oozie:workflow:0.1"</span>&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">    &lt;start to=<span class="string">"firstHadoopJob"</span>/&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">&lt;/workflow-app&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="End_Control_Node">End Control Node</h2><p>end 节点是一个控制流的结束点，即一个控制流执行到 end 节点时，表明工作流执行成功。其中，当工作流中有多个 action 节点在执行，而其中一个 action 节点执行后到了 end 节点，则其它正在执行的 action 节点将会被终止，此时，工作流被认为执行成功。一个工作流必须有一个 end 节点。</p>
+<p>语法:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;workflow-app name=<span class="string">"[WF-DEF-NAME]"</span> xmlns=<span class="string">"uri:oozie:workflow:0.1"</span>&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">    &lt;end name=<span class="string">"[NODE-NAME]"</span>/&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">&lt;/workflow-app&gt;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>name</code> 属性即是工作流在结束时的过渡过程</p>
+<p>例子：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;workflow-app name=<span class="string">"foo-wf"</span> xmlns=<span class="string">"uri:oozie:workflow:0.1"</span>&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">    &lt;end name=<span class="string">"end"</span>/&gt;</span><br><span class="line">&lt;/workflow-app&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Kill_Control_Node">Kill Control Node</h2><p>kill 节点允许工作流终止自己。当一个工作流执行到 kill 节点时，表明执行失败。其中，当工作流中有多个 action 节点在执行，而其中一个 action 节点执行后到了 kill 节点，则其它正在执行的 action 节点将会被终止，此时，工作流被认为执行失败。一个工作流可以有0个或者多个 kill 节点。</p>
+<p>语法:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;workflow-app name=<span class="string">"[WF-DEF-NAME]"</span> xmlns=<span class="string">"uri:oozie:workflow:0.1"</span>&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">    &lt;kill name=<span class="string">"[NODE-NAME]"</span>&gt;</span><br><span class="line">        &lt;message&gt;[MESSAGE-TO-LOG]&lt;/message&gt;</span><br><span class="line">    &lt;/kill&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">&lt;/workflow-app&gt;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>name</code> 属性是工作流被终止时，需要执行的后续工作的节点名称。<code>message</code> 的内容将作为日志，记录工作流失败的原因。</p>
+<p>例子:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;workflow-app name=<span class="string">"foo-wf"</span> xmlns=<span class="string">"uri:oozie:workflow:0.1"</span>&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">    &lt;kill name=<span class="string">"killBecauseNoInput"</span>&gt;</span><br><span class="line">        &lt;message&gt;Input unavailable&lt;/message&gt;</span><br><span class="line">    &lt;/kill&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">&lt;/workflow-app&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Decision_Control_Node">Decision Control Node</h2><p>decision 节点使得工作流可以选择执行路径执行，decision 节点可以看作一个 <code>switch-case</code>。 在 decision 节点中，有多个可选择执行的过渡节点和一个默认执行的过渡节点。工作流将会按照这些节点在 decision 节点中排列的顺序，一个接着一个比较是否满足过渡条件。当有过渡条件满足时，将会执行对应的过渡节点，否则执行默认的过渡节点。</p>
+<p>过渡条件为 <code>JSP</code> 表达式语言（<code>EL</code>） 形式，解析为布尔结果，如：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$<span class="rules">&#123;<span class="rule"><span class="attribute">fs</span>:<span class="value"><span class="function">fileSize</span>(<span class="string">'/usr/foo/myinputdir'</span>) gt <span class="number">10</span> * GB</span></span></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>语法:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;workflow-app name=<span class="string">"[WF-DEF-NAME]"</span> xmlns=<span class="string">"uri:oozie:workflow:0.1"</span>&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">    &lt;decision name=<span class="string">"[NODE-NAME]"</span>&gt;</span><br><span class="line">        &lt;<span class="keyword">switch</span>&gt;</span><br><span class="line">            &lt;case to=<span class="string">"[NODE_NAME]"</span>&gt;[PREDICATE]&lt;/case&gt;</span><br><span class="line">            <span class="keyword">...</span></span><br><span class="line">            &lt;case to=<span class="string">"[NODE_NAME]"</span>&gt;[PREDICATE]&lt;/case&gt;</span><br><span class="line">            &lt;default to=<span class="string">"[NODE_NAME]"</span>/&gt;</span><br><span class="line">        &lt;/<span class="keyword">switch</span>&gt;</span><br><span class="line">    &lt;/decision&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">&lt;/workflow-app&gt;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>name</code> 属性即是 decison 节点的名称。每一个 <code>case</code> 包含一个判断条件，即 <code>EL</code> 表达式，并按照顺序判断，直到有一个 <code>EL</code> 表达式计算结果为 <code>true</code> 时执行对应的过渡节点。当所有的 <code>EL</code> 表达式计算结果为 <code>false</code> 时，将会执行 <code>default</code> 中 <code>to</code> 属性的名字的节点。每一个 decsion 节点必须有一个 <code>default</code> 元素，从而避免当所有的 <code>EL</code> 表达式计算结果为 <code>false</code> 时工作流进入执行错误的执行状态。</p>
+<p>例子:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;workflow-app name=<span class="string">"foo-wf"</span> xmlns=<span class="string">"uri:oozie:workflow:0.1"</span>&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">    &lt;decision name=<span class="string">"mydecision"</span>&gt;</span><br><span class="line">        &lt;<span class="keyword">switch</span>&gt;</span><br><span class="line">            &lt;case to=<span class="string">"reconsolidatejob"</span>&gt;</span><br><span class="line">              \$&#123;fs:fileSize(secondjobOutputDir) gt <span class="number">10</span> \* GB&#125;</span><br><span class="line">            &lt;/case&gt;</span><br><span class="line">            &lt;case to=<span class="string">"rexpandjob"</span>&gt;</span><br><span class="line">              \$&#123;fs:filSize(secondjobOutputDir) lt <span class="number">100</span> \* MB&#125;</span><br><span class="line">            &lt;/case&gt;</span><br><span class="line">            &lt;case to=<span class="string">"recomputejob"</span>&gt;</span><br><span class="line">              \$&#123; hadoop:counters(<span class="string">'secondjob'</span>)[RECORDS][REDUCE_OUT] lt <span class="number">1000000</span> &#125;</span><br><span class="line">            &lt;/case&gt;</span><br><span class="line">            &lt;default to=<span class="string">"end"</span>/&gt;</span><br><span class="line">        &lt;/<span class="keyword">switch</span>&gt;</span><br><span class="line">    &lt;/decision&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">&lt;/workflow-app&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Fork_and_Join_Control_Nodes">Fork and Join Control Nodes</h2><p>fork 节点将工作流的执行路径分割为多个并发执行的子路径，而 join 节点等待，直到 fork 分割的多个并发执行的子路径都执行结束后执行。因此，fork 节点与 join 节点成对出现。</p>
+<p>语法:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;workflow-app name=<span class="string">"[WF-DEF-NAME]"</span> xmlns=<span class="string">"uri:oozie:workflow:0.1"</span>&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">    &lt;fork name=<span class="string">"[FORK-NODE-NAME]"</span>&gt;</span><br><span class="line">        &lt;path start=<span class="string">"[NODE-NAME]"</span> /&gt;</span><br><span class="line">        <span class="keyword">...</span></span><br><span class="line">        &lt;path start=<span class="string">"[NODE-NAME]"</span> /&gt;</span><br><span class="line">    &lt;/fork&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">    &lt;join name=<span class="string">"[JOIN-NODE-NAME]"</span> to=<span class="string">"[NODE-NAME]"</span> /&gt;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">&lt;/workflow-app&gt;</span><br></pre></td></tr></table></figure>
+<p>其中，fork 中的 <code>name</code> 属性是 fork 节点的名字，<code>start</code> 属性是多个并发执行的子路径的名称。join 中的 <code>name</code> 是 join 节点的名称。</p>
+<p>例子:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">workflow-app</span> <span class="attribute">name</span>=<span class="value">"sample-wf"</span> <span class="attribute">xmlns</span>=<span class="value">"uri:oozie:workflow:0.1"</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="tag">&lt;<span class="title">fork</span> <span class="attribute">name</span>=<span class="value">"forking"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">path</span> <span class="attribute">start</span>=<span class="value">"firstparalleljob"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">path</span> <span class="attribute">start</span>=<span class="value">"secondparalleljob"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">fork</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">action</span> <span class="attribute">name</span>=<span class="value">"firstparallejob"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">map-reduce</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">job-tracker</span>&gt;</span>foo:8021<span class="tag">&lt;/<span class="title">job-tracker</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">name-node</span>&gt;</span>bar:8020<span class="tag">&lt;/<span class="title">name-node</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">job-xml</span>&gt;</span>job1.xml<span class="tag">&lt;/<span class="title">job-xml</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">map-reduce</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">ok</span> <span class="attribute">to</span>=<span class="value">"joining"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">error</span> <span class="attribute">to</span>=<span class="value">"kill"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">action</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">action</span> <span class="attribute">name</span>=<span class="value">"secondparalleljob"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">map-reduce</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">job-tracker</span>&gt;</span>foo:8021<span class="tag">&lt;/<span class="title">job-tracker</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">name-node</span>&gt;</span>bar:8020<span class="tag">&lt;/<span class="title">name-node</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">job-xml</span>&gt;</span>job2.xml<span class="tag">&lt;/<span class="title">job-xml</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">map-reduce</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">ok</span> <span class="attribute">to</span>=<span class="value">"joining"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">error</span> <span class="attribute">to</span>=<span class="value">"kill"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">action</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">join</span> <span class="attribute">name</span>=<span class="value">"joining"</span> <span class="attribute">to</span>=<span class="value">"nextaction"</span>/&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="title">workflow-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>默认的，Oozie 会对工作流中任何一个并发执行的路径进行验证，确保工作流不会出现异常的行为或不稳定。如果在提交包含有并发执行路径的工作流时被 Oozie 阻止，而提交者确认该工作流可以正常的工作，则可以通过在 <code>job.properties</code> 文件中设置 <code>oozie.wf.validate.ForkJoin</code> 为 <code>false</code> 取消对该工作流的验证过程。若要取消对所有包含并发执行路径的工作流的验证过程，可以在 <code>oozie-site.xml</code> 中设置 <code>oozie.validate.ForkJoin</code> 为 <code>false</code>。</p>
+<h2 id="总结">总结</h2><p>本篇主要介绍了 Oozie Workflow 中控制节点的语法，同时给出了例子予以说明。</p>
+<h2 id="参考资料">参考资料</h2><ol>
+<li><a href="http://archive.cloudera.com/cdh4/cdh/4/oozie/WorkflowFunctionalSpec.html" target="_blank" rel="external">WorkflowFunctionalSpec</a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Oozie/">Oozie</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://whlminds.com/2015/05/24/oozie-wf-control-node/" data-title="Oozie Workflow Control Nodes | FreeMinds" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/05/24/oozie-wf-action-node/" title="Oozie Workflow Action Nodes">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Oozie Workflow Action Nodes</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/05/18/Oozie-introduction/"  title="Oozie简介">
+ <strong>下一篇：</strong><br/> 
+ <span>Oozie简介
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/05/24/oozie-wf-control-node/" data-title="Oozie Workflow Control Nodes" data-url="http://whlminds.com/2015/05/24/oozie-wf-control-node/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Start_Control_Node"><span class="toc-number">1.</span> <span class="toc-text">Start Control Node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#End_Control_Node"><span class="toc-number">2.</span> <span class="toc-text">End Control Node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kill_Control_Node"><span class="toc-number">3.</span> <span class="toc-text">Kill Control Node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Decision_Control_Node"><span class="toc-number">4.</span> <span class="toc-text">Decision Control Node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fork_and_Join_Control_Nodes"><span class="toc-number">5.</span> <span class="toc-text">Fork and Join Control Nodes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">7.</span> <span class="toc-text">参考资料</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Sqoop/" title="Sqoop">Sqoop<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Oozie/" title="Oozie">Oozie<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hive/" title="Hive">Hive<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>6</sup></a></li>
+		  
+		
+		  
+		
+		  
+			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 10px;">Hive</a><a href="/tags/Oozie/" style="font-size: 20px;">Oozie</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 20px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 10px;">booknotes</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://fangjb.me" target="_blank" title="Fice&#39;s Blog">Fice&#39;s Blog</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://dangfan.me" target="_blank" title="有一说一">有一说一</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="120" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=250&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1907586883&verifier=50d45b85&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m HongliangWEI. <br/>
+			This is my blog. Believe it or not!</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:helloweihl@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"whlminds"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F9c533e8f9930cffc806c36de6a517fbe' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
