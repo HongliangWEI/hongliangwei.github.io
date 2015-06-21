@@ -1093,10 +1093,20 @@ article .article-content .img-logo {
 article .article-content .img-center {
   display: block;
   margin: auto;
+  max-width: 70%;
+  max-height: 70%;
 }
 article .article-content .img-shadow {
   -webkit-box-shadow: 0 0 2px 3px #ddd;
   box-shadow: 0 0 2px 3px #ddd;
+  max-width: 70%;
+  max-height: 70%;
+}
+article .article-content .img-self {
+  -webkit-box-shadow: 0 0 2px 3px #ddd;
+  box-shadow: 0 0 2px 3px #ddd;
+  max-width: 90%;
+  max-height: 90%;
 }
 article .article-content figcaption,
 article .article-content .caption {
