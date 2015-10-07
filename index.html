@@ -78,6 +78,73 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/10/07/hive-udf-java-python/" title="在Hive中通过Java和Python实现UDF" itemprop="url">在Hive中通过Java和Python实现UDF</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-10-07T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-10-07</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>当业务数据量过大，不能在关系型数据库中统计时，可以通过 Sqoop 导入到 HDFS 上进行统计，类似日志数据一样。导入到 HDFS 上数据，每一条记录通过 <code>\t</code> 或 <code>Ctrl+A</code> 等分割每一个字断，通过 <code>\n</code> 分割每一条记录。然后，通过建立 Hive 表指向 HDFS 对应的路径数据，对 HDFS 上的数据添加 Schema 定义，可以基于 Hive 中 SQL 的语法进行查询统计。</p>
+<p>尽管 Hive 提供了丰富的<a href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+UDF">函数</a>，有时仍然不能满足个性化的查询和统计要求。这时，需要用户实现 <code>UDF</code>。</p>
+<h2 id="概述">概述</h2><p><code>UDF</code>，即 User-Defined Function，用户通过自定义对数据的处理过程，以函数的形式在 HiveQL 中使用。</p>
+<p>有 2 种方式在 HiveQL 中实现 UDF。<strong> 第一种方式 </strong>，即通过 <code>Java</code> 或其他通过 JVM 实现的语言（Jython、JRuby、Clojure、Groovy），实现UDF；<strong> 第二种方式 </strong>，通过 <code>TRANSFORM...AS</code> 语法，使用可执行的脚步语言实现 UDF。 接下来，将分别介绍通过 Java 和 Python 实现 Hive 中的 UDF，最后，比较二者在使用过程中的异同。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/10/07/hive-udf-java-python/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Hive/">Hive</a><a href="/tags/Java/">Java</a><a href="/tags/Python/">Python</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/10/07/hive-udf-java-python/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/10/07/hive-udf-java-python/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/10/06/php-nginx-mysql-mac/" title="Mac下安装Nginx、PHP和MySQL" itemprop="url">Mac下安装Nginx、PHP和MySQL</a>
   </h1>
   <p class="article-author">By
@@ -674,76 +741,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/05/Factorial-Trailing-Zeroes/" title="Factorial-Trailing-Zeroes" itemprop="url">Factorial-Trailing-Zeroes</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-05T07:34:47.000Z" itemprop="datePublished"> 发表于 2015-04-05</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>来自<a href="https://leetcode.com/">LeetCode</a>的第172道算法题<a href="https://leetcode.com/problems/factorial-trailing-zeroes/">Factorial Trailing Zeroes</a>：</p>
-<blockquote>
-<p>Given an integer n, return the number of trailing zeroes in n!.</p>
-<p><strong><em>Note</em></strong>: Your solution should be in logarithmic time complexity.</p>
-</blockquote>
-<p>即给一个整数 <code>n</code>, 给出 <code>n</code> 的阶乘 <code>n!</code> 中有多少个 0，要求算法时间复杂度是 <code>O(log(n))</code></p>
-<h2 id="思路">思路</h2><p>看到题目后，有人直接拔“刀”切“菜”，先 ‘％’ 再 ‘/‘ ，各种挥舞之后，发现提示 “Out of Range” 的错误，然后绞尽脑汁，回忆各种数据结构与算法，尝试是否能够尽快“吞”下，最后发现还是被“噎”住了:(</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/04/05/Factorial-Trailing-Zeroes/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/算法/">算法</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/algorithm/">algorithm</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/04/05/Factorial-Trailing-Zeroes/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/05/Factorial-Trailing-Zeroes/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -770,19 +767,11 @@
 			
 		
 			
+				<li><a href="/tags/Hive/" title="Hive">Hive<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
 			
 		
 			
@@ -790,7 +779,15 @@
 			
 		
 			
-				<li><a href="/tags/Hive/" title="Hive">Hive<sup>1</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
 			
 		
 			
@@ -798,7 +795,15 @@
 			
 		
 			
-				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
+				<li><a href="/tags/Java/" title="Java">Java<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
 			
 		
 			
@@ -815,7 +820,7 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>6</sup></a></li>
+			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>7</sup></a></li>
 		  
 		
 		  
@@ -846,7 +851,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 10px;">Hive</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 20px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 20px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 10px;">booknotes</a>
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 15px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 20px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 20px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 10px;">booknotes</a>
     </div>
   </div>
 
