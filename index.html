@@ -78,6 +78,74 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/11/30/mapreduce-intro/" title="浅谈MapReduce" itemprop="url">浅谈MapReduce</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-30T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-11-30</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <blockquote>
+<p>MapReduce被提出，已有10年多，广泛应用于大数据领域，在21世纪这信息爆炸时代，有效地帮助无数多的攻城狮解决处理海量数据的困扰。</p>
+</blockquote>
+<h2 id="概述">概述</h2><p>在 <code>OSDI 2004</code>，Google 的两名科学家 <code>Jeffrefy Dean</code> 和 <code>Sanjay Ghemawat</code> 在一篇名为 <code>MapReduce: Simplified Data Processing on Large Clusters</code> 的 paper 中讲述了 <code>MapReduce</code>，该 paper 在写本文时已被引用高达 <code>15542</code> 次。本篇主要以该 paper 中对 <code>MapReduce</code> 的描述，以及自己的开发经验，简要谈一下对 <code>MapReduce</code> 的理解。</p>
+<p><code>MapReduce</code>是一个编程模型，用于处理海量数据，生成目标数据结果。MapReduce 将任务的计算过程划分为2个阶段： <code>Map</code> 阶段和 <code>Reduce</code> 阶段。计算过程中，在 <code>Map</code> 阶段，对业务逻辑的每一条 <code>记录</code> 作为输入，生成一组 <code>&lt;key, value&gt;</code> 对作为中间结果；接着，在 <code>Reduce</code> 阶段，将 <code>Map</code> 阶段中生成的一组 <code>&lt;key, value&gt;</code> 对中间结果进行合并，即对具有相同 <code>key</code> 的 <code>value</code> 进行合并，这里的<code>合并</code>可能是做聚合操作，也可能是进行排序等操作，然后将最终合并后的结果输出。让人欣喜的是，现实世界中的许多问题处理过程，都可以表达成这样的模型。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/11/30/mapreduce-intro/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/MapReduce/">MapReduce</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/11/30/mapreduce-intro/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/11/30/mapreduce-intro/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/10/07/hive-udf-java-python/" title="在Hive中通过Java和Python实现UDF" itemprop="url">在Hive中通过Java和Python实现UDF</a>
   </h1>
   <p class="article-author">By
@@ -674,73 +742,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/05/Min-Number-in-Rotated-Array/" title="旋转数组中的最小值" itemprop="url">旋转数组中的最小值</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-05T07:38:21.000Z" itemprop="datePublished"> 发表于 2015-04-05</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>来自《剑指Offer》中的一道面试题：</p>
-<p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。</p>
-<p>理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）</p>
-<h2 id="Naive解法">Naive解法</h2><p>在 <code>O(n)</code> 时间范围内遍历旋转后的数组，可以找到最小的元素。但是，这种解法没有利用旋转数组的特点，即数组内部元素间部分有序，因此，查找效率不高。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/04/05/Min-Number-in-Rotated-Array/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/算法/">算法</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/algorithm/">algorithm</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/04/05/Min-Number-in-Rotated-Array/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/05/Min-Number-in-Rotated-Array/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -759,11 +760,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Sqoop/" title="Sqoop">Sqoop<sup>3</sup></a></li>
+				<li><a href="/tags/Oozie/" title="Oozie">Oozie<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Oozie/" title="Oozie">Oozie<sup>3</sup></a></li>
+				<li><a href="/tags/Sqoop/" title="Sqoop">Sqoop<sup>3</sup></a></li>
 			
 		
 			
@@ -775,7 +776,7 @@
 			
 		
 			
-				<li><a href="/tags/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
 			
 		
 			
@@ -783,15 +784,19 @@
 			
 		
 			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
+				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>1</sup></a></li>
+				<li><a href="/tags/MapReduce/" title="MapReduce">MapReduce<sup>1</sup></a></li>
 			
 		
 			
@@ -803,7 +808,7 @@
 			
 		
 			
-				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
 			
 		
 			
@@ -820,7 +825,7 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>7</sup></a></li>
+			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>8</sup></a></li>
 		  
 		
 		  
@@ -851,7 +856,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 15px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 20px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 20px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 10px;">booknotes</a>
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 15px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 20px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 20px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 10px;">booknotes</a>
     </div>
   </div>
 

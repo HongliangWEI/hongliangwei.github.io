@@ -1,0 +1,561 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>浅谈MapReduce | FreeMinds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="HongliangWEI">
+    
+
+    
+    <meta name="description" content="MapReduce被提出，已有10年多，广泛应用于大数据领域，在21世纪这信息爆炸时代，有效地帮助无数多的攻城狮解决处理海量数据的困扰。
+
+概述在 OSDI 2004，Google 的两名科学家 Jeffrefy Dean 和 Sanjay Ghemawat 在一篇名为 MapReduce: Simplified Data Processing on Large Clusters 的 paper">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈MapReduce">
+<meta property="og:url" content="http://whlminds.com/2015/11/30/mapreduce-intro/index.html">
+<meta property="og:site_name" content="FreeMinds">
+<meta property="og:description" content="MapReduce被提出，已有10年多，广泛应用于大数据领域，在21世纪这信息爆炸时代，有效地帮助无数多的攻城狮解决处理海量数据的困扰。
+
+概述在 OSDI 2004，Google 的两名科学家 Jeffrefy Dean 和 Sanjay Ghemawat 在一篇名为 MapReduce: Simplified Data Processing on Large Clusters 的 paper">
+<meta property="og:image" content="/illustration/mapreduce-overview.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈MapReduce">
+<meta name="twitter:description" content="MapReduce被提出，已有10年多，广泛应用于大数据领域，在21世纪这信息爆炸时代，有效地帮助无数多的攻城狮解决处理海量数据的困扰。
+
+概述在 OSDI 2004，Google 的两名科学家 Jeffrefy Dean 和 Sanjay Ghemawat 在一篇名为 MapReduce: Simplified Data Processing on Large Clusters 的 paper">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="FreeMinds" title="FreeMinds"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="FreeMinds">FreeMinds</a></h1>
+				<h2 class="blog-motto">大 胆 假 设，小 心 求 证</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:whlminds.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/11/30/mapreduce-intro/" title="浅谈MapReduce" itemprop="url">浅谈MapReduce</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-30T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-11-30</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MapReduce编程模型"><span class="toc-number">2.</span> <span class="toc-text">MapReduce编程模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MapReduce应用CASE"><span class="toc-number">3.</span> <span class="toc-text">MapReduce应用CASE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WordCount"><span class="toc-number">3.1.</span> <span class="toc-text">WordCount</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式Grep查找"><span class="toc-number">3.2.</span> <span class="toc-text">分布式Grep查找</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MapReduce实现"><span class="toc-number">4.</span> <span class="toc-text">MapReduce实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+		
+		</div>
+		
+		<blockquote>
+<p>MapReduce被提出，已有10年多，广泛应用于大数据领域，在21世纪这信息爆炸时代，有效地帮助无数多的攻城狮解决处理海量数据的困扰。</p>
+</blockquote>
+<h2 id="概述">概述</h2><p>在 <code>OSDI 2004</code>，Google 的两名科学家 <code>Jeffrefy Dean</code> 和 <code>Sanjay Ghemawat</code> 在一篇名为 <code>MapReduce: Simplified Data Processing on Large Clusters</code> 的 paper 中讲述了 <code>MapReduce</code>，该 paper 在写本文时已被引用高达 <code>15542</code> 次。本篇主要以该 paper 中对 <code>MapReduce</code> 的描述，以及自己的开发经验，简要谈一下对 <code>MapReduce</code> 的理解。</p>
+<p><code>MapReduce</code>是一个编程模型，用于处理海量数据，生成目标数据结果。MapReduce 将任务的计算过程划分为2个阶段： <code>Map</code> 阶段和 <code>Reduce</code> 阶段。计算过程中，在 <code>Map</code> 阶段，对业务逻辑的每一条 <code>记录</code> 作为输入，生成一组 <code>&lt;key, value&gt;</code> 对作为中间结果；接着，在 <code>Reduce</code> 阶段，将 <code>Map</code> 阶段中生成的一组 <code>&lt;key, value&gt;</code> 对中间结果进行合并，即对具有相同 <code>key</code> 的 <code>value</code> 进行合并，这里的<code>合并</code>可能是做聚合操作，也可能是进行排序等操作，然后将最终合并后的结果输出。让人欣喜的是，现实世界中的许多问题处理过程，都可以表达成这样的模型。</p>
+<a id="more"></a>
+<p>由于 <code>MapReduce</code> 模型非常简单，在使用 <code>MapReduce</code> 进行计算时，用户不需要考虑输入数据如何划分成多份，在大量的机器组成的集群上如何对程序的执行过程进行调度，不需要关心可能存在集群中有机器挂掉，以及集群中机器间通信问题，因此，即使没有任何并行和分布式开发经验的人，也可以快速掌握通过 MapReduce 处理海量数据的方法。</p>
+<h2 id="MapReduce编程模型">MapReduce编程模型</h2><p>MapReduce模型计算过程以一组 <code>&lt;key, value&gt;</code> 对作为输入，输出一组 <code>&lt;key, value&gt;</code> 对。用户通过在程序中调用 MapReduce 库进行计算，MapReduce 库将计算过程表达成 <code>Map</code> 函数和 <code>Reduce</code> 函数。</p>
+<p>在使用 MapReduce 时，用户需要自定义 <code>Map</code> 函数和 <code>Reduce</code> 函数；<code>Map</code> 函数的输入是一个 <code>&lt;key, value&gt;</code> 对，产生一组 <code>&lt;key, value&gt;</code> 对作为中间结果；而 <code>Reduce</code> 函数将中间结果中具有相同 <code>key</code> 的 <code>value</code> 做合并，并将最终合并后的结果输出。一般，一个 reduce 过程将会产生零个或者一个结果。</p>
+<p>形式化表述  <code>Map</code> 函数和 <code>Reduce</code> 函数的过程如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">map     (k1, v1)          --&gt;  <span class="function"><span class="title">list</span><span class="params">(k2, v2)</span></span></span><br><span class="line">reduce  (k2, <span class="function"><span class="title">list</span><span class="params">(v2)</span></span>)    --&gt;  <span class="function"><span class="title">list</span><span class="params">(v2)</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="MapReduce应用CASE">MapReduce应用CASE</h2><h3 id="WordCount">WordCount</h3><p>在一组文档中，需要统计所有文档中，每一个单词出现的频率。使用 MapReduce 进行统计时，伪代码可能是这样的：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>(<span class="keyword">String</span> <span class="variable">key</span>, <span class="keyword">String</span> value):</span><br><span class="line">    <span class="comment">// key  : document name</span></span><br><span class="line">    <span class="comment">// value: document contents</span></span><br><span class="line">    <span class="keyword">for</span> each word w in values:</span><br><span class="line">      GenerateIntermediate(w, <span class="string">"1"</span>);</span><br><span class="line">      </span><br><span class="line">reduce(<span class="keyword">String</span> <span class="variable">key</span>, Iterator values):</span><br><span class="line">    <span class="comment">// key   : a word</span></span><br><span class="line">    <span class="comment">// vaules: a list of counts</span></span><br><span class="line">    <span class="built_in">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> each v in values:</span><br><span class="line">      count += ParseInt(v);</span><br><span class="line">    GenerateOutput(<span class="variable">key</span>, ParseString(count));</span><br></pre></td></tr></table></figure>
+<p>在 <code>Map</code> 函数中，对于文档中每一个单词，均生成 <code>(word, 1)</code> 这样的 <code>key/value</code> 对，传递给 <code>Reduce</code> 函数，在 <code>Reduce</code> 函数中，对每一个具有相同 <code>word</code> 的  <code>key/value</code> 对，累加值为<code>1</code>的 <code>value</code>，最终即可得到每一个单词在这组文档中出现的频率。</p>
+<h3 id="分布式Grep查找">分布式Grep查找</h3><p>运维经常会有这样的需求，即在大量非结构化的日志中，通过<code>grep</code>命令查找包含指定关键字的日志，并抽取出来。在使用 MapReduce 时， <code>Map</code> 函数以每一条日志作为输入，查找包含指定关键字的日志，然后传递给 <code>Reduce</code> 函数，而 <code>Reduce</code> 函数直接进行输出即可。<code>Map</code> 函数和 <code>Reduce</code> 函数均可以在集群中的多台机器上依次并行的计算。</p>
+<h2 id="MapReduce实现">MapReduce实现</h2><p>MapReduce的执行过程可以通过下图进行描述：</p>
+<p><img src="/illustration/mapreduce-overview.png" width="80%" height="80%"></p>
+<p>其中，<code>Map</code> 函数在集群中多台机器上，位于 <code>HDFS</code> 上的输入数据被划分为 <code>M</code> 份，输入的 <code>M</code> 份数据在可以在不同的机器上并行的处理。而 <code>Reduce</code> 函数亦位于集群中的多台机器上，通过一个<code>分割函数</code>，对产生的中间结果中的 <code>key</code> 划分成 <code>R</code> 份，这里的分隔函数类似 <code>hash(key) mod R</code>。用户可以自定义分隔函数，以及指定 <code>R</code> 值，即划分为多少份。</p>
+<p>当用户调用执行 <code>MapReduce</code> 过程时，执行过程如上图中序号所示：</p>
+<ol>
+<li>用户程序中的 MapReduce 库首先对数据文件分隔为 <code>M</code> 份，每一份的大小可以是 <code>16MB</code> 至 <code>64MB</code>，用户可以对划分的数据的大小进行配置。接着，程序将被拷贝多份至集群中多台机器上；</li>
+<li>众多拷贝程序中，有一个为 <code>master</code>，其他的为 <code>worker</code>，并且， <code>master</code> 将指派计算任务给 <code>worker</code>。共有 <code>M</code> 个 map 任务和 <code>R</code> 个 reduce 任务将被指派。<code>master</code> 将在集群中选择空闲的机器分配给一个 map 任务或者一个 reduce 任务。</li>
+<li>被指派为 map 任务的 <code>worker</code> 从对应的一份输入数据中读取内容，将输入数据转化为一组 <code>&lt;key, value&gt;</code> 对，并传递每一个键值对给用户实现的 <code>Map</code> 函数，产生新的 <code>&lt;key, value&gt;</code> 对作为中间结果缓存在内存中；</li>
+<li>缓存在内存中的键值对周期性的被写入本地硬盘，并通过 <code>分隔函数</code> 划分为 <code>R</code> 个区域；这些在本地硬盘上缓存的中间结果的位置信息将会传递给 <code>master</code>，并通过 <code>master</code> 转发给各被指派 reduce 任务的 <code>workder</code>；</li>
+<li>当被指派 reduce 任务的 <code>workder</code> 被 <code>master</code> 告知中间结果的位置信息后，reduce 任务的 <code>workder</code> 将会通过 <code>RPC</code> 读取位于 map 任务的 <code>worker</code> 的机器上的中间结果数据。当 reduce 任务的 <code>workder</code> 读取了所有的中间结果，将会按照 <code>key</code> 对中间结果进行排序，将具有相同 <code>key</code> 的键值对分组在一起。如果中间数据太大不能在内存中存储，外部排序将会被采用；</li>
+<li>被指派 reduce 任务的 <code>workder</code> 迭代排序的中间结果数据，将每一个独立的 <code>key</code>，以及其对应的 <code>value</code> 集合传递给用户实现的 <code>Reduce</code> 函数， <code>Reduce</code> 函数的输出结果将被添加到该 reduce 任务的最终输出文件中；</li>
+<li>当所有的 map 任务和 reduce 任务完成后，<code>master</code> 唤醒用户的程序，用户程序中对 <code>MapReduce</code> 的调用将结束，执行过程返回至用户程序中。</li>
+</ol>
+<h2 id="总结">总结</h2><p>本文简要介绍了 <code>MapReduce</code> 编程模型的思想，并简单描述了 <code>MapReduce</code> 的执行过程。在执行过程中，如何进行容错、负载均衡、是否对中间结果压缩、以何种格式进行压缩等问题并没有说明。</p>
+<h2 id="参考资料">参考资料</h2><ol>
+<li>Jeffrey Dean , Sanjay Ghemawat, MapReduce: simplified data processing on large clusters, Proceedings of the 6th conference on Symposium on Opearting Systems Design &amp; Implementation, p.10-10, December 06-08, 2004, San Francisco, CA</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/MapReduce/">MapReduce</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://whlminds.com/2015/11/30/mapreduce-intro/" data-title="浅谈MapReduce | FreeMinds" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/10/07/hive-udf-java-python/"  title="在Hive中通过Java和Python实现UDF">
+ <strong>下一篇：</strong><br/> 
+ <span>在Hive中通过Java和Python实现UDF
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/11/30/mapreduce-intro/" data-title="浅谈MapReduce" data-url="http://whlminds.com/2015/11/30/mapreduce-intro/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MapReduce编程模型"><span class="toc-number">2.</span> <span class="toc-text">MapReduce编程模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MapReduce应用CASE"><span class="toc-number">3.</span> <span class="toc-text">MapReduce应用CASE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WordCount"><span class="toc-number">3.1.</span> <span class="toc-text">WordCount</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式Grep查找"><span class="toc-number">3.2.</span> <span class="toc-text">分布式Grep查找</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MapReduce实现"><span class="toc-number">4.</span> <span class="toc-text">MapReduce实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Oozie/" title="Oozie">Oozie<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Sqoop/" title="Sqoop">Sqoop<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hive/" title="Hive">Hive<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MapReduce/" title="MapReduce">MapReduce<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 15px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 20px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 20px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 10px;">booknotes</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://fangjb.me" target="_blank" title="Fice&#39;s Blog">Fice&#39;s Blog</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://dangfan.me" target="_blank" title="有一说一">有一说一</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="120" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=250&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1907586883&verifier=50d45b85&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m HongliangWEI. <br/>
+			This is my blog. Believe it or not!</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:helloweihl@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"whlminds"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F9c533e8f9930cffc806c36de6a517fbe' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
