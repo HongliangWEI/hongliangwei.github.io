@@ -2,7 +2,7 @@
  <!DOCTYPE HTML>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
     <title>FreeMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -29,11 +29,11 @@
     <link rel="apple-touch-icon" href="/img/jacman.jpg">
     <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
     
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
   <body>
-    <header>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
       <div>
 		
 			<div id="imglogo">
@@ -71,6 +71,79 @@
     </header>
     <div id="container">
       <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/02/statistics-amazon-s3-hive/" title="基于 Amazon S3 和 HIVE 的统计" itemprop="url">基于 Amazon S3 和 HIVE 的统计</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-02T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-05-02</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。</p>
+<p>这时，可以将业务数据存储到 Hadoop文件系统 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。</p>
+<h2 id="大数据统计思路">大数据统计思路</h2><p>当统计任务越来越多，并且数据量日益庞大，需要能够管理逻辑复杂的多个Hadoop作业。统计任务大致步骤如下：</p>
+<ol>
+<li>通过 Sqoop 先将业务数据同步到 Hadoop文件系统 上；</li>
+<li>对 Hadoop文件系统 上的业务数据，以分区表的形式存储到多张 Hive 表中；</li>
+<li>进行 JOIN 处理，得到一个明细数据Hive大表（此步骤可选）；</li>
+<li>借助 MapReduce 计算框架，对 Hive 中的表数据进行复杂的统计，得到统计后的的报表信息；</li>
+<li>需要将统计分析得到的结果数据同步到业务系统中，供业务调用使用。</li>
+</ol>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/05/02/statistics-amazon-s3-hive/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Hadoop/">Hadoop</a><a href="/tags/Hive/">Hive</a><a href="/tags/Sqoop/">Sqoop</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/05/02/statistics-amazon-s3-hive/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/05/02/statistics-amazon-s3-hive/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
 
    
     
@@ -439,11 +512,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Sqoop/" title="Sqoop">Sqoop<sup>3</sup></a></li>
+				<li><a href="/tags/Oozie/" title="Oozie">Oozie<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Oozie/" title="Oozie">Oozie<sup>3</sup></a></li>
+				<li><a href="/tags/Sqoop/" title="Sqoop">Sqoop<sup>3</sup></a></li>
 			
 		
 			
@@ -455,7 +528,7 @@
 			
 		
 			
-				<li><a href="/tags/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
 			
 		
 			
@@ -467,11 +540,11 @@
 			
 		
 			
-				<li><a href="/tags/personal/" title="personal">personal<sup>1</sup></a></li>
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
+				<li><a href="/tags/personal/" title="personal">personal<sup>1</sup></a></li>
 			
 		
 			
@@ -491,11 +564,15 @@
 			
 		
 			
-				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/math/" title="math">math<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -524,6 +601,10 @@
 		  
 		
 		  
+			<li><a href="/categories/数学/" title="数学">数学<sup>1</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
 		  
 		
@@ -543,7 +624,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 15px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 20px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 20px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 10px;">booknotes</a><a href="/tags/personal/" style="font-size: 10px;">personal</a>
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 15px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 20px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 20px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 10px;">booknotes</a><a href="/tags/math/" style="font-size: 10px;">math</a><a href="/tags/personal/" style="font-size: 10px;">personal</a>
     </div>
   </div>
 
@@ -717,7 +798,24 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <!-- Tiny_search Begin -->
 
-<!-- Tiny_search End -->
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
   </body>
  </html>
