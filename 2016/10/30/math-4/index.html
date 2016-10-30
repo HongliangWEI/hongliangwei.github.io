@@ -4,7 +4,7 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>拉格朗日中值定理 | FreeMinds</title>
+    <title>泰勒公式 | FreeMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="HongliangWEI">
@@ -13,26 +13,19 @@
     
     <meta name="description" content="继续！
 
-费马(Fermat)引理设函数 $f(x)$ 在点 $x_0$ 的某领域 $U(x_0)$ 内有定义，并且在 $x_0$ 处可导，如果对于任意的 $x \in U(x_0)$，有
-$$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
-那么 $f^{‘}(x)=0.$">
+背景对于一些较复杂的函数，为了便于研究，往往希望用一些简单的函数来近似表达。由于用多项式表示函数，只要对自变量进行有限次加、减、乘三种运算，便能求出它的函数值来，因此，经常用多项式来近似表达函数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="拉格朗日中值定理">
-<meta property="og:url" content="http://whlminds.com/2016/10/30/math-3/index.html">
+<meta property="og:title" content="泰勒公式">
+<meta property="og:url" content="http://whlminds.com/2016/10/30/math-4/index.html">
 <meta property="og:site_name" content="FreeMinds">
 <meta property="og:description" content="继续！
 
-费马(Fermat)引理设函数 $f(x)$ 在点 $x_0$ 的某领域 $U(x_0)$ 内有定义，并且在 $x_0$ 处可导，如果对于任意的 $x \in U(x_0)$，有
-$$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
-那么 $f^{‘}(x)=0.$">
-<meta property="og:image" content="/illustration/lagrange-1.png">
+背景对于一些较复杂的函数，为了便于研究，往往希望用一些简单的函数来近似表达。由于用多项式表示函数，只要对自变量进行有限次加、减、乘三种运算，便能求出它的函数值来，因此，经常用多项式来近似表达函数。">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="拉格朗日中值定理">
+<meta name="twitter:title" content="泰勒公式">
 <meta name="twitter:description" content="继续！
 
-费马(Fermat)引理设函数 $f(x)$ 在点 $x_0$ 的某领域 $U(x_0)$ 内有定义，并且在 $x_0$ 处可导，如果对于任意的 $x \in U(x_0)$，有
-$$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
-那么 $f^{‘}(x)=0.$">
+背景对于一些较复杂的函数，为了便于研究，往往希望用一些简单的函数来近似表达。由于用多项式表示函数，只要对自变量进行有限次加、减、乘三种运算，便能求出它的函数值来，因此，经常用多项式来近似表达函数。">
 
     
     
@@ -89,14 +82,14 @@ $$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/10/30/math-3/" title="拉格朗日中值定理" itemprop="url">拉格朗日中值定理</a>
+      <a href="/2016/10/30/math-4/" title="泰勒公式" itemprop="url">泰勒公式</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
 		
   <p class="article-time">
-    <time datetime="2016-10-30T07:38:21.000Z" itemprop="datePublished"> 发表于 2016-10-30</time>
+    <time datetime="2016-10-30T09:38:21.000Z" itemprop="datePublished"> 发表于 2016-10-30</time>
     
   </p>
 </header>
@@ -105,68 +98,71 @@ $$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#费马(Fermat)引理"><span class="toc-number">1.</span> <span class="toc-text">费马(Fermat)引理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#罗尔(Rolle)定理"><span class="toc-number">2.</span> <span class="toc-text">罗尔(Rolle)定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉格朗日(Lagrange)中值定理"><span class="toc-number">3.</span> <span class="toc-text">拉格朗日(Lagrange)中值定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#柯西中值定理"><span class="toc-number">4.</span> <span class="toc-text">柯西中值定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#洛必达法则"><span class="toc-number">5.</span> <span class="toc-text">洛必达法则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泰勒中值定理1"><span class="toc-number">2.</span> <span class="toc-text">泰勒中值定理1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泰勒中值定理2"><span class="toc-number">3.</span> <span class="toc-text">泰勒中值定理2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">4.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
 		
 		</div>
 		
 		<blockquote>
 <p>继续！</p>
 </blockquote>
-<h2 id="费马(Fermat)引理">费马(Fermat)引理</h2><p>设函数 $f(x)$ 在点 $x_0$ 的某领域 $U(x_0)$ 内有定义，并且在 $x_0$ 处可导，如果对于任意的 $x \in U(x_0)$，有</p>
-<p>$$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$</p>
-<p>那么 $f^{‘}(x)=0.$</p>
+<h2 id="背景">背景</h2><p>对于一些较复杂的函数，为了便于研究，往往希望用一些简单的函数来近似表达。由于用多项式表示函数，只要对自变量进行有限次加、减、乘三种运算，便能求出它的函数值来，因此，经常用多项式来近似表达函数。</p>
 <a id="more"></a>
-<h2 id="罗尔(Rolle)定理">罗尔(Rolle)定理</h2><p>如果函数 $f(x)$ 满足</p>
-<ul>
-<li>在闭区间 $[a, b]$ 上连续；</li>
-<li>在开区间 $(a, b)$ 内可导；</li>
-<li>在区间端点处的函数值相等，即 $f(a)=f(b)$，</li>
-</ul>
-<p>那么在 $(a, b)$ 至少有一点 $\xi，(a&lt;\xi&lt;b)$，使得 $f^{‘}(\xi)=0.$</p>
-<h2 id="拉格朗日(Lagrange)中值定理">拉格朗日(Lagrange)中值定理</h2><p>罗尔定理中 $f(a)=f(b)$ 是相当特殊的，使得罗尔定理的应用受到限制，如果取消 $f(a)=f(b)$ 这个条件，但仍然保留另外2个条件，并相应的改变结论，就得到 <code>拉格朗日中值定理</code>。</p>
-<p>如果函数 $f(x)$ 满足</p>
-<ul>
-<li>在闭区间 $[a, b]$ 上连续；</li>
-<li>在开区间 $(a, b)$ 内可导；</li>
-</ul>
-<p>那么在 $(a, b)$ 内至少有一点 $\xi，(a&lt;\xi&lt;b)$，使得等式</p>
-<p>$$f(b)-f(a)=f^{‘}(b-a)$$</p>
-<p>成立。</p>
-<p>改写上式可以表达为</p>
-<p>$$\frac{f(b)-f(a)}{b-a}=f^{‘}(\xi)$$</p>
-<p><img src="/illustration/lagrange-1.png" width="40%" height="40%"></p>
-<p>拉格朗日中值定理的几何意义为：如果连续曲线 $y=f(x)$ 的弧 $AB$ 上除端点外处处具有不垂直于 $x$ 轴的切线，那么这弧上至少有一点 $C$，使曲线在点 $C$ 处的切线平行于弦 $AB$。</p>
-<h2 id="柯西中值定理">柯西中值定理</h2><p>如果函数 $f(x)$ 及 $F(x)$ 满足</p>
-<ul>
-<li>在闭区间 $[a, b]$ 上连续；</li>
-<li>在开区间 $(a, b)$ 内可导；</li>
-<li>对任一 $x \in (a, b)，F^{‘}(x) \neq 0$，</li>
-</ul>
-<p>那么在 $(a, b)$ 内至少有一点 $\xi$，使得等式</p>
-<p>$$\frac{f(b)-f(a)}{F(b)-F(a)}=\frac{f^{‘}(\xi)}{F^{‘}(\xi)}$$</p>
-<p>成立。</p>
-<p>很明显，如果 $F(x)=x$，那么$F(b)-F(a)=b-a, F^{‘}(x)=1$，因而上面公式可写为</p>
-<p>$$f(b)-f(a)=f^{‘}(\xi)(b-a), (a&lt;\xi&lt;b),$$</p>
-<p>这就变成拉格朗日中值公式了。</p>
-<h2 id="洛必达法则">洛必达法则</h2><p>如果当 $x \to a（或 x \to \infty）$时，两个函数 $f(x)$ 与 $F(x)$ 都趋于零或者无穷大，那么极限 $\lim \limits_{x \to a} \frac{f(x)}{F(x)}（或 \lim \limits_{x \to \infty} \frac{f(x)}{F(x)}）$ 可能存在、也可能不存在，例如 $\lim \limits_{x \to 0} \frac{sin(x)}{x}$。</p>
-<p>洛必达法则 $L^{‘}Hospital$ 就是解决这类问题的，这种在一定条件下通过分子分母分别求导再求极限来确定未定式的值的方法称为洛必达法则。</p>
-<p>当 $x \to a$时，未定式 $\frac{0}{0}$ 的情形，设</p>
-<ul>
-<li>当 $x \to a$ 时，函数 $f(x)$ 及 $F(x)$ 都趋于零；</li>
-<li>在点 $a$ 的某去心领域内，$f^{‘}(x)$ 及 $F^{‘}(x)$ 都存在且 $F^{‘}(x) \neq 0；$</li>
-<li>$\lim \limits_{x \to a} \frac{f^{‘}(x)}{F^{‘}(x)}$ 存在（或为无穷大），则</li>
-</ul>
-<p>$$\lim \limits_{x \to a} \frac{f(x)}{F(x)}=\lim \limits_{x \to a} \frac{f^{‘}(x)}{F^{‘}(x)}.$$</p>
-<p>当 $x \to \infty$时，未定式 $\frac{0}{0}$ 的情形，设</p>
-<ul>
-<li>当 $x \to \infty$ 时，函数 $f(x)$ 及 $F(x)$ 都趋于零；</li>
-<li>当 $|x| &gt; N$ 时 $f^{‘}(x)$ 及 $F^{‘}(x)$ 都存在且 $F^{‘}(x) \neq 0；$</li>
-<li>$\lim \limits_{x \to \infty} \frac{f^{‘}(x)}{F^{‘}(x)}$ 存在（或为无穷大），则</li>
-</ul>
-<p>$$\lim \limits_{x \to \infty} \frac{f(x)}{F(x)}=\lim \limits_{x \to \infty} \frac{f^{‘}(x)}{F^{‘}(x)}.$$</p>
-<blockquote>
-<p>文中图片来自 维基百科。</p>
-</blockquote>
+<h2 id="泰勒中值定理1">泰勒中值定理1</h2><p>设 $f(x)$ 在 $x_0$ 处具有 $n$ 阶导数，试找出一个关于 $x-x_0$ 的 $n$ 次多项式</p>
+<p>$$\begin{eqnarray}<br>p_n(x)=a_0+a_1(x-x_0)+a_2(x-x_0)^{2}+\cdots+a_n(x-x_0)^n<br>\end{eqnarray}$$</p>
+<p>来近似表达 $f(x)$，要求使得 $p_n(x)$ 与 $f(x)$ 之差是当 $x \to x_0$ 时比 $(x-x_0)^{n}$ 高阶的无穷小。</p>
+<p>假设 $p_n(x)$ 在 $x_0$ 处的函数值及它的直到 $n$ 阶导数在 $x_0$ 处的值依次与 $f(x_0)，f^{‘}(x_0)，\cdots，f^{(n)}(x_0)$ 相等，即满足</p>
+<p>$$p_{n}(x_0)=f(x_0)，p^{‘}(x_0)=f^{‘}(x_0)，$$</p>
+<p>$$p_{n}^{‘’}(x_0)=f^{‘’}(x_0)，\cdots，p_{n}^{(n)}(x_0)=f^{(n)}(x_0)，$$</p>
+<p>按这些等式来确定多项式 (1) 的系数 $a_0, a_1, a_2, \cdots, a_n$。为此，对 (1) 式求各阶导数，然后分别带入以上式子得到</p>
+<p>$$a_0=f(x_0), 1 \cdot a_1=f^{‘}(x_0)$$</p>
+<p>$$2! \cdot a_2=f^{‘’}(x_0), \cdots, n! \cdot a_n=f^{(n)}(x_0)，$$</p>
+<p>即得</p>
+<p>$$a_0=f(x_0)，a_1=f^{‘}(x_0)，a_2=\frac{1}{2!} f^{‘’}(x_0)，\cdots，a_n=\frac{1}{n!} f^{(n)}(x_0).$$</p>
+<p>将求得的系数 $a_0, a_1, a_2, \cdots, a_n$ 带入 (1) 式，有</p>
+<p>$$\begin{eqnarray}<br>p_n(x)=f(x_0)+f^{‘}(x_0)(x-x_0)+\frac{f^{‘’}(x_0)}{2!}(x-x_0)^{2}+\cdots+\frac{f^{(n)}(x_0)}{n!}(x-x_0)^{n}.<br>\end{eqnarray}$$</p>
+<p><strong>泰勒(Taylor)中值定理1</strong></p>
+<p>如果函数 $f(x)$ 在 $x_0$ 处具有 $n$ 阶导数，那么存在 $x_0$ 的一个领域，对于该领域内的任一 $x$，有</p>
+<p>$$\begin{eqnarray}<br>f(x)=f(x_0)+f^{‘}(x_0)(x-x_0)+\frac{f^{‘’}(x_0)}{2!}(x-x_0)^{2}+\cdots+\frac{f^{(n)}(x_0)}{n!}(x-x_0)^{n}+R_{n}(x),<br>\end{eqnarray}$$</p>
+<p>其中，</p>
+<p>$$\begin{eqnarray}<br>R_n(x)=o((x-x_0)^{n}).<br>\end{eqnarray}$$</p>
+<p>多项式 (2) 称为函数 $f(x)$ 在 $x_0$ 处（或按（$(x \to x_0)$）的幂展开）的 $n$ 次泰勒多项式。</p>
+<p>多项式 (3) 称为函数 $f(x)$ 在 $x_0$ 处（或按（$(x \to x_0)$）的幂展开）的带有佩亚诺(Peano)余项的 $n$ 阶泰勒公式。</p>
+<p>$R_{n}(x)$ 的表达式 (4) 称为佩亚诺余项，它就是用 $n$ 次泰勒多项式来近似表达 $f(x)$ 所产生的误差。这一误差是当 $x \to x_0$ 时比 $(x-x_0)^{n}$ 高阶的无穷小，但不能由它具体估算出误差的大小。而 <strong>泰勒(Taylor)中值定理2</strong> 则解决了这一问题。</p>
+<h2 id="泰勒中值定理2">泰勒中值定理2</h2><p>如果函数 $f(x)$ 在 $x_0$ 的某个领域 $U(x_0)$ 内具有 $(n+1)$ 阶导数，那么对任一 $x \in U(x_0)$，有</p>
+<p>$$\begin{eqnarray}<br>f(x)=f(x_0)+f^{‘}(x_0)(x-x_0)+\frac{f^{‘’}(x_0)}{2!}(x-x_0)^{2}+\cdots+\frac{f^{(n)}(x_0)}{n!}(x-x_0)^{n}+R_{n}(x),<br>\end{eqnarray}$$</p>
+<p>其中</p>
+<p>$$\begin{eqnarray}<br>R_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}，<br>\end{eqnarray}$$</p>
+<p>这里 $\xi$ 是 $x_0$ 与 $x$ 之间的某个值。</p>
+<p>公式 (5) 称为函数 $f(x)$ 在 $x_0$ 处（或按（$(x \to x_0)$）的幂展开）的带有拉格朗日余项的 $n$ 阶泰勒多项式，而 $R_n(x)$ 的表达式 (6) 称为拉格朗日余项。</p>
+<p>当 $n=0$ 时，泰勒公式 (5) 变成拉格朗日中值公式</p>
+<p>$$f(x)=f(x_0)+f^{‘}(\xi)(x-x_0)，(\xi 在 x_0 与 x 之间).$$</p>
+<p>因此，泰勒中值定理2是拉格朗日中值定理的推广。</p>
+<p>由泰勒中值定理2可知，以多项式 $p_n(x)$ 近似表达函数 $f(x)$ 时，其误差为 $|R_n(x)|$。如果对于某个固定的 $n$，当 $x \in U(x_0)$ 时，$|f^{(n+1)}(x)| \leq M$，那么有估计式</p>
+<p>$$\begin{eqnarray}<br>|R_n(x)|=|\frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}| \leq \frac{M}{(n+1)!}|x-x_0|^{n+1}<br>\end{eqnarray}$$</p>
+<p>在泰勒公式 (3) 中，如果取 $x_0=0$，那么带有佩亚诺余项的麦克劳林(Maclaurin)公式</p>
+<p>$$\begin{eqnarray}<br>f(x)=f(0)+f^{‘}(0)x+\cdots+\frac{f^{(n)}(0)}{n!}x^{n}+o(x^{n}).<br>\end{eqnarray}$$</p>
+<p>在泰勒公式 (5) 中，如果取 $x_0=0$，那么 $\xi$ 在 $0$ 和 $x$ 之间。因此，可以令 $\xi=\theta x，(0&lt;\theta&lt;1)$，从而泰勒公式 (5) 变成较简单的形式，即所谓带有拉格朗日余项的麦克劳林公式</p>
+<p>$$\begin{eqnarray}<br>f(x)=f(0)+f^{‘}(0)x+\frac{f^{‘’}(0)}{2!}x^{2}+\cdots+\frac{f^{(n)}(0)}{n!}x^{n}+\frac{f^{(n+1)}(\theta x)}{(n+1)!}x^{n+1}, (0&lt;\theta&lt;1).<br>\end{eqnarray}$$</p>
+<p>由 (8) 和 (9) 可得近似公式</p>
+<p>$$f(x)=f(0)+f^{‘}(0)x+\frac{f^{‘’}(0)}{2!}x^{2}+\cdots+\frac{f^{(n)}(0)}{n!}x^{n}，$$</p>
+<p>误差估计式 (7) 相应的变成</p>
+<p>$$|R_n(x)| \leq \frac{M}{(n+1)!}|x|^{n+1}.$$</p>
+<h2 id="例子">例子</h2><p>函数 $f(x)=e^{x}$ 的带有拉格朗日余项的 $n$ 阶麦克劳林公式:</p>
+<p>因为</p>
+<p>$$f^{‘}(x)=f^{‘’}(x)=\cdots=f^{(n)}(x)=e^{x}$$</p>
+<p>所以</p>
+<p>$$f(0)=f^{‘}(0)=f^{‘’}(0)=\cdots=f^{(n)}(0)=1$$</p>
+<p>把这些值带入 (9)，并注意到 $f^{(n+1)}(\theta x)=e^{\theta x}$ 便得</p>
+<p>$$e^{x}=1+x+\frac{x^2}{2!}+\cdots+\frac{x^n}{n!}+\frac{e^{\theta x}}{(n+1)!}x^{n+1}, (0&lt;\theta&lt;1).$$</p>
+<p>由这个公式可知，若把 $e^{x}$ 用它的 $n$ 次泰勒多项式表达为</p>
+<p>$$e^{x} \approx 1+x+\frac{x^2}{2!}+\cdots+\frac{x^n}{n!}，$$</p>
+<p>这时所产生的误差为</p>
+<p>$$|R_n(x)|=|\frac{e^{\theta x}}{(n+1)!}x^{n+1}|&lt;\frac{e^{|x|}}{(n+1)!}|x|^{n+1}, (0&lt;\theta&lt;1).$$</p>
+<p>如果取 $x=1$，则取得无理数 $e$ 的近似式为</p>
+<p>$$e \approx 1+1+\frac{1}{2!}+\cdots+\frac{1}{n!}，$$</p>
+<p>其误差</p>
+<p>$$|R_n|&lt;\frac{e}{(n+1)!}&lt;\frac{3}{(n+1)!}.$$</p>
+<p>当 $n=10$ 时，可算出 $e \approx 2.718282$，其误差不超过 $10^{-6}$。</p>
 <h2 id="参考资料">参考资料</h2><ol>
 <li>《高等数学》，第七版上册，同济大学版</li>
 </ol>
@@ -192,7 +188,7 @@ $$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2016/10/30/math-3/" data-title="拉格朗日中值定理 | FreeMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2016/10/30/math-4/" data-title="泰勒公式 | FreeMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -205,19 +201,11 @@ $$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/10/30/math-4/" title="泰勒公式">
-  <strong>上一篇：</strong><br/>
-  <span>
-  泰勒公式</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/10/29/math-2/"  title="导数与微分">
+<a href="/2016/10/30/math-3/"  title="拉格朗日中值定理">
  <strong>下一篇：</strong><br/> 
- <span>导数与微分
+ <span>拉格朗日中值定理
 </span>
 </a>
 </div>
@@ -226,7 +214,7 @@ $$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/10/30/math-3/" data-title="拉格朗日中值定理" data-url="http://whlminds.com/2016/10/30/math-3/"></div>
+	<div class="ds-thread" data-thread-key="2016/10/30/math-4/" data-title="泰勒公式" data-url="http://whlminds.com/2016/10/30/math-4/"></div>
 </section>
 
 
@@ -236,7 +224,7 @@ $$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#费马(Fermat)引理"><span class="toc-number">1.</span> <span class="toc-text">费马(Fermat)引理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#罗尔(Rolle)定理"><span class="toc-number">2.</span> <span class="toc-text">罗尔(Rolle)定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉格朗日(Lagrange)中值定理"><span class="toc-number">3.</span> <span class="toc-text">拉格朗日(Lagrange)中值定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#柯西中值定理"><span class="toc-number">4.</span> <span class="toc-text">柯西中值定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#洛必达法则"><span class="toc-number">5.</span> <span class="toc-text">洛必达法则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泰勒中值定理1"><span class="toc-number">2.</span> <span class="toc-text">泰勒中值定理1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泰勒中值定理2"><span class="toc-number">3.</span> <span class="toc-text">泰勒中值定理2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">4.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
  
   </div>
 
