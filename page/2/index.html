@@ -78,6 +78,73 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/05/24/oozie-wf-control-node/" title="Oozie Workflow Control Nodes" itemprop="url">Oozie Workflow Control Nodes</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-24T14:34:07.000Z" itemprop="datePublished"> 发表于 2015-05-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Oozie 工作流中，控制节点包括工作流的开始和结束节点，即 start 节点、end 节点和 kill 节点，并提供了控制工作流执行路径的节点，即 decison 节点、fork 节点和 join 节点。</p>
+<h2 id="Start_Control_Node">Start Control Node</h2><p>start 节点是一个工作流的入口节点，当工作流开始执行时，将会自动的过渡到由 start 节点 指向的节点。一个工作流必须有一个 start 节点。</p>
+<p>语法:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;workflow-app name=<span class="string">"[WF-DEF-NAME]"</span> xmlns=<span class="string">"uri:oozie:workflow:0.1"</span>&gt;</span><br><span class="line">  <span class="keyword">...</span></span><br><span class="line">  &lt;start to=<span class="string">"[NODE-NAME]"</span>/&gt;</span><br><span class="line">  <span class="keyword">...</span></span><br><span class="line">&lt;/workflow-app&gt;</span><br></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/05/24/oozie-wf-control-node/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Oozie/">Oozie</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/05/24/oozie-wf-control-node/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/05/24/oozie-wf-control-node/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/05/18/Oozie-introduction/" title="Oozie简介" itemprop="url">Oozie简介</a>
   </h1>
   <p class="article-author">By
@@ -646,7 +713,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Math/" title="Math">Math<sup>5</sup></a></li>
+				<li><a href="/tags/Math/" title="Math">Math<sup>6</sup></a></li>
 			
 		
 			
@@ -727,7 +794,7 @@
 		  
 		
 		  
-			<li><a href="/categories/数学/" title="数学">数学<sup>5</sup></a></li>
+			<li><a href="/categories/数学/" title="数学">数学<sup>6</sup></a></li>
 		  
 		
 		  
