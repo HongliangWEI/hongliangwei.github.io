@@ -78,6 +78,72 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/05/24/oozie-wf-action-node/" title="Oozie Workflow Action Nodes" itemprop="url">Oozie Workflow Action Nodes</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-24T14:34:16.000Z" itemprop="datePublished"> 发表于 2015-05-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Oozie 工作流中，Action节点包括即 Oozie 支持的 jobs 和 sub-workflows。其中，Oozie 支持的 Hadoop jobs 类型有 <strong>Map Reduce</strong>、<strong>Pig</strong>、<strong>Hive</strong> 和 <strong>Sqoop</strong>。另外，Oozie 还支持的 jobs 类型还有 <strong>Java</strong>、<strong>Streaming</strong>、<strong>Fs(Hadoop File System 操作)</strong>、<strong>Ssh</strong>、<strong>Shell</strong>、<strong>Email</strong> 和 <strong>DistCp</strong>。</p>
+<h2 id="Sqoop">Sqoop</h2><p>Sqoop action 执行一个 Sqoop job。工作流一直等待直到 Sqoop job 完成后才会进入到工作流中的下一个 action。在运行 Sqoop action 之前，须要设置 <code>job-tracker</code>、<code>name-node</code>、<code>Sqoop command</code> 和 <code>arg elements</code>。Sqoop action 在执行 Sqoop job 前可以创建或删除 HDFS 目录。</p>
+<p>通过 <code>job-xml</code> 可以指定 Sqoop action 配置文件，或通过 <code>configuration</code> 元素在线对 Sqoop action 配置。其中，可以在在线配置中使用 <code>EL</code> 表达式，并且在线配置的值会覆盖在通过 <code>job-xml</code> 的配置值。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/05/24/oozie-wf-action-node/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Oozie/">Oozie</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/05/24/oozie-wf-action-node/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/05/24/oozie-wf-action-node/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/05/24/oozie-wf-control-node/" title="Oozie Workflow Control Nodes" itemprop="url">Oozie Workflow Control Nodes</a>
   </h1>
   <p class="article-author">By
@@ -713,7 +779,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Math/" title="Math">Math<sup>6</sup></a></li>
+				<li><a href="/tags/Math/" title="Math">Math<sup>7</sup></a></li>
 			
 		
 			
@@ -794,7 +860,7 @@
 		  
 		
 		  
-			<li><a href="/categories/数学/" title="数学">数学<sup>6</sup></a></li>
+			<li><a href="/categories/数学/" title="数学">数学<sup>7</sup></a></li>
 		  
 		
 		  
