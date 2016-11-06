@@ -4,31 +4,31 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>旋转数组中的最小值 | FreeMinds</title>
+    <title>方向导数与梯度 | FreeMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="HongliangWEI">
     
 
     
-    <meta name="description" content="来自《剑指Offer》中的一道面试题：
-把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。
-理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）
-Naive解法在 O(n)">
+    <meta name="description" content="继续！
+
+方向导数设 $l$ 是 $xOy$ 平面上以 $P_{0}(x_{0}, y_{0})$ 为始点的一条射线，$\mathbf{e}_{l}=(cos(\alpha), cos(\beta))$ 是与 $l$ 同方向的单位向量。射线 $l$ 的参数方程为
+$$\begin{cases}x=x_{0}+tcos(\alpha),\\y=y_{0}+tcos(\beta)&amp;amp;\text{">
 <meta property="og:type" content="article">
-<meta property="og:title" content="旋转数组中的最小值">
-<meta property="og:url" content="http://whlminds.com/2015/04/05/Min-Number-in-Rotated-Array/index.html">
+<meta property="og:title" content="方向导数与梯度">
+<meta property="og:url" content="http://whlminds.com/2016/11/06/math-8/index.html">
 <meta property="og:site_name" content="FreeMinds">
-<meta property="og:description" content="来自《剑指Offer》中的一道面试题：
-把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。
-理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）
-Naive解法在 O(n)">
+<meta property="og:description" content="继续！
+
+方向导数设 $l$ 是 $xOy$ 平面上以 $P_{0}(x_{0}, y_{0})$ 为始点的一条射线，$\mathbf{e}_{l}=(cos(\alpha), cos(\beta))$ 是与 $l$ 同方向的单位向量。射线 $l$ 的参数方程为
+$$\begin{cases}x=x_{0}+tcos(\alpha),\\y=y_{0}+tcos(\beta)&amp;amp;\text{">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="旋转数组中的最小值">
-<meta name="twitter:description" content="来自《剑指Offer》中的一道面试题：
-把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。
-理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）
-Naive解法在 O(n)">
+<meta name="twitter:title" content="方向导数与梯度">
+<meta name="twitter:description" content="继续！
+
+方向导数设 $l$ 是 $xOy$ 平面上以 $P_{0}(x_{0}, y_{0})$ 为始点的一条射线，$\mathbf{e}_{l}=(cos(\alpha), cos(\beta))$ 是与 $l$ 同方向的单位向量。射线 $l$ 的参数方程为
+$$\begin{cases}x=x_{0}+tcos(\alpha),\\y=y_{0}+tcos(\beta)&amp;amp;\text{">
 
     
     
@@ -85,14 +85,14 @@ Naive解法在 O(n)">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/04/05/Min-Number-in-Rotated-Array/" title="旋转数组中的最小值" itemprop="url">旋转数组中的最小值</a>
+      <a href="/2016/11/06/math-8/" title="方向导数与梯度" itemprop="url">方向导数与梯度</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
 		
   <p class="article-time">
-    <time datetime="2015-04-05T07:38:21.000Z" itemprop="datePublished"> 发表于 2015-04-05</time>
+    <time datetime="2016-11-06T13:38:21.000Z" itemprop="datePublished"> 发表于 2016-11-06</time>
     
   </p>
 </header>
@@ -101,28 +101,49 @@ Naive解法在 O(n)">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Naive解法"><span class="toc-number">1.</span> <span class="toc-text">Naive解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改进的解法"><span class="toc-number">2.</span> <span class="toc-text">改进的解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#方向导数"><span class="toc-number">1.</span> <span class="toc-text">方向导数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#梯度"><span class="toc-number">2.</span> <span class="toc-text">梯度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">3.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
 		
 		</div>
 		
-		<p>来自《剑指Offer》中的一道面试题：</p>
-<p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。</p>
-<p>理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）</p>
-<h2 id="Naive解法">Naive解法</h2><p>在 <code>O(n)</code> 时间范围内遍历旋转后的数组，可以找到最小的元素。但是，这种解法没有利用旋转数组的特点，即数组内部元素间部分有序，因此，查找效率不高。</p>
+		<blockquote>
+<p>继续！</p>
+</blockquote>
+<h2 id="方向导数">方向导数</h2><p>设 $l$ 是 $xOy$ 平面上以 $P_{0}(x_{0}, y_{0})$ 为始点的一条射线，$\mathbf{e}_{l}=(cos(\alpha), cos(\beta))$ 是与 $l$ 同方向的单位向量。射线 $l$ 的参数方程为</p>
+<p>$$\begin{cases}<br>x=x_{0}+tcos(\alpha),\\<br>y=y_{0}+tcos(\beta)&amp;\text{$(t \geq 0).$}<br>\end{cases}$$</p>
 <a id="more"></a>
-<h2 id="改进的解法">改进的解法</h2><p>旋转数组是对非递增的排序的数组进行旋转的结果，因此，数组内部元素被分为了2个区间，在各区间内部是有序的，例如 {3, 4, 5, 1, 2} ，被分为了 {3, 4, 5 } 和 { 1, 2} 两个有序的子区间，对于有序的数组的查找问题，可以考虑二分查找算法，时间复杂度 <code>O(log(n))</code>。</p>
-<p>那么，如何对旋转的数组采用二分查找法寻找最小的元素呢，基本思路如下：</p>
-<ol>
-<li>对旋转数组二分， 必然有一个区间内的元素间是严格的非递增有序的；</li>
-<li>比较中间的元素与二分后两个区间的元素，可以筛选掉一个区间的元素；</li>
-<li>再二分，再重复第二步骤，直到中间的元素都不大于二分后两个区间内的元素。</li>
+<p>设函数 $z=f(x,y)$ 在点 $P_{0}(x_{0},y_{0})$ 的某个领域 $U(P_{0})$ 内有定义，$P(x_{0}+tcos(\alpha),y_{0}+tcos(\beta))$ 为 $l$ 上另外一点，且 $P \in U(P_{0})$。如果函数增量 $f(x_{0}+tcos(\alpha),y_{0}+tcos(\beta))-f(x_{0}+y_{0})$ 与 $P$ 到 $P_{0}$ 的距离 $|PP_{0}|=t$ 的比值</p>
+<p>$$\frac{f(x_{0}+tcos(\alpha),y_{0}+tcos(\beta))-f(x_{0},y_{0})}{t}$$</p>
+<p>当 $P$ 沿着 $l$ 趋于 $P_{0}$ （即 $t \to 0^{+}$）时的极限存在，那么称此极限为函数 $f(x,y)$ 在点 $P_{0}$ 沿着方向 $l$ 的方向导数，记作 $\frac{\partial f}{\partial l}|_{(x_{0}, y_{0})}$，即</p>
+<p>$$\frac{\partial f}{\partial l}|_{(x_{0}, y_{0})}=\lim_{t \to 0^{+}}\frac{f(x_{0}+tcos(\alpha),y_{0}+tcos(\beta))-f(x_{0},y_{0})}{t}.$$</p>
+<p>从方向导数的定义可知，方向导数 $\frac{\partial f}{\partial l}|_{(x_{0}, y_{0})}$ 就是函数 $f(x,y)$ 在点 $P_{0}(x_{0},y_{0})$ 处沿着方向 $l$ 的变化率。若函数 $f(x,y)$ 在点 $P_{0}(x_{0},y_{0})$ 的偏导数存在</p>
+<p>$\mathbf{e}_{l}=\mathbf{i}=(1,0)$，则</p>
+<p>$$\frac{\partial f}{\partial l}|_{(x_{0}, y_{0})}=\lim_{t \to 0^{+}}\frac{f(x_{0}+t,y_{0})-f(x_{0},y_{0})}{t}=f_{x}(x_{0},y_{0});$$</p>
+<p>$\mathbf{e}_{l}=\mathbf{j}=(0,1)$，则</p>
+<p>$$\frac{\partial f}{\partial l}|_{(x_{0}, y_{0})}=\lim_{t \to 0^{+}}\frac{f(x_{0},y_{0}+t)-f(x_{0},y_{0})}{t}=f_{y}(x_{0},y_{0}).$$</p>
+<h2 id="梯度">梯度</h2><p>在二元函数的情形下，设函数 $f(x,y)$ 在平面区域 $D$ 内具有一阶连续偏导数，则对于每点 $P_{0}(x_{0}, y_{0}) \in D$，都可定出一个向量</p>
+<p>$$f_{x}(x_{0}, y_{0})\mathbf{i}+f_{y}(x_{0}, y_{0})\mathbf{j}，$$</p>
+<p> 这向量称为函数 $f(x,y)$ 在点 $P_{0}(x_{0}, y_{0})$ 的梯度，记作 $\mathbf{grad} f(x_{0}, y_{0})$ 或 $\nabla f(x_{0}, y_{0})$，即</p>
+<p> $$\mathbf{grad} f(x_{0}, y_{0})=\nabla f(x_{0}, y_{0})=f_{x}(x_{0}, y_{0})\mathbf{i}+f_{y}(x_{0}, y_{0})\mathbf{j}.$$</p>
+<p> 其中 $\nabla = \frac{\partial}{\partial x}\mathbf{i}+\frac{\partial}{\partial y}\mathbf{j}$ 称为（二维的）向量微分算子或 $Nabla$ 算子，$\nabla f=\frac{\partial f}{\partial x}\mathbf{i}+\frac{\partial f}{\partial y}\mathbf{j}.$</p>
+<p>如果函数 $f(x,y)$ 在点 $P_{0}(x_{0}, y_{0})$ 可微分，$\mathbf{e}_{l}=(cos(\alpha), cos(\beta))$ 是与方向 $l$ 同向的单位向量，那么</p>
+<p>$$\frac{\partial f}{\partial l}|_{(x_{0}, y_{0})}=f_{x}(x_{0}, y_{0})cos(\alpha)+f_{y}(x_{0}, y_{0})cos(\beta)\\<br>=\mathbf{grad}f(x_{0}, y_{0})\cdot \mathbf{e}_{l}\\<br>=|\mathbf{grad}f(x_{0}, y_{0})|cos(\theta),$$</p>
+<p>其中，$\theta=(\mathbf{grad}f(x_{0}, \widehat{y_{0}), \mathbf{e}_{l}}).$</p>
+<p>这一关系表明了函数在一点的梯度与函数在这点的方向导数间的关系，即</p>
+<p>(1) 当 $\theta=0$，即方向 $\mathbf{e}_{l}$ 与梯度 $\mathbf{grad}f(x_{0}, y_{0})$ 的方向相同时，函数 $f(x,y)$ 增加最快，此时，函数在这个方向的方向导数达到最大值，这个最大值就是的梯度 $\mathbf{grad}f(x_{0}, y_{0})$ 的模，即</p>
+<p>$$\frac{\partial f}{\partial l}|_{(x_{0}, y_{0})}=|\mathbf{grad}f(x_{0}, y_{0})|.$$</p>
+<p>这个结果也表明：函数 $f(x,y)$ 在一点的梯度 $\mathbf{grad} f$ 是这样的一个向量，它的方向是函数在这点的方向导数取得最大值的方向，它的模就等于方向导数的最大值。</p>
+<p>(2) 当 $\theta=\pi$，即方向 $\mathbf{e}_{l}$ 与梯度 $\mathbf{grad}f(x_{0}, y_{0})$ 的方向相反时，函数 $f(x,y)$ 减少最快，函数在这个方向的方向导数达到最小值，即</p>
+<p>$$\frac{\partial f}{\partial l}|_{(x_{0}, y_{0})}=-|\mathbf{grad}f(x_{0}, y_{0})|.$$</p>
+<p>(3) 当 $\theta=\frac{\pi}{2}$，即方向 $\mathbf{e}_{l}$ 与梯度 $\mathbf{grad}f(x_{0}, y_{0})$ 的方向正交时，函数的变化率为零，即</p>
+<p>$$\frac{\partial f}{\partial l}|_{(x_{0}, y_{0})}=-|\mathbf{grad}f(x_{0}, y_{0})|cos(\theta)=0.$$</p>
+<h2 id="例子">例子</h2><p>求 $\mathbf{grad}\frac{1}{x^{2}+y^{2}}.$</p>
+<p>这里 $f(x,y)=\frac{1}{x^{2}+y^{2}}.$因为</p>
+<p>$$\frac{\partial f}{\partial x}=-\frac{2x}{(x^2+y^2)^2}，\frac{\partial f}{\partial y}=-\frac{2y}{(x^2+y^2)^2},$$</p>
+<p>所以</p>
+<p>$$\mathbf{grad}\frac{1}{x^{2}+y^{2}}=-\frac{2x}{(x^2+y^2)^2}\mathbf{i}-\frac{2y}{(x^2+y^2)^2}\mathbf{j}.$$</p>
+<h2 id="参考资料">参考资料</h2><ol>
+<li>《高等数学》，第七版上册，同济大学版</li>
 </ol>
-<p>呃，感觉还是confusing，上菜：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> findMin(<span class="keyword">int</span> numbers[], <span class="keyword">int</span> <span class="keyword">size</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(numbers == <span class="keyword">NULL</span> || <span class="keyword">size</span> == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> exception(<span class="string">"Invalid parameters"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> low = <span class="number">0</span>, high = <span class="keyword">size</span> - <span class="number">1</span>, mid = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">while</span>(low &lt; high)&#123;</span><br><span class="line">	    mid = (low + high) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">	</span><br><span class="line">	    <span class="keyword">if</span>(A[low] &lt; A[high])&#123; <span class="comment">//数组是严格非递增排序的</span></span><br><span class="line">		    <span class="keyword">break</span>;</span><br><span class="line">	    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(A[low] == A[high])&#123; <span class="comment">// 见下方 `dateset6` 情况</span></span><br><span class="line">		    high--;</span><br><span class="line">	    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(A[low] &gt; A[high])&#123; </span><br><span class="line">		    <span class="keyword">if</span>(A[mid] &gt;= A[low])&#123; <span class="comment">// 最小元素必在 mid 位置后的子区间，因为包括mid索引的元素之前的元素排序是递增的</span></span><br><span class="line">			    low = mid + <span class="number">1</span>;</span><br><span class="line">		    &#125;<span class="keyword">else</span>&#123;                 </span><br><span class="line">				high = mid; <span class="comment">// 有可能 mid 索引的元素就是最小元素</span></span><br><span class="line">		    &#125;	</span><br><span class="line">	    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">return</span> A[low];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>测试数据：</p>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">dataset1</span>: <span class="string">&#123;4, 5, 1, 2, 3&#125;</span></span><br><span class="line"><span class="attribute">dataset2</span>: <span class="string">&#123;5, 1, 2, 3, 4&#125;</span></span><br><span class="line"><span class="attribute">dataset3</span>: <span class="string">&#123;1, 2, 3, 4, 5&#125;</span></span><br><span class="line"><span class="attribute">dataset4</span>: <span class="string">&#123;2, 3, 4, 5, 1&#125;</span></span><br><span class="line"><span class="attribute">dataset5</span>: <span class="string">&#123;3, 4, 5, 1, 2&#125;</span></span><br><span class="line"><span class="attribute">dataset6</span>: <span class="string">&#123;1, 1, 1, 0, 1&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="总结">总结</h2><p>二分查找算法在面试题中经常遇到，算法很简单，但非常重要，面试题经常会以各种变化的形式[^1]考察。当看到对有序或部分有序的数组进行查找时，可以考虑用二分查找算法。</p>
-<p>[^1]: 《剑指Offer》中另一道面试题：统计一个数字在排序数组中出现的次数。例如输入排序数组 {1, 2, 3, 3, 3, 3, 4, 5}, 由于 3 在这个数组中出现了 4 次，因此输出 4。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -130,13 +151,13 @@ Naive解法在 O(n)">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/算法/">算法</a>
+  <a class="article-category-link" href="/categories/数学/">数学</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/algorithm/">algorithm</a>
+  <span></span> <a href="/tags/Math/">Math</a>
   </div>
 
 </div>
@@ -145,7 +166,7 @@ Naive解法在 O(n)">
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2015/04/05/Min-Number-in-Rotated-Array/" data-title="旋转数组中的最小值 | FreeMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2016/11/06/math-8/" data-title="方向导数与梯度 | FreeMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -158,19 +179,11 @@ Naive解法在 O(n)">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/04/05/where-and-having-in-sql/" title="SQL中WHERE与HAVING用法">
-  <strong>上一篇：</strong><br/>
-  <span>
-  SQL中WHERE与HAVING用法</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/04/05/Factorial-Trailing-Zeroes/"  title="Factorial-Trailing-Zeroes">
+<a href="/2016/11/06/math-7/"  title="多元函数偏导与全微分">
  <strong>下一篇：</strong><br/> 
- <span>Factorial-Trailing-Zeroes
+ <span>多元函数偏导与全微分
 </span>
 </a>
 </div>
@@ -179,7 +192,7 @@ Naive解法在 O(n)">
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/04/05/Min-Number-in-Rotated-Array/" data-title="旋转数组中的最小值" data-url="http://whlminds.com/2015/04/05/Min-Number-in-Rotated-Array/"></div>
+	<div class="ds-thread" data-thread-key="2016/11/06/math-8/" data-title="方向导数与梯度" data-url="http://whlminds.com/2016/11/06/math-8/"></div>
 </section>
 
 
@@ -189,7 +202,7 @@ Naive解法在 O(n)">
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Naive解法"><span class="toc-number">1.</span> <span class="toc-text">Naive解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改进的解法"><span class="toc-number">2.</span> <span class="toc-text">改进的解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#方向导数"><span class="toc-number">1.</span> <span class="toc-text">方向导数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#梯度"><span class="toc-number">2.</span> <span class="toc-text">梯度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">3.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
  
   </div>
 
