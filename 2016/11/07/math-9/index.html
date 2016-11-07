@@ -4,7 +4,7 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>拉格朗日中值定理 | FreeMinds</title>
+    <title>拉格朗日乘数法 | FreeMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="HongliangWEI">
@@ -13,26 +13,25 @@
     
     <meta name="description" content="继续！
 
-费马(Fermat)引理设函数 $f(x)$ 在点 $x_0$ 的某领域 $U(x_0)$ 内有定义，并且在 $x_0$ 处可导，如果对于任意的 $x \in U(x_0)$，有
-$$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
-那么 $f^{‘}(x)=0.$">
+多元函数的极值设函数 $z=f(x,y)$ 的定义域为 $D$，$P_{0}(x_{0}, y{0})$ 为 $D$ 的内点，若存在 $P_{0}$ 的某个领域 $U(P_{0}) \subset D$，使得对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有
+$$f(x,y)&amp;lt;f(x_{0}, y{0})，$$
+则称函数 $f(x,y)$ 在点 $(x_{0}, y{">
 <meta property="og:type" content="article">
-<meta property="og:title" content="拉格朗日中值定理">
-<meta property="og:url" content="http://whlminds.com/2016/10/30/math-3/index.html">
+<meta property="og:title" content="拉格朗日乘数法">
+<meta property="og:url" content="http://whlminds.com/2016/11/07/math-9/index.html">
 <meta property="og:site_name" content="FreeMinds">
 <meta property="og:description" content="继续！
 
-费马(Fermat)引理设函数 $f(x)$ 在点 $x_0$ 的某领域 $U(x_0)$ 内有定义，并且在 $x_0$ 处可导，如果对于任意的 $x \in U(x_0)$，有
-$$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
-那么 $f^{‘}(x)=0.$">
-<meta property="og:image" content="/illustration/lagrange-1.png">
+多元函数的极值设函数 $z=f(x,y)$ 的定义域为 $D$，$P_{0}(x_{0}, y{0})$ 为 $D$ 的内点，若存在 $P_{0}$ 的某个领域 $U(P_{0}) \subset D$，使得对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有
+$$f(x,y)&amp;lt;f(x_{0}, y{0})，$$
+则称函数 $f(x,y)$ 在点 $(x_{0}, y{">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="拉格朗日中值定理">
+<meta name="twitter:title" content="拉格朗日乘数法">
 <meta name="twitter:description" content="继续！
 
-费马(Fermat)引理设函数 $f(x)$ 在点 $x_0$ 的某领域 $U(x_0)$ 内有定义，并且在 $x_0$ 处可导，如果对于任意的 $x \in U(x_0)$，有
-$$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
-那么 $f^{‘}(x)=0.$">
+多元函数的极值设函数 $z=f(x,y)$ 的定义域为 $D$，$P_{0}(x_{0}, y{0})$ 为 $D$ 的内点，若存在 $P_{0}$ 的某个领域 $U(P_{0}) \subset D$，使得对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有
+$$f(x,y)&amp;lt;f(x_{0}, y{0})，$$
+则称函数 $f(x,y)$ 在点 $(x_{0}, y{">
 
     
     
@@ -89,14 +88,14 @@ $$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/10/30/math-3/" title="拉格朗日中值定理" itemprop="url">拉格朗日中值定理</a>
+      <a href="/2016/11/07/math-9/" title="拉格朗日乘数法" itemprop="url">拉格朗日乘数法</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
 		
   <p class="article-time">
-    <time datetime="2016-10-30T07:38:21.000Z" itemprop="datePublished"> 发表于 2016-10-30</time>
+    <time datetime="2016-11-07T13:38:21.000Z" itemprop="datePublished"> 发表于 2016-11-07</time>
     
   </p>
 </header>
@@ -105,68 +104,74 @@ $$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#费马(Fermat)引理"><span class="toc-number">1.</span> <span class="toc-text">费马(Fermat)引理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#罗尔(Rolle)定理"><span class="toc-number">2.</span> <span class="toc-text">罗尔(Rolle)定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉格朗日(Lagrange)中值定理"><span class="toc-number">3.</span> <span class="toc-text">拉格朗日(Lagrange)中值定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#柯西中值定理"><span class="toc-number">4.</span> <span class="toc-text">柯西中值定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#洛必达法则"><span class="toc-number">5.</span> <span class="toc-text">洛必达法则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多元函数的极值"><span class="toc-number">1.</span> <span class="toc-text">多元函数的极值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#必要条件"><span class="toc-number">1.1.</span> <span class="toc-text">必要条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#充分条件"><span class="toc-number">1.2.</span> <span class="toc-text">充分条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件极值"><span class="toc-number">2.</span> <span class="toc-text">条件极值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉格朗日乘数法"><span class="toc-number">3.</span> <span class="toc-text">拉格朗日乘数法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">4.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
 		
 		</div>
 		
 		<blockquote>
 <p>继续！</p>
 </blockquote>
-<h2 id="费马(Fermat)引理">费马(Fermat)引理</h2><p>设函数 $f(x)$ 在点 $x_0$ 的某领域 $U(x_0)$ 内有定义，并且在 $x_0$ 处可导，如果对于任意的 $x \in U(x_0)$，有</p>
-<p>$$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$</p>
-<p>那么 $f^{‘}(x)=0.$</p>
+<h2 id="多元函数的极值">多元函数的极值</h2><p>设函数 $z=f(x,y)$ 的定义域为 $D$，$P_{0}(x_{0}, y{0})$ 为 $D$ 的内点，若存在 $P_{0}$ 的某个领域 $U(P_{0}) \subset D$，使得对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有</p>
+<p>$$f(x,y)&lt;f(x_{0}, y{0})，$$</p>
+<p>则称函数 $f(x,y)$ 在点 $(x_{0}, y{0})$  有极大值 $f(x_{0}, y{0})$ ，点 $((x_{0}, y{0}))$ 称为函数 $f(x,y)$ 的极大值点；若对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有</p>
 <a id="more"></a>
-<h2 id="罗尔(Rolle)定理">罗尔(Rolle)定理</h2><p>如果函数 $f(x)$ 满足</p>
-<ul>
-<li>在闭区间 $[a, b]$ 上连续；</li>
-<li>在开区间 $(a, b)$ 内可导；</li>
-<li>在区间端点处的函数值相等，即 $f(a)=f(b)$，</li>
-</ul>
-<p>那么在 $(a, b)$ 至少有一点 $\xi，(a&lt;\xi&lt;b)$，使得 $f^{‘}(\xi)=0.$</p>
-<h2 id="拉格朗日(Lagrange)中值定理">拉格朗日(Lagrange)中值定理</h2><p>罗尔定理中 $f(a)=f(b)$ 是相当特殊的，使得罗尔定理的应用受到限制，如果取消 $f(a)=f(b)$ 这个条件，但仍然保留另外2个条件，并相应的改变结论，就得到 <code>拉格朗日中值定理</code>。</p>
-<p>如果函数 $f(x)$ 满足</p>
-<ul>
-<li>在闭区间 $[a, b]$ 上连续；</li>
-<li>在开区间 $(a, b)$ 内可导；</li>
-</ul>
-<p>那么在 $(a, b)$ 内至少有一点 $\xi，(a&lt;\xi&lt;b)$，使得等式</p>
-<p>$$f(b)-f(a)=f^{‘}(b-a)$$</p>
-<p>成立。</p>
-<p>改写上式可以表达为</p>
-<p>$$\frac{f(b)-f(a)}{b-a}=f^{‘}(\xi)$$</p>
-<p><img src="/illustration/lagrange-1.png" width="40%" height="40%"></p>
-<p>拉格朗日中值定理的几何意义为：如果连续曲线 $y=f(x)$ 的弧 $AB$ 上除端点外处处具有不垂直于 $x$ 轴的切线，那么这弧上至少有一点 $C$，使曲线在点 $C$ 处的切线平行于弦 $AB$。</p>
-<h2 id="柯西中值定理">柯西中值定理</h2><p>如果函数 $f(x)$ 及 $F(x)$ 满足</p>
-<ul>
-<li>在闭区间 $[a, b]$ 上连续；</li>
-<li>在开区间 $(a, b)$ 内可导；</li>
-<li>对任一 $x \in (a, b)，F^{‘}(x) \neq 0$，</li>
-</ul>
-<p>那么在 $(a, b)$ 内至少有一点 $\xi$，使得等式</p>
-<p>$$\frac{f(b)-f(a)}{F(b)-F(a)}=\frac{f^{‘}(\xi)}{F^{‘}(\xi)}$$</p>
-<p>成立。</p>
-<p>很明显，如果 $F(x)=x$，那么$F(b)-F(a)=b-a, F^{‘}(x)=1$，因而上面公式可写为</p>
-<p>$$f(b)-f(a)=f^{‘}(\xi)(b-a), (a&lt;\xi&lt;b),$$</p>
-<p>这就变成拉格朗日中值公式了。</p>
-<h2 id="洛必达法则">洛必达法则</h2><p>如果当 $x \to a（或 x \to \infty）$时，两个函数 $f(x)$ 与 $F(x)$ 都趋于零或者无穷大，那么极限 $\lim \limits_{x \to a} \frac{f(x)}{F(x)}（或 \lim \limits_{x \to \infty} \frac{f(x)}{F(x)}）$ 可能存在、也可能不存在，例如 $\lim \limits_{x \to 0} \frac{sin(x)}{x}$。</p>
-<p>洛必达法则 $L^{‘}Hospital$ 就是解决这类问题的，这种在一定条件下通过分子分母分别求导再求极限来确定未定式的值的方法称为洛必达法则。</p>
-<p>当 $x \to a$时，未定式 $\frac{0}{0}$ 的情形，设</p>
-<ul>
-<li>当 $x \to a$ 时，函数 $f(x)$ 及 $F(x)$ 都趋于零；</li>
-<li>在点 $a$ 的某去心领域内，$f^{‘}(x)$ 及 $F^{‘}(x)$ 都存在且 $F^{‘}(x) \neq 0；$</li>
-<li>$\lim \limits_{x \to a} \frac{f^{‘}(x)}{F^{‘}(x)}$ 存在（或为无穷大），则</li>
-</ul>
-<p>$$\lim \limits_{x \to a} \frac{f(x)}{F(x)}=\lim \limits_{x \to a} \frac{f^{‘}(x)}{F^{‘}(x)}.$$</p>
-<p>当 $x \to \infty$时，未定式 $\frac{0}{0}$ 的情形，设</p>
-<ul>
-<li>当 $x \to \infty$ 时，函数 $f(x)$ 及 $F(x)$ 都趋于零；</li>
-<li>当 $|x| &gt; N$ 时 $f^{‘}(x)$ 及 $F^{‘}(x)$ 都存在且 $F^{‘}(x) \neq 0；$</li>
-<li>$\lim \limits_{x \to \infty} \frac{f^{‘}(x)}{F^{‘}(x)}$ 存在（或为无穷大），则</li>
-</ul>
-<p>$$\lim \limits_{x \to \infty} \frac{f(x)}{F(x)}=\lim \limits_{x \to \infty} \frac{f^{‘}(x)}{F^{‘}(x)}.$$</p>
-<blockquote>
-<p>文中图片来自 维基百科。</p>
-</blockquote>
+<p>$$f(x,y)&gt;f(x_{0}, y{0})，$$</p>
+<p>则称函数 $f(x,y)$ 在点 $(x_{0}, y_{0})$ 有极小值 $f(x_{0}, y{0})$，点 $(x_{0}, y{0})$ 称为函数 $f(x,y)$ 的极小值点，极大值与极小值统称为极值。使得函数取得极值点的点称为极值点。</p>
+<h3 id="必要条件">必要条件</h3><p>设函数 $z=f(x,y)$ 在点 $(x_{0}, y_{0})$ 具有偏导数，且在点 $(x_{0}, y_{0})$ 处有极值，则有</p>
+<p>$$f_{x}(x_{0}, y_{0})=0,f_{y}(x_{0}, y_{0})=0.$$</p>
+<h3 id="充分条件">充分条件</h3><p>设函数 $z=f(x,y)$ 在点 $(x_{0},y_{0})$ 的某领域内连续且有一阶和二阶连续偏导数，又 $f_{x}(x_{0}, y_{0})=0,f_{y}(x_{0}, y_{0})=0$，令</p>
+<p>$$f_{xx}(x_{0}, y_{0})=A,f_{xy}(x_{0}, y_{0})=B,f_{yy}(x_{0}, y_{0})=C,$$</p>
+<p>则 $f(x,y)$ 在 $(x_{0}, y_{0})$ 处是否取得极值的条件如下：</p>
+<p>(1) $AC-B^{2}&gt;0$ 时具有极值，且当 $A<0$ 时有极大值，当="" $a="">0$ 时有极小值；</0$></p>
+<p>(2) $AC-B^{2}&lt;0$ 时没有极值；</p>
+<p>(3) $AC-B^{2}=0$ 时可能有极值，也可能没有极值，还需要另作讨论。</p>
+<h2 id="条件极值">条件极值</h2><p>对于函数的自变量，除了限制在函数的定义域内以外，并无其他条件，所以有时候称为 <strong>无条件极值</strong>，而对自变量有附加条件的极值称为<strong>条件极值</strong>。</p>
+<p>很多情况下，将条件极值化为无条件极值并不容易。可以通过 <strong>拉格朗日乘数法</strong> 解决条件极值，而不需化为无条件极值。</p>
+<h2 id="拉格朗日乘数法">拉格朗日乘数法</h2><p>函数</p>
+<p>$$\begin{eqnarray}<br>z=f(x,y)<br>\end{eqnarray}$$</p>
+<p>在条件</p>
+<p>$$\begin{eqnarray}<br>\varphi (x,y)=0<br>\end{eqnarray}$$</p>
+<p>下取得极值的必要条件。</p>
+<p>如果函数 (1) 在 $(x_{0}, y_{0})$ 取得所求的极值，那么首先有</p>
+<p>$$\begin{eqnarray}<br>\varphi (x_{0}, y_{0})=0.<br>\end{eqnarray}$$</p>
+<p>我们假定在 $(x_{0}, y_{0})$ 的某一领域内 $f(x,y)$ 与 $\varphi (x,y)$ 均有连续的一阶偏导数，而 $\varphi _{y}(x_{0}, y_{0}) \neq 0$，由隐函数存在定理可知，方程 (2) 确定一个连续且具有连续导数的函数 $y=\psi (x)$，将其带入 (1) 式，结果得到一个变量 $x$ 的函数</p>
+<p>$$\begin{eqnarray}<br>z=f[x, \psi (x)].<br>\end{eqnarray}$$</p>
+<p>于是函数 (1) 在 $(x_{0}, y_{0})$ 取得所求的极值，也就是相当于函数 $(4)$ 在 $x=x_{0}$ 取得极值。由一元可导函数取得极值的必要条件知道</p>
+<p>$$\begin{eqnarray}<br>\frac{dz}{dx}|_{x=x_{0}}=f_{x}(x_{0}, y_{0})+f_{y}(x_{0}, y_{0})\frac{dy}{dx}|_{x=x_{0}}=0,<br>\end{eqnarray}$$</p>
+<p>而由 (2) 用隐函数求导公式，有</p>
+<p>$$\frac{dy}{dx}|_{x=x_{0}}=-\frac{\psi _{x}(x_{0}, y_{0})}{\psi _{y}(x_{0}, y_{0})}.$$</p>
+<p>把上式代入 (5) 式，得</p>
+<p>$$\begin{eqnarray}<br>f_{x}(x_{0}, y_{0})-f_{y}(x_{0}, y_{0})\frac{\psi _{x}(x_{0}, y_{0})}{\psi _{y}(x_{0}, y_{0})}=0.<br>\end{eqnarray}$$</p>
+<p>式 (3) 和 (6) 就是函数 (1) 在条件 (2) 下在 $(x_{0}, y_{0})$ 取得极值的必要条件。</p>
+<p>设 $\frac{f_{y}(x_{0}, y_{0})}{\psi_{y}(x_{0}, y_{0})}=-\lambda$，上述必要条件就变为</p>
+<p>$$\begin{eqnarray}<br>\begin{cases}<br>f_{x}(x_{0}, y_{0})+\lambda \varphi _{x}(x_{0}, y_{0})=0,\\<br>f_{y}(x_{0}, y_{0})+\lambda \varphi _{y}(x_{0}, y_{0})=0,\\<br>\psi_{y}(x_{0}, y_{0})=0.<br>\end{cases}<br>\end{eqnarray}$$</p>
+<p>若引进辅助函数</p>
+<p>$$L(x,y)=f(x,y)+\lambda \varphi (x,y),$$</p>
+<p>则不难看出，(7) 中前两项就是</p>
+<p>$$L_{x}(x_{0}, y_{0})=0, L_{y}(x_{0}, y_{0})=0.$$</p>
+<p>函数 $L(x,y)$ 称为拉格朗日函数，参数 $\lambda$ 称为拉格朗日乘子。</p>
+<hr>
+<p>要找函数 $z=f(x,y)$ 在附加条件 $\varphi (x,y)=0$ 下的可能极值点，可以先作拉格朗日函数</p>
+<p>$$L(x,y)=f(x,y)+\lambda \varphi (x,y),$$</p>
+<p>其中 $\lambda$ 为参数，求其对 $x$ 与 $y$ 的一阶偏导数，并使之为零，然后与方程 (2) 联立起来</p>
+<p>$$\begin{eqnarray}<br>\begin{cases}<br>f_{x}(x, y)+\lambda \varphi _{x}(x, y)=0,\\<br>f_{y}(x, y)+\lambda \varphi _{y}(x, y)=0,\\<br>\psi_{y}(x, y)=0.<br>\end{cases}<br>\end{eqnarray}$$</p>
+<p>由这方程组解出 $x,y,\lambda$ 这样得到 $(x,y)$ 就是函数 $f(x,y)$ 在附加条件 $\varphi (x,y)=0$ 下的可能极值点。</p>
+<h2 id="例子">例子</h2><p>求表面积为 $a^{2}$ 而体积为最大的长方体的体积。</p>
+<p>设长方体的三棱长为 $x、y$ 与 $z$ ，则问题就是在条件</p>
+<p>$$\begin{eqnarray}<br>\varphi (x,y,z)=2xy+2yz+2xz-a^{2}=0<br>\end{eqnarray}$$</p>
+<p>下，求函数</p>
+<p>$$V=xyz, (x&gt;0, y&gt;0, z&gt;0)$$</p>
+<p>的最大值，作拉格朗日函数</p>
+<p>$$L(x,y,z)=xyz+\lambda (2xy+2yz+2xz-a^{2}),$$</p>
+<p>求其对 $x、y$ 与 $z$ 的偏导数，并使之为零，得到<br>$$\begin{eqnarray}<br>\begin{cases}<br>yz+2\lambda (y+z)=0,\\<br>xz+2\lambda (x+z)=0,\\<br>xy+2\lambda (y+x)=0.<br>\end{cases}<br>\end{eqnarray}$$</p>
+<p>再与 (9) 联立求解。</p>
+<p>因为 $x、y$ 与 $z$ 都不等于零，所以由 (10) 可得</p>
+<p>$$\frac{x}{y}=\frac{x+z}{y+z}, \frac{y}{z}=\frac{x+y}{x+z}.$$</p>
+<p>由以上两个式子解得</p>
+<p>$$x=y=z$$</p>
+<p>将此式子代入 (9)，使得</p>
+<p>$$x=y=z=\frac{\sqrt{6}}{6}a,$$</p>
+<p>这是唯一可能的极值点，因为由问题本身可知最大值一定存在，所以最大值就在这个可能的极值点处取得，也就是说，表面积为 $a^{2}$ 的长方体中， 以棱长为 $\frac{\sqrt{6}}{6}a$ 的正方体的体积为最大，最大体积 $V=\frac{\sqrt{6}}{36}a^{3}$。</p>
 <h2 id="参考资料">参考资料</h2><ol>
 <li>《高等数学》，第七版上册，同济大学版</li>
 </ol>
@@ -192,7 +197,7 @@ $$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2016/10/30/math-3/" data-title="拉格朗日中值定理 | FreeMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2016/11/07/math-9/" data-title="拉格朗日乘数法 | FreeMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -205,19 +210,11 @@ $$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/10/30/math-4/" title="泰勒公式">
-  <strong>上一篇：</strong><br/>
-  <span>
-  泰勒公式</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/10/29/math-2/"  title="导数与微分">
+<a href="/2016/11/06/math-8/"  title="方向导数与梯度">
  <strong>下一篇：</strong><br/> 
- <span>导数与微分
+ <span>方向导数与梯度
 </span>
 </a>
 </div>
@@ -226,7 +223,7 @@ $$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/10/30/math-3/" data-title="拉格朗日中值定理" data-url="http://whlminds.com/2016/10/30/math-3/"></div>
+	<div class="ds-thread" data-thread-key="2016/11/07/math-9/" data-title="拉格朗日乘数法" data-url="http://whlminds.com/2016/11/07/math-9/"></div>
 </section>
 
 
@@ -236,7 +233,7 @@ $$f(x) \leq f(x_0) （或 f(x) \geq f(x_0)）,$$
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#费马(Fermat)引理"><span class="toc-number">1.</span> <span class="toc-text">费马(Fermat)引理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#罗尔(Rolle)定理"><span class="toc-number">2.</span> <span class="toc-text">罗尔(Rolle)定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉格朗日(Lagrange)中值定理"><span class="toc-number">3.</span> <span class="toc-text">拉格朗日(Lagrange)中值定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#柯西中值定理"><span class="toc-number">4.</span> <span class="toc-text">柯西中值定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#洛必达法则"><span class="toc-number">5.</span> <span class="toc-text">洛必达法则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多元函数的极值"><span class="toc-number">1.</span> <span class="toc-text">多元函数的极值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#必要条件"><span class="toc-number">1.1.</span> <span class="toc-text">必要条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#充分条件"><span class="toc-number">1.2.</span> <span class="toc-text">充分条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件极值"><span class="toc-number">2.</span> <span class="toc-text">条件极值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉格朗日乘数法"><span class="toc-number">3.</span> <span class="toc-text">拉格朗日乘数法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">4.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
  
   </div>
 

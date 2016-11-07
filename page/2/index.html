@@ -78,6 +78,73 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/10/07/hive-udf-java-python/" title="在Hive中通过Java和Python实现UDF" itemprop="url">在Hive中通过Java和Python实现UDF</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-10-07T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-10-07</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>当业务数据量过大，不能在关系型数据库中统计时，可以通过 Sqoop 导入到 HDFS 上进行统计，类似日志数据一样。导入到 HDFS 上数据，每一条记录通过 <code>\t</code> 或 <code>Ctrl+A</code> 等分割每一个字断，通过 <code>\n</code> 分割每一条记录。然后，通过建立 Hive 表指向 HDFS 对应的路径数据，对 HDFS 上的数据添加 Schema 定义，可以基于 Hive 中 SQL 的语法进行查询统计。</p>
+<p>尽管 Hive 提供了丰富的<a href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+UDF">函数</a>，有时仍然不能满足个性化的查询和统计要求。这时，需要用户实现 <code>UDF</code>。</p>
+<h2 id="概述">概述</h2><p><code>UDF</code>，即 User-Defined Function，用户通过自定义对数据的处理过程，以函数的形式在 HiveQL 中使用。</p>
+<p>有 2 种方式在 HiveQL 中实现 UDF。<strong> 第一种方式 </strong>，即通过 <code>Java</code> 或其他通过 JVM 实现的语言（Jython、JRuby、Clojure、Groovy），实现UDF；<strong> 第二种方式 </strong>，通过 <code>TRANSFORM...AS</code> 语法，使用可执行的脚步语言实现 UDF。 接下来，将分别介绍通过 Java 和 Python 实现 Hive 中的 UDF，最后，比较二者在使用过程中的异同。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/10/07/hive-udf-java-python/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Hive/">Hive</a><a href="/tags/Java/">Java</a><a href="/tags/Python/">Python</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/10/07/hive-udf-java-python/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/10/07/hive-udf-java-python/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/10/06/php-nginx-mysql-mac/" title="Mac下安装Nginx、PHP和MySQL" itemprop="url">Mac下安装Nginx、PHP和MySQL</a>
   </h1>
   <p class="article-author">By
@@ -681,79 +748,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/02/Baby's-First-Garbage-Collector/" title="简易的垃圾回收器" itemprop="url">简易的垃圾回收器</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-02T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-04-02</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>在<a href="http://blog.jobbole.com/">伯乐在线</a>上看到这篇<a href="http://blog.jobbole.com/53376/">Google工程师教你编写你的第一个垃圾回收器</a>文章，着实被作者<a href="http://www.stuffwithstuff.com/bob-nystrom.html">Bob Nystrom</a>深入浅出、娓娓道来讲述垃圾回收机制的思路所吸引，必须收藏与分享；）</p>
-<h2 id="Bob_Nystrom的话">Bob Nystrom的话</h2><blockquote>
-<p>每当我倍感压力以及有很多事情要做的时候，我总是有这样一种反常的反应，那就是希望做一些其他的事情来摆脱这种状况。通常情况下，这些事情都是些我能够编写并实现的独立的小程序。</p>
-<p>一天早上，我几乎要被一堆事情给整疯了——我得写我那本《游戏编程模式》、处理一些工作上的事情、还要准备一场Strange Loop的演讲，然后这时我突然想到：“我该写一个垃圾回收器了”。</p>
-<p>是的，我知道那一刻让我看上去有多疯狂。不过我的神经故障却是你实现一段基础的程序语言设计的免费教程！在100行左右毫无新意的c代码中，我设法实现一个基本的标记和扫描模块。</p>
-<p>有人认为，垃圾回收好比是有更多鲨鱼出没的危险水域，但在这篇文章中，我会给你一个漂亮的儿童游泳池去玩耍。可能这里面仍然会有一些坑，但至少这是一个浅水区。</p>
-</blockquote>
-<h2 id="精简、复用、再复用">精简、复用、再复用</h2><p>垃圾回收背后有这样一个基本的观念：编程语言(大多数的)似乎总能访问无限的内存。而开发者可以一直分配、分配再分配——像魔法一样，取之不尽用之不竭。</p>
-<p>当然，我们从来都没有无限的内存。所以计算机实现回收的方式就是当机器需要分配一些内存，而内存又不足时，让它回收垃圾。</p>
-<p><strong>“垃圾(Garbage)”</strong>在这里表示那些事先分配过但后来不再被使用的内存。而基于对无限内存的幻想，我们需要确保“不再被使用”对于编程语言来说是非常安全的。要知道在你的程序试图访问一些随机的对象时它们却刚好正在得到回收，这可不是一件好玩的事情。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/04/02/Baby's-First-Garbage-Collector/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/C-C-plus-plus/">C/C plus plus</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/GC/">GC</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/04/02/Baby's-First-Garbage-Collector/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/02/Baby's-First-Garbage-Collector/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
@@ -772,7 +766,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Math/" title="Math">Math<sup>8</sup></a></li>
+				<li><a href="/tags/Math/" title="Math">Math<sup>9</sup></a></li>
 			
 		
 			
@@ -853,7 +847,7 @@
 		  
 		
 		  
-			<li><a href="/categories/数学/" title="数学">数学<sup>8</sup></a></li>
+			<li><a href="/categories/数学/" title="数学">数学<sup>9</sup></a></li>
 		  
 		
 		  
