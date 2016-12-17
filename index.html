@@ -78,6 +78,74 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2016/11/07/random-var-distribution/" title="随机变量分布" itemprop="url">随机变量分布</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2016-11-07T13:38:21.000Z" itemprop="datePublished"> 发表于 2016-11-07</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <blockquote>
+<p>随机变量 $X=X(e)$ 是定义在样本空间 $S=\{e\}$ 上的实值单值函数，它是随机试验结果的函数，它的取值随试验的结果而定，是不能预先确定的，它的取值有一定的概率分布。</p>
+</blockquote>
+<h2 id="离散型随机变量">离散型随机变量</h2><p>一个随机变量，如果它所有可能的值是有限个或可列无限个，这种随机变量称为离散型随机变量。</p>
+<h3 id="离散型随机变量性质">离散型随机变量性质</h3><p>设离散型随机变量 $X$ 所有可能取的值为 $x_{k},(k=1,2,\cdots)$，$X$ 取各个可能值的概率，即事件 $\{X=x_{k}\}$ 的概率为</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2016/11/07/random-var-distribution/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/数学/">数学</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Math/">Math</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/11/07/random-var-distribution/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/11/07/random-var-distribution/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2016/11/07/math-9/" title="拉格朗日乘数法" itemprop="url">拉格朗日乘数法</a>
   </h1>
   <p class="article-author">By
@@ -696,74 +764,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/11/30/mapreduce-intro/" title="浅谈MapReduce" itemprop="url">浅谈MapReduce</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
-		
-  <p class="article-time">
-    <time datetime="2015-11-30T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-11-30</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <blockquote>
-<p>MapReduce被提出，已有10年多，广泛应用于大数据领域，在21世纪这信息爆炸时代，有效地帮助无数多的攻城狮解决处理海量数据的困扰。</p>
-</blockquote>
-<h2 id="概述">概述</h2><p>在 <code>OSDI 2004</code>，Google 的两名科学家 <code>Jeffrefy Dean</code> 和 <code>Sanjay Ghemawat</code> 在一篇名为 <code>MapReduce: Simplified Data Processing on Large Clusters</code> 的 paper 中讲述了 <code>MapReduce</code>，该 paper 在写本文时已被引用高达 <code>15542</code> 次。本篇主要以该 paper 中对 <code>MapReduce</code> 的描述，以及自己的开发经验，简要谈一下对 <code>MapReduce</code> 的理解。</p>
-<p><code>MapReduce</code>是一个编程模型，用于处理海量数据，生成目标数据结果。MapReduce 将任务的计算过程划分为2个阶段： <code>Map</code> 阶段和 <code>Reduce</code> 阶段。计算过程中，在 <code>Map</code> 阶段，对业务逻辑的每一条 <code>记录</code> 作为输入，生成一组 <code>&lt;key, value&gt;</code> 对作为中间结果；接着，在 <code>Reduce</code> 阶段，将 <code>Map</code> 阶段中生成的一组 <code>&lt;key, value&gt;</code> 对中间结果进行合并，即对具有相同 <code>key</code> 的 <code>value</code> 进行合并，这里的<code>合并</code>可能是做聚合操作，也可能是进行排序等操作，然后将最终合并后的结果输出。让人欣喜的是，现实世界中的许多问题处理过程，都可以表达成这样的模型。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/11/30/mapreduce-intro/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/MapReduce/">MapReduce</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/11/30/mapreduce-intro/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/11/30/mapreduce-intro/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -782,7 +782,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Math/" title="Math">Math<sup>9</sup></a></li>
+				<li><a href="/tags/Math/" title="Math">Math<sup>10</sup></a></li>
 			
 		
 			
@@ -802,11 +802,11 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -814,11 +814,11 @@
 			
 		
 			
-				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>1</sup></a></li>
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
+				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>1</sup></a></li>
 			
 		
 			
@@ -863,7 +863,7 @@
 		  
 		
 		  
-			<li><a href="/categories/数学/" title="数学">数学<sup>9</sup></a></li>
+			<li><a href="/categories/数学/" title="数学">数学<sup>10</sup></a></li>
 		  
 		
 		  
