@@ -4,34 +4,33 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>拉格朗日乘数法 | FreeMinds</title>
+    <title>线性回归 | FreeMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="HongliangWEI">
     
 
     
-    <meta name="description" content="继续！
+    <meta name="description" content="尽管网络上讲述 线性回归 的文章多如牛毛，这里再次讲述，仅为记录自己的理解过程。文中部分内容直接从参考资料拿来。
 
-多元函数的极值设函数 $z=f(x,y)$ 的定义域为 $D$，$P_{0}(x_{0}, y_{0})$ 为 $D$ 的内点，若存在 $P_{0}$ 的某个领域 $U(P_{0}) \subset D$，使得对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有
-$$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
-则称函数 $f(x,y)$ 在点 $(x_{0},">
+机器学习过程一个典型的有监督的机器学习过程，目标是构建一个具有较强泛化能力的模型，这个模型能够对输入数据得到输出数据，输出数据能够进行较好的预测。
+在构建模型的过程中，首先给出一组已经标注好的训练数据作为输入，通过定义一个假设函数对输入数据进行拟合，并通过定义一个损失函数衡量假设函数">
 <meta property="og:type" content="article">
-<meta property="og:title" content="拉格朗日乘数法">
-<meta property="og:url" content="http://whlminds.com/2016/11/07/math-9/index.html">
+<meta property="og:title" content="线性回归">
+<meta property="og:url" content="http://whlminds.com/2016/12/17/linear-regression/index.html">
 <meta property="og:site_name" content="FreeMinds">
-<meta property="og:description" content="继续！
+<meta property="og:description" content="尽管网络上讲述 线性回归 的文章多如牛毛，这里再次讲述，仅为记录自己的理解过程。文中部分内容直接从参考资料拿来。
 
-多元函数的极值设函数 $z=f(x,y)$ 的定义域为 $D$，$P_{0}(x_{0}, y_{0})$ 为 $D$ 的内点，若存在 $P_{0}$ 的某个领域 $U(P_{0}) \subset D$，使得对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有
-$$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
-则称函数 $f(x,y)$ 在点 $(x_{0},">
+机器学习过程一个典型的有监督的机器学习过程，目标是构建一个具有较强泛化能力的模型，这个模型能够对输入数据得到输出数据，输出数据能够进行较好的预测。
+在构建模型的过程中，首先给出一组已经标注好的训练数据作为输入，通过定义一个假设函数对输入数据进行拟合，并通过定义一个损失函数衡量假设函数">
+<meta property="og:image" content="/illustration/batch-gradient-descent-1.png">
+<meta property="og:image" content="/illustration/stochastic-gradient-descent-1.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="拉格朗日乘数法">
-<meta name="twitter:description" content="继续！
+<meta name="twitter:title" content="线性回归">
+<meta name="twitter:description" content="尽管网络上讲述 线性回归 的文章多如牛毛，这里再次讲述，仅为记录自己的理解过程。文中部分内容直接从参考资料拿来。
 
-多元函数的极值设函数 $z=f(x,y)$ 的定义域为 $D$，$P_{0}(x_{0}, y_{0})$ 为 $D$ 的内点，若存在 $P_{0}$ 的某个领域 $U(P_{0}) \subset D$，使得对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有
-$$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
-则称函数 $f(x,y)$ 在点 $(x_{0},">
+机器学习过程一个典型的有监督的机器学习过程，目标是构建一个具有较强泛化能力的模型，这个模型能够对输入数据得到输出数据，输出数据能够进行较好的预测。
+在构建模型的过程中，首先给出一组已经标注好的训练数据作为输入，通过定义一个假设函数对输入数据进行拟合，并通过定义一个损失函数衡量假设函数">
 
     
     
@@ -88,14 +87,14 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/07/math-9/" title="拉格朗日乘数法" itemprop="url">拉格朗日乘数法</a>
+      <a href="/2016/12/17/linear-regression/" title="线性回归" itemprop="url">线性回归</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
 		
   <p class="article-time">
-    <time datetime="2016-11-07T13:38:21.000Z" itemprop="datePublished"> 发表于 2016-11-07</time>
+    <time datetime="2016-12-17T15:38:21.000Z" itemprop="datePublished"> 发表于 2016-12-17</time>
     
   </p>
 </header>
@@ -104,76 +103,56 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多元函数的极值"><span class="toc-number">1.</span> <span class="toc-text">多元函数的极值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#必要条件"><span class="toc-number">1.1.</span> <span class="toc-text">必要条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#充分条件"><span class="toc-number">1.2.</span> <span class="toc-text">充分条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件极值"><span class="toc-number">2.</span> <span class="toc-text">条件极值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉格朗日乘数法"><span class="toc-number">3.</span> <span class="toc-text">拉格朗日乘数法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">4.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习过程"><span class="toc-number">1.</span> <span class="toc-text">机器学习过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线性回归"><span class="toc-number">2.</span> <span class="toc-text">线性回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#假设函数"><span class="toc-number">2.1.</span> <span class="toc-text">假设函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#损失函数"><span class="toc-number">2.2.</span> <span class="toc-text">损失函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最小均方算法"><span class="toc-number">2.3.</span> <span class="toc-text">最小均方算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#梯度下降"><span class="toc-number">2.4.</span> <span class="toc-text">梯度下降</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#批梯度下降（batch_gradient_descent）"><span class="toc-number">2.4.1.</span> <span class="toc-text">批梯度下降（batch gradient descent）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#随机梯度下降（Stochastic_Gradient_Descent,_SGD）"><span class="toc-number">2.4.2.</span> <span class="toc-text">随机梯度下降（Stochastic Gradient Descent, SGD）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
 		
 		</div>
 		
 		<blockquote>
-<p>继续！</p>
+<p>尽管网络上讲述 线性回归 的文章多如牛毛，这里再次讲述，仅为记录自己的理解过程。文中部分内容直接从参考资料拿来。</p>
 </blockquote>
-<h2 id="多元函数的极值">多元函数的极值</h2><p>设函数 $z=f(x,y)$ 的定义域为 $D$，$P_{0}(x_{0}, y_{0})$ 为 $D$ 的内点，若存在 $P_{0}$ 的某个领域 $U(P_{0}) \subset D$，使得对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有</p>
-<p>$$f(x,y)&lt;f(x_{0}, y_{0})，$$</p>
-<p>则称函数 $f(x,y)$ 在点 $(x_{0}, y_{0})$  有极大值 $f(x_{0}, y_{0})$ ，点 $((x_{0}, y_{0}))$ 称为函数 $f(x,y)$ 的极大值点；若对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有</p>
+<h2 id="机器学习过程">机器学习过程</h2><p>一个典型的有监督的机器学习过程，目标是构建一个具有较强泛化能力的模型，这个模型能够对输入数据得到输出数据，输出数据能够进行较好的预测。</p>
+<p>在构建模型的过程中，首先给出一组已经标注好的训练数据作为输入，通过定义一个假设函数对输入数据进行拟合，并通过定义一个损失函数衡量假设函数拟合的好坏，在损失函数取得最小值时，确定假设函数中参数。这个假设函数就作为要构建的模型，对新的数据给出估计。</p>
+<h2 id="线性回归">线性回归</h2><p>训练数据集 $\{(X^{(1)},y^{(2)}),(X^{(2)},y^{(2)}),\cdots,(X^{(m)},y^{(m)})\}$，其中，$X^{(i)}, (1 \leq i \leq m)$ ，为一组向量 $(x_{1}^{(i)}, x_{2}^{(i)}, \cdots, x_{n}^{(i)})$，分量 $x_{j}^{(i)}, (1 \leq j \leq n)$， 为 $X^{(i)}$ 的一个特征，$y^{(i)} \in R$。</p>
 <a id="more"></a>
-<p>$$f(x,y)&gt;f(x_{0}, y_{0})，$$</p>
-<p>则称函数 $f(x,y)$ 在点 $(x_{0}, y_{0})$ 有极小值 $f(x_{0}, y{0})$，点 $(x_{0}, y_{0})$ 称为函数 $f(x,y)$ 的极小值点，极大值与极小值统称为极值。使得函数取得极值点的点称为极值点。</p>
-<h3 id="必要条件">必要条件</h3><p>设函数 $z=f(x,y)$ 在点 $(x_{0}, y_{0})$ 具有偏导数，且在点 $(x_{0}, y_{0})$ 处有极值，则有</p>
-<p>$$f_{x}(x_{0}, y_{0})=0,f_{y}(x_{0}, y_{0})=0.$$</p>
-<h3 id="充分条件">充分条件</h3><p>设函数 $z=f(x,y)$ 在点 $(x_{0},y_{0})$ 的某领域内连续且有一阶和二阶连续偏导数，又 $f_{x}(x_{0}, y_{0})=0,f_{y}(x_{0}, y_{0})=0$，令</p>
-<p>$$f_{xx}(x_{0}, y_{0})=A,f_{xy}(x_{0}, y_{0})=B,f_{yy}(x_{0}, y_{0})=C,$$</p>
-<p>则 $f(x,y)$ 在 $(x_{0}, y_{0})$ 处是否取得极值的条件如下：</p>
-<p>(1) $AC-B^{2}&gt;0$ 时具有极值，且当 $A<0$ 时有极大值，当="" $a="">0$ 时有极小值；</0$></p>
-<p>(2) $AC-B^{2}&lt;0$ 时没有极值；</p>
-<p>(3) $AC-B^{2}=0$ 时可能有极值，也可能没有极值，还需要另作讨论。</p>
-<h2 id="条件极值">条件极值</h2><p>对于函数的自变量，除了限制在函数的定义域内以外，并无其他条件，所以有时候称为 <strong>无条件极值</strong>，而对自变量有附加条件的极值称为<strong>条件极值</strong>。</p>
-<p>很多情况下，将条件极值化为无条件极值并不容易。可以通过 <strong>拉格朗日乘数法</strong> 解决条件极值，而不需化为无条件极值。</p>
-<h2 id="拉格朗日乘数法">拉格朗日乘数法</h2><p>函数</p>
-<p>$$\begin{eqnarray}<br>z=f(x,y)<br>\end{eqnarray}$$</p>
-<p>在条件</p>
-<p>$$\begin{eqnarray}<br>\varphi (x,y)=0<br>\end{eqnarray}$$</p>
-<p>下取得极值的必要条件。</p>
-<p>如果函数 (1) 在 $(x_{0}, y_{0})$ 取得所求的极值，那么首先有</p>
-<p>$$\begin{eqnarray}<br>\varphi (x_{0}, y_{0})=0.<br>\end{eqnarray}$$</p>
-<p>我们假定在 $(x_{0}, y_{0})$ 的某一领域内 $f(x,y)$ 与 $\varphi (x,y)$ 均有连续的一阶偏导数，而 $\varphi _{y}(x_{0}, y_{0}) \neq 0$，由隐函数存在定理可知，方程 (2) 确定一个连续且具有连续导数的函数 $y=\psi (x)$，将其带入 (1) 式，结果得到一个变量 $x$ 的函数</p>
-<p>$$\begin{eqnarray}<br>z=f[x, \psi (x)].<br>\end{eqnarray}$$</p>
-<p>于是函数 (1) 在 $(x_{0}, y_{0})$ 取得所求的极值，也就是相当于函数 $(4)$ 在 $x=x_{0}$ 取得极值。由一元可导函数取得极值的必要条件知道</p>
-<p>$$\begin{eqnarray}<br>\frac{dz}{dx}|_{x=x_{0}}=f_{x}(x_{0}, y_{0})+f_{y}(x_{0}, y_{0})\frac{dy}{dx}|_{x=x_{0}}=0,<br>\end{eqnarray}$$</p>
-<p>而由 (2) 用隐函数求导公式，有</p>
-<p>$$\frac{dy}{dx}|_{x=x_{0}}=-\frac{\psi _{x}(x_{0}, y_{0})}{\psi _{y}(x_{0}, y_{0})}.$$</p>
-<p>把上式代入 (5) 式，得</p>
-<p>$$\begin{eqnarray}<br>f_{x}(x_{0}, y_{0})-f_{y}(x_{0}, y_{0})\frac{\psi _{x}(x_{0}, y_{0})}{\psi _{y}(x_{0}, y_{0})}=0.<br>\end{eqnarray}$$</p>
-<p>式 (3) 和 (6) 就是函数 (1) 在条件 (2) 下在 $(x_{0}, y_{0})$ 取得极值的必要条件。</p>
-<p>设 $\frac{f_{y}(x_{0}, y_{0})}{\psi_{y}(x_{0}, y_{0})}=-\lambda$，上述必要条件就变为</p>
-<p>$$\begin{eqnarray}<br>\begin{cases}<br>f_{x}(x_{0}, y_{0})+\lambda \varphi _{x}(x_{0}, y_{0})=0,\\<br>f_{y}(x_{0}, y_{0})+\lambda \varphi _{y}(x_{0}, y_{0})=0,\\<br>\psi_{y}(x_{0}, y_{0})=0.<br>\end{cases}<br>\end{eqnarray}$$</p>
-<p>若引进辅助函数</p>
-<p>$$L(x,y)=f(x,y)+\lambda \varphi (x,y),$$</p>
-<p>则不难看出，(7) 中前两项就是</p>
-<p>$$L_{x}(x_{0}, y_{0})=0, L_{y}(x_{0}, y_{0})=0.$$</p>
-<p>函数 $L(x,y)$ 称为拉格朗日函数，参数 $\lambda$ 称为拉格朗日乘子。</p>
-<hr>
-<p>要找函数 $z=f(x,y)$ 在附加条件 $\varphi (x,y)=0$ 下的可能极值点，可以先作拉格朗日函数</p>
-<p>$$L(x,y)=f(x,y)+\lambda \varphi (x,y),$$</p>
-<p>其中 $\lambda$ 为参数，求其对 $x$ 与 $y$ 的一阶偏导数，并使之为零，然后与方程 (2) 联立起来</p>
-<p>$$\begin{eqnarray}<br>\begin{cases}<br>f_{x}(x, y)+\lambda \varphi _{x}(x, y)=0,\\<br>f_{y}(x, y)+\lambda \varphi _{y}(x, y)=0,\\<br>\psi_{y}(x, y)=0.<br>\end{cases}<br>\end{eqnarray}$$</p>
-<p>由这方程组解出 $x,y,\lambda$ 这样得到 $(x,y)$ 就是函数 $f(x,y)$ 在附加条件 $\varphi (x,y)=0$ 下的可能极值点。</p>
-<h2 id="例子">例子</h2><p>求表面积为 $a^{2}$ 而体积为最大的长方体的体积。</p>
-<p>设长方体的三棱长为 $x、y$ 与 $z$ ，则问题就是在条件</p>
-<p>$$\begin{eqnarray}<br>\varphi (x,y,z)=2xy+2yz+2xz-a^{2}=0<br>\end{eqnarray}$$</p>
-<p>下，求函数</p>
-<p>$$V=xyz, (x&gt;0, y&gt;0, z&gt;0)$$</p>
-<p>的最大值，作拉格朗日函数</p>
-<p>$$L(x,y,z)=xyz+\lambda (2xy+2yz+2xz-a^{2}),$$</p>
-<p>求其对 $x、y$ 与 $z$ 的偏导数，并使之为零，得到<br>$$\begin{eqnarray}<br>\begin{cases}<br>yz+2\lambda (y+z)=0,\\<br>xz+2\lambda (x+z)=0,\\<br>xy+2\lambda (y+x)=0.<br>\end{cases}<br>\end{eqnarray}$$</p>
-<p>再与 (9) 联立求解。</p>
-<p>因为 $x、y$ 与 $z$ 都不等于零，所以由 (10) 可得</p>
-<p>$$\frac{x}{y}=\frac{x+z}{y+z}, \frac{y}{z}=\frac{x+y}{x+z}.$$</p>
-<p>由以上两个式子解得</p>
-<p>$$x=y=z$$</p>
-<p>将此式子代入 (9)，使得</p>
-<p>$$x=y=z=\frac{\sqrt{6}}{6}a,$$</p>
-<p>这是唯一可能的极值点，因为由问题本身可知最大值一定存在，所以最大值就在这个可能的极值点处取得，也就是说，表面积为 $a^{2}$ 的长方体中， 以棱长为 $\frac{\sqrt{6}}{6}a$ 的正方体的体积为最大，最大体积 $V=\frac{\sqrt{6}}{36}a^{3}$。</p>
+<h3 id="假设函数">假设函数</h3><p>线性回归假设 $X^{(i)}$ 的特征 $x_{j}^{(i)}, (1 \leq j \leq n)$ ，和结果 $y^{(i)}$ 满足线性关系。这里，我们定义假设函数</p>
+<p>$$h_{\theta}(X)=\theta_{0}+\theta_{1}x_{1}+\theta_{2}x_{2}+\cdots+\theta_{n}x_{n}$$</p>
+<p>$\theta$ 在这里为需要估计参数，即每个特征的的影响力。如果令 $x_{0}=1$，则假设函数为</p>
+<p>$$h_{\theta}(X)=\theta^{T}X.$$</p>
+<h3 id="损失函数">损失函数</h3><p>$\theta$ 的取值有无限多个，如何评估哪个取值较好，需要对定义的假设函数 $h_{\theta}(X)$ 进行评估。显然，关键在于衡量 $h_{\theta}(X)$ 和 $y$ 之间的差别。</p>
+<p>均方误差是回归任务中最常用的性能度量，因此，这里我们试图让均方误差最小化。均方误差有非常好的几何意义，它对应了常用的欧几里得距离或简称“欧氏距离(Euclidean distance)”。基于均方误差最小化来进行模型求解的方法称为 “最小二乘法(least square method)”。在线性回归中，最小二乘法就是试图找到一条直线，使得所有样本到直线上的欧氏距离之和最小。</p>
+<p>这里，均方误差作为<strong>损失函数(Loss Function)</strong>，衡量 $h_{\theta}(X)$ 和 $y$ 之间的差别，描述 $h_{\theta}(X)$ 函数的不好程度。下面，我们称损失函数为 $J(\theta)$。</p>
+<p>$$J(\theta)=\frac{1}{2}\sum_{i=1}^{m}(h_{\theta}(X^{(i)})-y^{(i)})^{2}$$</p>
+<p>前面乘上 $\frac{1}{2}$ 是为了在求导的时候，这个系数就消掉了。</p>
+<p>我们要选择最优的 $\theta$，使得 $h_{\theta}(X)$ 逼近真实值。这个问题就转化为求解最优的 $\theta$，使损失函数 $J(\theta)$ 取最小值。</p>
+<p>$$\min_{\theta}J(\theta)$$</p>
+<h3 id="最小均方算法">最小均方算法</h3><p>最小均方算法(Least mean square，LMS算法)的思路是：首先给 $\theta$ 一个初始值，然后改变 $\theta$ 的值让 $J(\theta)$ 的取值不断变小，不断重复改变 $\theta$ 使 $J(\theta)$ 变小的过程直至 $J(\theta)$ 约等于最小值。</p>
+<p>先来看当训练样本只有一个的时候的情况，然后再将训练样本扩大到多个的情况。</p>
+<p>对 $J(\theta)$ 中每个 $\theta_{j}$ 求偏导，给 $\theta_{j}$ 一个初试值，然后向着让 $J(\theta)$ 变化最大的方向更新 $\theta_{j}$ 的取值，如此迭代</p>
+<p>$$\theta_{j+1}:=\theta_{j}-\alpha \frac{\partial}{\partial \theta_{j}}J(\theta)$$</p>
+<p>公式中 $\alpha$ 称为步长（learning rate），它控制 $\theta$ 每次向 $J(\theta)$ 变小的方向和迭代时的变化幅度。$J(\theta)$ 对 $\theta$ 的偏导表示 $J(\theta)$ 变化最大的方向。由于是求极小值，因此梯度方向是偏导的反方向。求解过程如下：</p>
+<p>$$<br>\begin{eqnarray}<br>\frac{\partial}{\partial \theta_{j}}J(\theta) &amp; = &amp; \frac{\partial}{\partial \theta_{j}}\frac{1}{2}(h_{\theta}(X)-y)^{2} \\<br>{} &amp; = &amp; 2 \cdot \frac{1}{2}(h_{\theta}(X)-y)\cdot \frac{\partial}{\partial \theta_{j}}(h_{\theta}(X)-y) \\<br>{} &amp; = &amp; (h_{\theta}(X)-y)\cdot \frac{\partial}{\partial \theta_{j}}(\sum_{i=0}^{n}\theta_{i}x_{i}-y) \\<br>{} &amp; = &amp; (h_{\theta}(X)-y)x_{j}<br>\end{eqnarray}<br>$$</p>
+<p>$\theta$ 的迭代公式就变为：</p>
+<p>$$\theta_{j+1}:=\theta_{j}+\alpha (y^{(i)}-h_{\theta}(X^{(i)}))x_{j}^{(i)}$$</p>
+<p>这是当训练集只有一个样本时的数学表达。可以通过 <strong>梯度下降（gradient descent）</strong> 和 <strong>正则方程（The normal equations）</strong> 将只有一个样本的数学表达转化为样本为多个的情况。</p>
+<h3 id="梯度下降">梯度下降</h3><h4 id="批梯度下降（batch_gradient_descent）">批梯度下降（batch gradient descent）</h4><p>批梯度下降每一步都是计算的全部训练集的数据。</p>
+<p>$<br>\textrm{Repeat until convergence \{}\\<br>\begin{equation}<br>\qquad \qquad \theta_{j+1}:=\theta_{j}+\alpha \sum_{i=1}^{m} (y^{(i)}-h_{\theta}(X^{(i)}))x_{j}^{(i)}, \textrm{(for each j)}<br>\end{equation}\\<br>\textrm{\}}<br>$</p>
+<p>梯度下降可能得到局部最优，但在优化问题里已经证明线性回归只有一个最优点，因为损失函数 $J(\theta)$ 是一个二次的凸函数，不会产生局部最优的情况（假设学习步长α不是特别大）。</p>
+<p>批梯度下降的算法执行过程如下图</p>
+<p><img src="/illustration/batch-gradient-descent-1.png" width="45%" height="45%"></p>
+<p>批量梯度下降每次迭代的时候都要对所有数据集样本计算求和，计算量就会很大，尤其是训练数据集特别大的情况。</p>
+<h4 id="随机梯度下降（Stochastic_Gradient_Descent,_SGD）">随机梯度下降（Stochastic Gradient Descent, SGD）</h4><p>随机梯度下降在计算下降最快的方向时，随机选一个数据进行计算，而不是扫描全部训练数据集，这样就加快了迭代速度。随机梯度下降并不是沿着 $J(\theta)$ 下降最快的方向收敛，而是以震荡的方式趋向极小点。</p>
+<p>随机梯度下降迭代公式如下</p>
+<p>$<br>\textrm{Loop \{}\\<br>\qquad \textrm{for i=1 to m \{}\\<br>\begin{equation}<br>\qquad \qquad \theta_{j+1}:=\theta_{j}+\alpha (y^{(i)}-h_{\theta}(X^{(i)}))x_{j}^{(i)}, \textrm{(for each j)}<br>\end{equation}\\<br>\qquad \textrm{\}}\\<br>\textrm{\}}<br>$</p>
+<p>执行过程如下图</p>
+<p><img src="/illustration/stochastic-gradient-descent-1.png" width="50%" height="50%"></p>
+<h2 id="总结">总结</h2><p>线性回归是回归问题中的一种，假设特征值与目标值之间满足线性相关，即满足一个多元一次方程。通过使用最小二乘法构建损失函数，用梯度下降求解损失函数最小时的参数 $\theta$。</p>
 <h2 id="参考资料">参考资料</h2><ol>
-<li>《高等数学》，第七版上册，同济大学版</li>
+<li><a href="http://www.cnblogs.com/jerrylead/archive/2011/03/05/1971867.html" target="_blank" rel="external">对线性回归，logistic回归和一般回归的认识</a></li>
+<li><a href="http://www.cnblogs.com/BYRans/p/4713624.html" target="_blank" rel="external">逻辑回归（Logistic Regression）</a></li>
+<li><a href="http://tech.meituan.com/intro_to_logistic_regression.html" target="_blank" rel="external">Logistic Regression 模型简介</a></li>
+<li><a href="https://www.52ml.net/21391.html" target="_blank" rel="external">机器学习算法比较</a></li>
+<li><a href="http://www.cnblogs.com/BYRans/p/4700202.html" target="_blank" rel="external">线性回归、梯度下降（Linear Regression、Gradient Descent）</a></li>
+<li>周志华，《机器学习》，清华大学出版社</li>
 </ol>
   
 	</div>
@@ -182,13 +161,13 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/数学/">数学</a>
+  <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Math/">Math</a>
+  <span></span> <a href="/tags/Machining-Learning/">Machining Learning</a>
   </div>
 
 </div>
@@ -197,7 +176,7 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2016/11/07/math-9/" data-title="拉格朗日乘数法 | FreeMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2016/12/17/linear-regression/" data-title="线性回归 | FreeMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -210,19 +189,11 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/12/17/random-var-distribution/" title="随机变量分布">
-  <strong>上一篇：</strong><br/>
-  <span>
-  随机变量分布</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/11/06/math-8/"  title="方向导数与梯度">
+<a href="/2016/12/17/random-var-distribution/"  title="随机变量分布">
  <strong>下一篇：</strong><br/> 
- <span>方向导数与梯度
+ <span>随机变量分布
 </span>
 </a>
 </div>
@@ -231,7 +202,7 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/11/07/math-9/" data-title="拉格朗日乘数法" data-url="http://whlminds.com/2016/11/07/math-9/"></div>
+	<div class="ds-thread" data-thread-key="2016/12/17/linear-regression/" data-title="线性回归" data-url="http://whlminds.com/2016/12/17/linear-regression/"></div>
 </section>
 
 
@@ -241,7 +212,7 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多元函数的极值"><span class="toc-number">1.</span> <span class="toc-text">多元函数的极值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#必要条件"><span class="toc-number">1.1.</span> <span class="toc-text">必要条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#充分条件"><span class="toc-number">1.2.</span> <span class="toc-text">充分条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件极值"><span class="toc-number">2.</span> <span class="toc-text">条件极值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉格朗日乘数法"><span class="toc-number">3.</span> <span class="toc-text">拉格朗日乘数法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">4.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习过程"><span class="toc-number">1.</span> <span class="toc-text">机器学习过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线性回归"><span class="toc-number">2.</span> <span class="toc-text">线性回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#假设函数"><span class="toc-number">2.1.</span> <span class="toc-text">假设函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#损失函数"><span class="toc-number">2.2.</span> <span class="toc-text">损失函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最小均方算法"><span class="toc-number">2.3.</span> <span class="toc-text">最小均方算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#梯度下降"><span class="toc-number">2.4.</span> <span class="toc-text">梯度下降</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#批梯度下降（batch_gradient_descent）"><span class="toc-number">2.4.1.</span> <span class="toc-text">批梯度下降（batch gradient descent）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#随机梯度下降（Stochastic_Gradient_Descent,_SGD）"><span class="toc-number">2.4.2.</span> <span class="toc-text">随机梯度下降（Stochastic Gradient Descent, SGD）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
  
   </div>
 
