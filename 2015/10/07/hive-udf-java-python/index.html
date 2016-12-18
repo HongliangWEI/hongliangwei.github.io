@@ -4,7 +4,7 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>在Hive中通过Java和Python实现UDF | FreeMinds</title>
+    <title>在Hive中通过Java和Python实现UDF | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="HongliangWEI">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="在Hive中通过Java和Python实现UDF">
 <meta property="og:url" content="http://whlminds.com/2015/10/07/hive-udf-java-python/index.html">
-<meta property="og:site_name" content="FreeMinds">
+<meta property="og:site_name" content="WHLMinds">
 <meta property="og:description" content="当业务数据量过大，不能在关系型数据库中统计时，可以通过 Sqoop 导入到 HDFS 上进行统计，类似日志数据一样。导入到 HDFS 上数据，每一条记录通过 \t 或 Ctrl+A 等分割每一个字断，通过 \n 分割每一条记录。然后，通过建立 Hive 表指向 HDFS 对应的路径数据，对 HDFS 上的数据添加 Schema 定义，可以基于 Hive 中 SQL 的语法进行查询统计。
 尽管 Hi">
 <meta name="twitter:card" content="summary">
@@ -40,11 +40,11 @@
       <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="FreeMinds" title="FreeMinds"/></a>
+				<a href="/"><img src="/img/logo.png" alt="WHLMinds" title="WHLMinds"/></a>
 			</div>
 			
 			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="FreeMinds">FreeMinds</a></h1>
+				<h1 class="site-name"><a href="/" title="WHLMinds">WHLMinds</a></h1>
 				<h2 class="blog-motto">大 胆 假 设，小 心 求 证</h2>
 			</div>
 			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
@@ -172,7 +172,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2015/10/07/hive-udf-java-python/" data-title="在Hive中通过Java和Python实现UDF | FreeMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2015/10/07/hive-udf-java-python/" data-title="在Hive中通过Java和Python实现UDF | WHLMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -346,25 +346,6 @@
     </div>
   </div>
 
-
-  <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
-    <ul>
-        
-          <li>
-            
-            	<a href="http://fangjb.me" target="_blank" title="Fice&#39;s Blog">Fice&#39;s Blog</a>
-            
-          </li>
-        
-          <li>
-            
-            	<a href="http://dangfan.me" target="_blank" title="有一说一">有一说一</a>
-            
-          </li>
-        
-    </ul>
-</div>
 
   <div class="weiboshow">
   <p class="asidetitle">新浪微博</p>
@@ -588,6 +569,35 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <!-- MathJax Begin -->
 <!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 <!-- MathJax End -->

@@ -4,7 +4,7 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>Mac下安装Nginx、PHP和MySQL | FreeMinds</title>
+    <title>Mac下安装Nginx、PHP和MySQL | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="HongliangWEI">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mac下安装Nginx、PHP和MySQL">
 <meta property="og:url" content="http://whlminds.com/2015/10/06/php-nginx-mysql-mac/index.html">
-<meta property="og:site_name" content="FreeMinds">
+<meta property="og:site_name" content="WHLMinds">
 <meta property="og:description" content="在 Mac 上进行 PHP 开发，首先需要搭建开发环境。具体的，主要需要安装 Nginx 、 PHP-FPM 和 MySQL ，但由于网上各安装教程中软件版本不同和配置的差异，没有一个可以完全参照教程。遂，吸取前人搭建环境过程中的经验，总结下自己搭建环境的过程，mark。
 搭建过程主要分一下几部分说明：首先是安装前系统的版本，以及将要安装的版本，接着是说明安装过程，分别包括Nginx 、 PHP-">
 <meta property="og:image" content="/illustration/php-nginx-mac-example.png">
@@ -41,11 +41,11 @@
       <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="FreeMinds" title="FreeMinds"/></a>
+				<a href="/"><img src="/img/logo.png" alt="WHLMinds" title="WHLMinds"/></a>
 			</div>
 			
 			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="FreeMinds">FreeMinds</a></h1>
+				<h1 class="site-name"><a href="/" title="WHLMinds">WHLMinds</a></h1>
 				<h2 class="blog-motto">大 胆 假 设，小 心 求 证</h2>
 			</div>
 			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
@@ -237,7 +237,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2015/10/06/php-nginx-mysql-mac/" data-title="Mac下安装Nginx、PHP和MySQL | FreeMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2015/10/06/php-nginx-mysql-mac/" data-title="Mac下安装Nginx、PHP和MySQL | WHLMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -411,25 +411,6 @@
     </div>
   </div>
 
-
-  <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
-    <ul>
-        
-          <li>
-            
-            	<a href="http://fangjb.me" target="_blank" title="Fice&#39;s Blog">Fice&#39;s Blog</a>
-            
-          </li>
-        
-          <li>
-            
-            	<a href="http://dangfan.me" target="_blank" title="有一说一">有一说一</a>
-            
-          </li>
-        
-    </ul>
-</div>
 
   <div class="weiboshow">
   <p class="asidetitle">新浪微博</p>
@@ -653,6 +634,35 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <!-- MathJax Begin -->
 <!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 <!-- MathJax End -->

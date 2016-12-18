@@ -4,7 +4,7 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>线性回归 | FreeMinds</title>
+    <title>线性回归 | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="HongliangWEI">
@@ -18,7 +18,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="线性回归">
 <meta property="og:url" content="http://whlminds.com/2016/12/17/linear-regression/index.html">
-<meta property="og:site_name" content="FreeMinds">
+<meta property="og:site_name" content="WHLMinds">
 <meta property="og:description" content="尽管网络上讲述 线性回归 的文章多如牛毛，这里再次讲述，仅为记录自己的理解过程。文中部分内容直接从参考资料拿来。
 
 机器学习过程一个典型的有监督的机器学习过程，目标是构建一个具有较强泛化能力的模型，这个模型能够对输入数据得到输出数据，输出数据能够进行较好的预测。
@@ -48,11 +48,11 @@
       <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="FreeMinds" title="FreeMinds"/></a>
+				<a href="/"><img src="/img/logo.png" alt="WHLMinds" title="WHLMinds"/></a>
 			</div>
 			
 			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="FreeMinds">FreeMinds</a></h1>
+				<h1 class="site-name"><a href="/" title="WHLMinds">WHLMinds</a></h1>
 				<h2 class="blog-motto">大 胆 假 设，小 心 求 证</h2>
 			</div>
 			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
@@ -174,7 +174,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2016/12/17/linear-regression/" data-title="线性回归 | FreeMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2016/12/17/linear-regression/" data-title="线性回归 | WHLMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -348,25 +348,6 @@
     </div>
   </div>
 
-
-  <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
-    <ul>
-        
-          <li>
-            
-            	<a href="http://fangjb.me" target="_blank" title="Fice&#39;s Blog">Fice&#39;s Blog</a>
-            
-          </li>
-        
-          <li>
-            
-            	<a href="http://dangfan.me" target="_blank" title="有一说一">有一说一</a>
-            
-          </li>
-        
-    </ul>
-</div>
 
   <div class="weiboshow">
   <p class="asidetitle">新浪微博</p>
@@ -590,6 +571,35 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <!-- MathJax Begin -->
 <!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 <!-- MathJax End -->

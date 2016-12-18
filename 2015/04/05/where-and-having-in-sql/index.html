@@ -4,7 +4,7 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>SQL中WHERE与HAVING用法 | FreeMinds</title>
+    <title>SQL中WHERE与HAVING用法 | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="HongliangWEI">
@@ -17,7 +17,7 @@ HAVING12345SELECT column_name, aggregate_function(column_name)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL中WHERE与HAVING用法">
 <meta property="og:url" content="http://whlminds.com/2015/04/05/where-and-having-in-sql/index.html">
-<meta property="og:site_name" content="FreeMinds">
+<meta property="og:site_name" content="WHLMinds">
 <meta property="og:description" content="在查询数据库表时，需要对表中的记录进行筛选，SQL提供了两个约束子句，即WHERE与HAVING，二者效果有雷同，但用法有区别。
 语法区别WHERE1SELECT column_name FROM table_name WHERE column operator value
 HAVING12345SELECT column_name, aggregate_function(column_name)">
@@ -43,11 +43,11 @@ HAVING12345SELECT column_name, aggregate_function(column_name)">
       <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="FreeMinds" title="FreeMinds"/></a>
+				<a href="/"><img src="/img/logo.png" alt="WHLMinds" title="WHLMinds"/></a>
 			</div>
 			
 			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="FreeMinds">FreeMinds</a></h1>
+				<h1 class="site-name"><a href="/" title="WHLMinds">WHLMinds</a></h1>
 				<h2 class="blog-motto">大 胆 假 设，小 心 求 证</h2>
 			</div>
 			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
@@ -355,7 +355,7 @@ HAVING12345SELECT column_name, aggregate_function(column_name)">
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2015/04/05/where-and-having-in-sql/" data-title="SQL中WHERE与HAVING用法 | FreeMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2015/04/05/where-and-having-in-sql/" data-title="SQL中WHERE与HAVING用法 | WHLMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -529,25 +529,6 @@ HAVING12345SELECT column_name, aggregate_function(column_name)">
     </div>
   </div>
 
-
-  <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
-    <ul>
-        
-          <li>
-            
-            	<a href="http://fangjb.me" target="_blank" title="Fice&#39;s Blog">Fice&#39;s Blog</a>
-            
-          </li>
-        
-          <li>
-            
-            	<a href="http://dangfan.me" target="_blank" title="有一说一">有一说一</a>
-            
-          </li>
-        
-    </ul>
-</div>
 
   <div class="weiboshow">
   <p class="asidetitle">新浪微博</p>
@@ -771,6 +752,35 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <!-- MathJax Begin -->
 <!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 <!-- MathJax End -->

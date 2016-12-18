@@ -4,7 +4,7 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>基于 Amazon S3 和 HIVE 的统计 | FreeMinds</title>
+    <title>基于 Amazon S3 和 HIVE 的统计 | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="HongliangWEI">
@@ -17,7 +17,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于 Amazon S3 和 HIVE 的统计">
 <meta property="og:url" content="http://whlminds.com/2015/05/02/statistics-amazon-s3-hive/index.html">
-<meta property="og:site_name" content="FreeMinds">
+<meta property="og:site_name" content="WHLMinds">
 <meta property="og:description" content="当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。
 这时，可以将业务数据存储到 Hadoop文件系统 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。
 大数据统计思路当统计任务越来越多">
@@ -43,11 +43,11 @@
       <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="FreeMinds" title="FreeMinds"/></a>
+				<a href="/"><img src="/img/logo.png" alt="WHLMinds" title="WHLMinds"/></a>
 			</div>
 			
 			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="FreeMinds">FreeMinds</a></h1>
+				<h1 class="site-name"><a href="/" title="WHLMinds">WHLMinds</a></h1>
 				<h2 class="blog-motto">大 胆 假 设，小 心 求 证</h2>
 			</div>
 			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
@@ -243,7 +243,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2015/05/02/statistics-amazon-s3-hive/" data-title="基于 Amazon S3 和 HIVE 的统计 | FreeMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2015/05/02/statistics-amazon-s3-hive/" data-title="基于 Amazon S3 和 HIVE 的统计 | WHLMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -417,25 +417,6 @@
     </div>
   </div>
 
-
-  <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
-    <ul>
-        
-          <li>
-            
-            	<a href="http://fangjb.me" target="_blank" title="Fice&#39;s Blog">Fice&#39;s Blog</a>
-            
-          </li>
-        
-          <li>
-            
-            	<a href="http://dangfan.me" target="_blank" title="有一说一">有一说一</a>
-            
-          </li>
-        
-    </ul>
-</div>
 
   <div class="weiboshow">
   <p class="asidetitle">新浪微博</p>
@@ -659,6 +640,35 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <!-- MathJax Begin -->
 <!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 <!-- MathJax End -->
