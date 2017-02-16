@@ -4,34 +4,46 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>拉格朗日乘数法 | WHLMinds</title>
+    <title>REWORK--重来 | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="HongliangWEI">
     
 
     
-    <meta name="description" content="继续！
+    <meta name="description" content="买了《REWORK》，中文名《重来》，作者 Jason Fried 和 David Heinemeier Hansson，书中部分句子摘抄，关于做事儿的道与术，分享共勉。
 
-多元函数的极值设函数 $z=f(x,y)$ 的定义域为 $D$，$P_{0}(x_{0}, y_{0})$ 为 $D$ 的内点，若存在 $P_{0}$ 的某个领域 $U(P_{0}) \subset D$，使得对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有
-$$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
-则称函数 $f(x,y)$ 在点 $(x_{0},">
+工作狂
+
+工作狂往往不得要领。他们花费大把时间去解决问题，他们以为能靠蛮力来弥补思维上的惰性，其结果就是折腾出一堆粗略无用的解决方案。
+
+挠自己的痒处
+
+这些人解决了自己的燃眉之急，同时也发现了他们的需求背后隐藏着一片巨大的市">
 <meta property="og:type" content="article">
-<meta property="og:title" content="拉格朗日乘数法">
-<meta property="og:url" content="http://whlminds.com/2016/11/07/math-9/index.html">
+<meta property="og:title" content="REWORK--重来">
+<meta property="og:url" content="http://whlminds.com/2017/02/16/book_rework/index.html">
 <meta property="og:site_name" content="WHLMinds">
-<meta property="og:description" content="继续！
+<meta property="og:description" content="买了《REWORK》，中文名《重来》，作者 Jason Fried 和 David Heinemeier Hansson，书中部分句子摘抄，关于做事儿的道与术，分享共勉。
 
-多元函数的极值设函数 $z=f(x,y)$ 的定义域为 $D$，$P_{0}(x_{0}, y_{0})$ 为 $D$ 的内点，若存在 $P_{0}$ 的某个领域 $U(P_{0}) \subset D$，使得对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有
-$$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
-则称函数 $f(x,y)$ 在点 $(x_{0},">
+工作狂
+
+工作狂往往不得要领。他们花费大把时间去解决问题，他们以为能靠蛮力来弥补思维上的惰性，其结果就是折腾出一堆粗略无用的解决方案。
+
+挠自己的痒处
+
+这些人解决了自己的燃眉之急，同时也发现了他们的需求背后隐藏着一片巨大的市">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="拉格朗日乘数法">
-<meta name="twitter:description" content="继续！
+<meta name="twitter:title" content="REWORK--重来">
+<meta name="twitter:description" content="买了《REWORK》，中文名《重来》，作者 Jason Fried 和 David Heinemeier Hansson，书中部分句子摘抄，关于做事儿的道与术，分享共勉。
 
-多元函数的极值设函数 $z=f(x,y)$ 的定义域为 $D$，$P_{0}(x_{0}, y_{0})$ 为 $D$ 的内点，若存在 $P_{0}$ 的某个领域 $U(P_{0}) \subset D$，使得对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有
-$$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
-则称函数 $f(x,y)$ 在点 $(x_{0},">
+工作狂
+
+工作狂往往不得要领。他们花费大把时间去解决问题，他们以为能靠蛮力来弥补思维上的惰性，其结果就是折腾出一堆粗略无用的解决方案。
+
+挠自己的痒处
+
+这些人解决了自己的燃眉之急，同时也发现了他们的需求背后隐藏着一片巨大的市">
 
     
     
@@ -88,14 +100,14 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/07/math-9/" title="拉格朗日乘数法" itemprop="url">拉格朗日乘数法</a>
+      <a href="/2017/02/16/book_rework/" title="REWORK--重来" itemprop="url">REWORK--重来</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
 		
   <p class="article-time">
-    <time datetime="2016-11-07T13:38:21.000Z" itemprop="datePublished"> 发表于 2016-11-07</time>
+    <time datetime="2017-02-16T13:24:32.000Z" itemprop="datePublished"> 发表于 2017-02-16</time>
     
   </p>
 </header>
@@ -104,77 +116,160 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多元函数的极值"><span class="toc-number">1.</span> <span class="toc-text">多元函数的极值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#必要条件"><span class="toc-number">1.1.</span> <span class="toc-text">必要条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#充分条件"><span class="toc-number">1.2.</span> <span class="toc-text">充分条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件极值"><span class="toc-number">2.</span> <span class="toc-text">条件极值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉格朗日乘数法"><span class="toc-number">3.</span> <span class="toc-text">拉格朗日乘数法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">4.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
+			
 		
 		</div>
 		
 		<blockquote>
-<p>继续！</p>
+<p>买了《REWORK》，中文名《重来》，作者 Jason Fried 和 David Heinemeier Hansson，书中部分句子摘抄，关于做事儿的道与术，分享共勉。</p>
 </blockquote>
-<h2 id="多元函数的极值">多元函数的极值</h2><p>设函数 $z=f(x,y)$ 的定义域为 $D$，$P_{0}(x_{0}, y_{0})$ 为 $D$ 的内点，若存在 $P_{0}$ 的某个领域 $U(P_{0}) \subset D$，使得对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有</p>
-<p>$$f(x,y)&lt;f(x_{0}, y_{0})，$$</p>
-<p>则称函数 $f(x,y)$ 在点 $(x_{0}, y_{0})$  有极大值 $f(x_{0}, y_{0})$ ，点 $((x_{0}, y_{0}))$ 称为函数 $f(x,y)$ 的极大值点；若对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有</p>
+<p><strong><em>工作狂</em></strong></p>
+<ul>
+<li>工作狂往往不得要领。他们花费大把时间去解决问题，他们以为能靠蛮力来弥补思维上的惰性，其结果就是折腾出一堆粗略无用的解决方案。</li>
+</ul>
+<p><strong><em>挠自己的痒处</em></strong></p>
+<ul>
+<li>这些人解决了自己的燃眉之急，同时也发现了他们的需求背后隐藏着一片巨大的市场，这就是你应该去做的。</li>
+</ul>
+<p><strong><em>着手做点什么</em></strong></p>
+<ul>
+<li>在你的人生中真正有意义的是你做了什么，而不是你想过什么，说过什么或者计划过什么。</li>
+<li>真正的问题在于你执行的好坏。</li>
+</ul>
 <a id="more"></a>
-<p>$$f(x,y)&gt;f(x_{0}, y_{0})，$$</p>
-<p>则称函数 $f(x,y)$ 在点 $(x_{0}, y_{0})$ 有极小值 $f(x_{0}, y{0})$，点 $(x_{0}, y_{0})$ 称为函数 $f(x,y)$ 的极小值点，极大值与极小值统称为极值。使得函数取得极值点的点称为极值点。</p>
-<h3 id="必要条件">必要条件</h3><p>设函数 $z=f(x,y)$ 在点 $(x_{0}, y_{0})$ 具有偏导数，且在点 $(x_{0}, y_{0})$ 处有极值，则有</p>
-<p>$$f_{x}(x_{0}, y_{0})=0,f_{y}(x_{0}, y_{0})=0.$$</p>
-<h3 id="充分条件">充分条件</h3><p>设函数 $z=f(x,y)$ 在点 $(x_{0},y_{0})$ 的某领域内连续且有一阶和二阶连续偏导数，又 $f_{x}(x_{0}, y_{0})=0,f_{y}(x_{0}, y_{0})=0$，令</p>
-<p>$$f_{xx}(x_{0}, y_{0})=A,f_{xy}(x_{0}, y_{0})=B,f_{yy}(x_{0}, y_{0})=C,$$</p>
-<p>则 $f(x,y)$ 在 $(x_{0}, y_{0})$ 处是否取得极值的条件如下：</p>
-<p>(1) $AC-B^{2}&gt;0$ 时具有极值，且当 $A<0$ 时有极大值，当="" $a="">0$ 时有极小值；</0$></p>
-<p>(2) $AC-B^{2}&lt;0$ 时没有极值；</p>
-<p>(3) $AC-B^{2}=0$ 时可能有极值，也可能没有极值，还需要另作讨论。</p>
-<h2 id="条件极值">条件极值</h2><p>对于函数的自变量，除了限制在函数的定义域内以外，并无其他条件，所以有时候称为 <strong>无条件极值</strong>，而对自变量有附加条件的极值称为<strong>条件极值</strong>。</p>
-<p>很多情况下，将条件极值化为无条件极值并不容易。可以通过 <strong>拉格朗日乘数法</strong> 解决条件极值，而不需化为无条件极值。</p>
-<h2 id="拉格朗日乘数法">拉格朗日乘数法</h2><p>函数</p>
-<p>$$\begin{eqnarray}<br>z=f(x,y)<br>\end{eqnarray}$$</p>
-<p>在条件</p>
-<p>$$\begin{eqnarray}<br>\varphi (x,y)=0<br>\end{eqnarray}$$</p>
-<p>下取得极值的必要条件。</p>
-<p>如果函数 (1) 在 $(x_{0}, y_{0})$ 取得所求的极值，那么首先有</p>
-<p>$$\begin{eqnarray}<br>\varphi (x_{0}, y_{0})=0.<br>\end{eqnarray}$$</p>
-<p>我们假定在 $(x_{0}, y_{0})$ 的某一领域内 $f(x,y)$ 与 $\varphi (x,y)$ 均有连续的一阶偏导数，而 $\varphi _{y}(x_{0}, y_{0}) \neq 0$，由隐函数存在定理可知，方程 (2) 确定一个连续且具有连续导数的函数 $y=\psi (x)$，将其带入 (1) 式，结果得到一个变量 $x$ 的函数</p>
-<p>$$\begin{eqnarray}<br>z=f[x, \psi (x)].<br>\end{eqnarray}$$</p>
-<p>于是函数 (1) 在 $(x_{0}, y_{0})$ 取得所求的极值，也就是相当于函数 $(4)$ 在 $x=x_{0}$ 取得极值。由一元可导函数取得极值的必要条件知道</p>
-<p>$$\begin{eqnarray}<br>\frac{dz}{dx}|_{x=x_{0}}=f_{x}(x_{0}, y_{0})+f_{y}(x_{0}, y_{0})\frac{dy}{dx}|_{x=x_{0}}=0,<br>\end{eqnarray}$$</p>
-<p>而由 (2) 用隐函数求导公式，有</p>
-<p>$$\frac{dy}{dx}|_{x=x_{0}}=-\frac{\psi _{x}(x_{0}, y_{0})}{\psi _{y}(x_{0}, y_{0})}.$$</p>
-<p>把上式代入 (5) 式，得</p>
-<p>$$\begin{eqnarray}<br>f_{x}(x_{0}, y_{0})-f_{y}(x_{0}, y_{0})\frac{\psi _{x}(x_{0}, y_{0})}{\psi _{y}(x_{0}, y_{0})}=0.<br>\end{eqnarray}$$</p>
-<p>式 (3) 和 (6) 就是函数 (1) 在条件 (2) 下在 $(x_{0}, y_{0})$ 取得极值的必要条件。</p>
-<p>设 $\frac{f_{y}(x_{0}, y_{0})}{\psi_{y}(x_{0}, y_{0})}=-\lambda$，上述必要条件就变为</p>
-<p>$$\begin{eqnarray}<br>\begin{cases}<br>f_{x}(x_{0}, y_{0})+\lambda \varphi _{x}(x_{0}, y_{0})=0,\\<br>f_{y}(x_{0}, y_{0})+\lambda \varphi _{y}(x_{0}, y_{0})=0,\\<br>\psi_{y}(x_{0}, y_{0})=0.<br>\end{cases}<br>\end{eqnarray}$$</p>
-<p>若引进辅助函数</p>
-<p>$$L(x,y)=f(x,y)+\lambda \varphi (x,y),$$</p>
-<p>则不难看出，(7) 中前两项就是</p>
-<p>$$L_{x}(x_{0}, y_{0})=0, L_{y}(x_{0}, y_{0})=0.$$</p>
-<p>函数 $L(x,y)$ 称为拉格朗日函数，参数 $\lambda$ 称为拉格朗日乘子。</p>
-<hr>
-<p>要找函数 $z=f(x,y)$ 在附加条件 $\varphi (x,y)=0$ 下的可能极值点，可以先作拉格朗日函数</p>
-<p>$$L(x,y)=f(x,y)+\lambda \varphi (x,y),$$</p>
-<p>其中 $\lambda$ 为参数，求其对 $x$ 与 $y$ 的一阶偏导数，并使之为零，然后与方程 (2) 联立起来</p>
-<p>$$\begin{eqnarray}<br>\begin{cases}<br>f_{x}(x, y)+\lambda \varphi _{x}(x, y)=0,\\<br>f_{y}(x, y)+\lambda \varphi _{y}(x, y)=0,\\<br>\psi_{y}(x, y)=0.<br>\end{cases}<br>\end{eqnarray}$$</p>
-<p>由这方程组解出 $x,y,\lambda$ 这样得到 $(x,y)$ 就是函数 $f(x,y)$ 在附加条件 $\varphi (x,y)=0$ 下的可能极值点。</p>
-<h2 id="例子">例子</h2><p>求表面积为 $a^{2}$ 而体积为最大的长方体的体积。</p>
-<p>设长方体的三棱长为 $x、y$ 与 $z$ ，则问题就是在条件</p>
-<p>$$\begin{eqnarray}<br>\varphi (x,y,z)=2xy+2yz+2xz-a^{2}=0<br>\end{eqnarray}$$</p>
-<p>下，求函数</p>
-<p>$$V=xyz, (x&gt;0, y&gt;0, z&gt;0)$$</p>
-<p>的最大值，作拉格朗日函数</p>
-<p>$$L(x,y,z)=xyz+\lambda (2xy+2yz+2xz-a^{2}),$$</p>
-<p>求其对 $x、y$ 与 $z$ 的偏导数，并使之为零，得到<br>$$\begin{eqnarray}<br>\begin{cases}<br>yz+2\lambda (y+z)=0,\\<br>xz+2\lambda (x+z)=0,\\<br>xy+2\lambda (y+x)=0.<br>\end{cases}<br>\end{eqnarray}$$</p>
-<p>再与 (9) 联立求解。</p>
-<p>因为 $x、y$ 与 $z$ 都不等于零，所以由 (10) 可得</p>
-<p>$$\frac{x}{y}=\frac{x+z}{y+z}, \frac{y}{z}=\frac{x+y}{x+z}.$$</p>
-<p>由以上两个式子解得</p>
-<p>$$x=y=z$$</p>
-<p>将此式子代入 (9)，使得</p>
-<p>$$x=y=z=\frac{\sqrt{6}}{6}a,$$</p>
-<p>这是唯一可能的极值点，因为由问题本身可知最大值一定存在，所以最大值就在这个可能的极值点处取得，也就是说，表面积为 $a^{2}$ 的长方体中， 以棱长为 $\frac{\sqrt{6}}{6}a$ 的正方体的体积为最大，最大体积 $V=\frac{\sqrt{6}}{36}a^{3}$。</p>
-<h2 id="参考资料">参考资料</h2><ol>
-<li>《高等数学》，第七版上册，同济大学版</li>
-</ol>
+<p><strong><em>“没时间”不是借口</em></strong></p>
+<ul>
+<li>拜托，只要你善加利用，时间总是有的，你也根本无须辞职去做什么事情，白天好好上你的班，晚上再来干你的私人项目就好了。</li>
+<li>永远不会有正当其时的时候，你总会觉得要么年纪太轻，要么太老，要么太忙，抑或是其他什么原因。如果你总是为找不到完美的时刻而困扰，那么，完美的时机永远不会出现。</li>
+</ul>
+<p><strong><em>画沙为界，立场明确</em></strong></p>
+<ul>
+<li>有主见方能成大事，创业并不只是一个产品或一项服务那么简单。你必须心怀信念，要有主心骨，要了解自己是为什么而奋斗，并且要让世人明白你的信念。</li>
+<li>坚定的信念能为你赢得超级粉丝，他们会唯你马首是瞻，会舍身保护你，他们充满激情的口碑传播将胜过世上的一切广告。</li>
+<li>如果你的说法没有引起任何人的心烦意乱，只能说明你的推广力度可能不够。（也可能代表你比较无趣）</li>
+</ul>
+<p><strong><em>不可能的宗旨</em></strong></p>
+<ul>
+<li>坚守某种信念并不仅仅是把它写下来。不但要相信它，还要让它成为你的生活方式。</li>
+</ul>
+<p><strong><em>要成就事业，不能只是创业</em></strong></p>
+<ul>
+<li>无法通往盈利之路的事业不能称为事业，只是嗜好。</li>
+</ul>
+<p><strong><em>条件受限是好事</em></strong></p>
+<ul>
+<li>见过囚犯用肥皂或汤勺制作武器吗？他们是“物尽其用”的典范。我们不是怂恿你去砍人——只是希望你能发挥自己的创造力，并最后折服于自己“小材大用”的能力。</li>
+</ul>
+<p><strong><em>与其做半个成品，不如做好半个产品</em></strong></p>
+<ul>
+<li>有舍才有得，砍掉多余的野心，你就会发现慢慢做一件正事要胜过毛毛躁躁做一堆傻事。</li>
+</ul>
+<p><strong><em>从核心出发</em></strong></p>
+<ul>
+<li>当你开始着手做一件事时，总有一些力量将你拉向不同的方向。这当中包括你能做的，你想做的以及你必须做的事情。你应该从必须做的事情开始下手，即从核心出发。</li>
+<li>要判断出你的事业的中心。在你的创业等式中，哪个部分是绝对不能拿掉的？如果有些东西即使没了，你也能把事情干下去，那这些东西就不是事业的中心。当你发现事业的中心时，你就会恍然大悟，然后你应该把所有的精力都集中在这个中心上，把它做得越强越好。</li>
+</ul>
+<p><strong><em>关注不变因素</em></strong></p>
+<ul>
+<li>你的事业的核心应该建立在不变的基础之上。你应该投资那些人们现在需要并且10年后仍然需要的事物。</li>
+<li>要记住，时尚会凋零。只有当你聚焦于长久的功能时，你才会发现自己把握住了永不落伍的东西。</li>
+</ul>
+<p><strong><em>卖掉副产品</em></strong></p>
+<ul>
+<li>当你去做某件事时，总会同时做出其他的东西来。你不会只做一样东西。副产品无处不在。一个善于观察、富有创意的商业头脑能够注意到这些副产品，并从中挖掘出商机。</li>
+</ul>
+<p><strong><em>立马就上线</em></strong></p>
+<ul>
+<li>一旦你的产品实现了基本的功能，就要迅速把它亮出来。</li>
+<li>这样做只是因为，也许你的产品有很多需要改进的地方。但不代表它不能使用。不要因为一些遗留的问题而把整个产品扣留下来。那些遗留的问题可以等事后再解决，往后放一放也可能意味着能找到更好的解决办法。</li>
+</ul>
+<p><strong><em>会议有毒</em></strong></p>
+<ul>
+<li>不要去会议室，就在出现问题的地点开会，直面现实，提出切合实际的改进建议。</li>
+<li>以明确的解决方案结束会议，并安排好由谁负责实施。</li>
+</ul>
+<p><strong><em>刚刚好就是真的好</em></strong></p>
+<ul>
+<li>找一个四两拨千斤的解决方案，以最小的投入获得最大的产出。</li>
+<li>想要以小博大，其中重要的一点就是要认识到任何问题都是可以变通的。</li>
+<li>当找到合适的解决办法后，就用它了。总比浪费资源、甚至因为无法承担复杂的解决方案而在那干等要强。记住，以后你随时都可以把“刚刚好”变成“特别棒”。</li>
+</ul>
+<p><strong><em>速战速决</em></strong></p>
+<ul>
+<li>想要保持良好势头和持续动力，就要养成“积跬步以致千里”的习惯。那时微小的进步也能让你士气大振。</li>
+</ul>
+<p><strong><em>预估的都是垃圾</em></strong></p>
+<ul>
+<li>把大项目分解成小任务。越小的任务越容易预计。你可能还是会犯错，但错得肯定不会像预测大项目那么离谱。如果某个任务所用的时间比预计的长两倍，那么最好把它从长达数月的大项目拆解成耗时几周的小项目。</li>
+</ul>
+<p><strong><em>罗列问题，不得解决</em></strong></p>
+<ul>
+<li>把长串的清单分解成一堆小任务列表。</li>
+<li>后面要做的工作量还是一样多。但是现在你能够看着这个小图表，给自己找到一丝满足感、动力以及成就感。这比带着恐惧和绝望盯着一张大图强得多。</li>
+</ul>
+<p><strong><em>决策宜小不宜大</em></strong></p>
+<ul>
+<li>易于实现的目标就是最好目标。你能真正完成这些任务并有所建树。你可以自信地说：“我们干得不错，搞定了！”然后就能接着做下一件事。和那些虚幻的梦想相比，这样的小胜利带来的满足感要强得多。</li>
+</ul>
+<p><strong><em>拒绝照搬</em></strong></p>
+<ul>
+<li>简单复制扼杀了深层的理解——而理解才能激发成长。</li>
+</ul>
+<p><strong><em>向对手挑战</em></strong></p>
+<ul>
+<li>眼里有目标，心中就有方向，出手才有力量。</li>
+</ul>
+<p><strong><em>头脑发热不等于当务之急</em></strong></p>
+<ul>
+<li>要想尽一切办法找到所有伟大的创意，让自己激情澎湃一把，但是不要轻举妄动。把它们都写下来，然后放上几天，再用冷静下来的思路去为它们安排优先顺序吧。</li>
+</ul>
+<p><strong><em>不必逐字记下客户的需求</em></strong></p>
+<ul>
+<li>真正有意义的需求，客户会一次一次地跟在你屁股后面提出来。你根本就不可能忘记。你的客户就是你的记事本，他们会反复提醒你，会展示给你哪些事情是真正需要你去考虑的。</li>
+</ul>
+<p><strong><em>培养自己的拥趸</em></strong></p>
+<ul>
+<li>赶快培养观众群体吧。说些什么、写点什么、开个博客、整个微博、制作视频——总之，想尽一切办法。大方地分享有价值的信息，你就会慢慢建立起忠实的观众群体。然后，当你想传达消息时，自然就会有人在那儿等着倾听了。</li>
+</ul>
+<p><strong><em>普及知识，赢得竞争</em></strong></p>
+<ul>
+<li>通过讲授知识来赢得人们的忠诚则建立起了一种截然不同的关系。后者会更加相信你、尊重你。即使他们不使用你的产品，也仍然是你的粉丝。</li>
+</ul>
+<p><strong><em>没人喜欢塑料花</em></strong></p>
+<ul>
+<li>不要害怕让人看见你的缺点。不完美才真实，真实才能激起人们的共鸣。</li>
+<li>直面你的弱点，向人们展示你最近的工作状况，即使你还没完全搞定它。不完美没关系，也许你看起来不专业，但你却更真实。</li>
+</ul>
+<p><strong><em>一夜成名只是传说</em></strong></p>
+<ul>
+<li>你了解那些道听途说来的“一夜成名”的故事吗？往里深挖一点，你就能发现这些成功人士在到达引爆点之前，都已经在这个方向苦熬了很长时间。</li>
+</ul>
+<p><strong><em>亲力亲为</em></strong></p>
+<ul>
+<li>在你亲自尝试做这份工作之前，永远不要雇人去做。只有这样，你才能了解这项工作的本质。你才会懂得如何判断工作完成的好坏，才会知道怎样写出符合实际的岗位招聘要求，也才会清楚在面试中该问什么问题。你才能知道该雇用全职员工还是兼职人员，是将工作直接外包还是坚持自己搞定。</li>
+</ul>
+<p><strong><em>受不了时再招人</em></strong></p>
+<ul>
+<li>当你在很长一段时间内都被超负荷的工作所困扰，这才是招人的正确时机。此时出现了一些你无法再亲力亲为的事情，你发现工作质量有所下滑，令你感到受不了了，这时才是招人的最佳时机，不要提前招人。</li>
+</ul>
+<p><strong><em>招聘笔杆子</em></strong></p>
+<ul>
+<li>一个优秀的写手，其优点并不仅仅在于写作。文法清晰代表思路明晰。优秀的写手都懂得如何与人沟通。他们使事情变得易于理解，他们善于换位思考，懂得抓重点、砍枝节，这些都是合法的应聘者身上应具备的特点。</li>
+</ul>
+<p><strong><em>如何道歉</em></strong></p>
+<ul>
+<li>一句真诚的道歉，是要承担责任的。</li>
+<li>道歉时要详细解释发生的一切，要说明你将采取什么措施来防止这样的事情再次发生。道歉就是要找到一个办法去纠正错误。</li>
+</ul>
+<p><strong><em>员工不止13岁</em></strong></p>
+<ul>
+<li>当你把员工当孩子看时，人们就会像孩子一样行事。</li>
+<li>对员工的不信任才是最大的开销。</li>
+</ul>
+<p><strong><em>不要听风就是雨</em></strong></p>
+<ul>
+<li>不要一受伤就急着结疤，不要因为一个人的一次错误而去制定规章制度。只有当一件事情反复发生时，才需要为之制定规章制度。</li>
+</ul>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -182,13 +277,13 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/数学/">数学</a>
+  <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Math/">Math</a>
+  <span></span> <a href="/tags/booknotes/">booknotes</a>
   </div>
 
 </div>
@@ -197,7 +292,7 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2016/11/07/math-9/" data-title="拉格朗日乘数法 | WHLMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2017/02/16/book_rework/" data-title="REWORK--重来 | WHLMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -210,19 +305,11 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/12/17/random-var-distribution/" title="随机变量分布">
-  <strong>上一篇：</strong><br/>
-  <span>
-  随机变量分布</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/11/06/math-8/"  title="方向导数与梯度">
+<a href="/2016/12/18/logistic-regression/"  title="逻辑回归">
  <strong>下一篇：</strong><br/> 
- <span>方向导数与梯度
+ <span>逻辑回归
 </span>
 </a>
 </div>
@@ -231,7 +318,7 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/11/07/math-9/" data-title="拉格朗日乘数法" data-url="http://whlminds.com/2016/11/07/math-9/"></div>
+	<div class="ds-thread" data-thread-key="2017/02/16/book_rework/" data-title="REWORK--重来" data-url="http://whlminds.com/2017/02/16/book_rework/"></div>
 </section>
 
 
@@ -241,7 +328,7 @@ $$f(x,y)&amp;lt;f(x_{0}, y_{0})，$$
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多元函数的极值"><span class="toc-number">1.</span> <span class="toc-text">多元函数的极值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#必要条件"><span class="toc-number">1.1.</span> <span class="toc-text">必要条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#充分条件"><span class="toc-number">1.2.</span> <span class="toc-text">充分条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件极值"><span class="toc-number">2.</span> <span class="toc-text">条件极值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉格朗日乘数法"><span class="toc-number">3.</span> <span class="toc-text">拉格朗日乘数法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">4.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
+ 
  
   </div>
 

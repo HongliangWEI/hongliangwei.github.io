@@ -78,6 +78,79 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/05/02/statistics-amazon-s3-hive/" title="基于 Amazon S3 和 HIVE 的统计" itemprop="url">基于 Amazon S3 和 HIVE 的统计</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-02T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-05-02</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>当业务数量量越来越大时，通过在数据库中写 SQL 语句进行统计就变的越来越困难了，尽管可以通过不断优化 SQL 语句，比如，通过 EXPLAIN 查看执行计划，建立索引，子查询与连接查询选择，等等。但面对越来越大的数据量，还是会无力回天。</p>
+<p>这时，可以将业务数据存储到 Hadoop文件系统 上，借助 HIVE 进行统计，然后，再将统计结果导入业务数据库，供业务调用。</p>
+<h2 id="大数据统计思路">大数据统计思路</h2><p>当统计任务越来越多，并且数据量日益庞大，需要能够管理逻辑复杂的多个Hadoop作业。统计任务大致步骤如下：</p>
+<ol>
+<li>通过 Sqoop 先将业务数据同步到 Hadoop文件系统 上；</li>
+<li>对 Hadoop文件系统 上的业务数据，以分区表的形式存储到多张 Hive 表中；</li>
+<li>进行 JOIN 处理，得到一个明细数据Hive大表（此步骤可选）；</li>
+<li>借助 MapReduce 计算框架，对 Hive 中的表数据进行复杂的统计，得到统计后的的报表信息；</li>
+<li>需要将统计分析得到的结果数据同步到业务系统中，供业务调用使用。</li>
+</ol>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/05/02/statistics-amazon-s3-hive/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Hadoop/">Hadoop</a><a href="/tags/Hive/">Hive</a><a href="/tags/Sqoop/">Sqoop</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/05/02/statistics-amazon-s3-hive/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/05/02/statistics-amazon-s3-hive/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/04/05/where-and-having-in-sql/" title="SQL中WHERE与HAVING用法" itemprop="url">SQL中WHERE与HAVING用法</a>
   </h1>
   <p class="article-author">By
@@ -455,15 +528,15 @@
 			
 		
 			
+				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Machining-Learning/" title="Machining Learning">Machining Learning<sup>2</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -475,7 +548,7 @@
 			
 		
 			
-				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>1</sup></a></li>
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
 			
 		
 			
@@ -483,7 +556,7 @@
 			
 		
 			
-				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
 			
 		
 			
@@ -495,7 +568,7 @@
 			
 		
 			
-				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -540,7 +613,7 @@
 		  
 		
 		  
-			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>2</sup></a></li>
 		  
 		
 		</ul>
@@ -551,7 +624,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 13.33px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 16.67px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 13.33px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 13.33px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 10px;">booknotes</a>
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 13.33px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 16.67px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 13.33px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 13.33px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 13.33px;">booknotes</a>
     </div>
   </div>
 
@@ -596,7 +669,7 @@
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
 		
 		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
 		
