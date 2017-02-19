@@ -1,0 +1,659 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>基于Topic Model的商品排序 | WHLMinds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="HongliangWEI">
+    
+
+    
+    <meta name="description" content="问题背景在 基于朴素贝叶斯分类器的商品排序 中讨论了通过朴素贝叶斯分类器对商品排序，同样的问题背景，本文讨论基于无监督的Topic Model对商品排序，即如何对 200 多个商品排序，使得用户感兴趣的商品排在前面，提高99模块的点击率？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Topic Model的商品排序">
+<meta property="og:url" content="http://whlminds.com/2017/02/18/sort_based_plsa/index.html">
+<meta property="og:site_name" content="WHLMinds">
+<meta property="og:description" content="问题背景在 基于朴素贝叶斯分类器的商品排序 中讨论了通过朴素贝叶斯分类器对商品排序，同样的问题背景，本文讨论基于无监督的Topic Model对商品排序，即如何对 200 多个商品排序，使得用户感兴趣的商品排在前面，提高99模块的点击率？">
+<meta property="og:image" content="/illustration/topic_model_1.jpg">
+<meta property="og:image" content="/illustration/topic_model_2.jpg">
+<meta property="og:image" content="/illustration/topic_model_3.png">
+<meta property="og:image" content="/illustration/topic_model_4.png">
+<meta property="og:image" content="/illustration/topic_model_5.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Topic Model的商品排序">
+<meta name="twitter:description" content="问题背景在 基于朴素贝叶斯分类器的商品排序 中讨论了通过朴素贝叶斯分类器对商品排序，同样的问题背景，本文讨论基于无监督的Topic Model对商品排序，即如何对 200 多个商品排序，使得用户感兴趣的商品排在前面，提高99模块的点击率？">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="WHLMinds" title="WHLMinds"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="WHLMinds">WHLMinds</a></h1>
+				<h2 class="blog-motto">大 胆 假 设，小 心 求 证</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:whlminds.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/18/sort_based_plsa/" title="基于Topic Model的商品排序" itemprop="url">基于Topic Model的商品排序</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-18T15:38:21.000Z" itemprop="datePublished"> 发表于 2017-02-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题背景"><span class="toc-number">1.</span> <span class="toc-text">问题背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Topic_Model"><span class="toc-number">2.</span> <span class="toc-text">Topic Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#两种Topic_Model模型"><span class="toc-number">2.1.</span> <span class="toc-text">两种Topic Model模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文本建模"><span class="toc-number">2.2.</span> <span class="toc-text">文本建模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pLSA"><span class="toc-number">2.3.</span> <span class="toc-text">pLSA</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于Topic_Model的商品排序"><span class="toc-number">3.</span> <span class="toc-text">基于Topic Model的商品排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#电商场景的语料库构建"><span class="toc-number">4.</span> <span class="toc-text">电商场景的语料库构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="问题背景">问题背景</h3><p>在 <a href="http://whlminds.com/2017/02/18/sort_based_naive_bayes/" target="_blank" rel="external">基于朴素贝叶斯分类器的商品排序</a> 中讨论了通过朴素贝叶斯分类器对商品排序，同样的问题背景，本文讨论基于无监督的Topic Model对商品排序，即如何对 200 多个商品排序，使得用户感兴趣的商品排在前面，提高99模块的点击率？</p>
+<a id="more"></a>
+<h3 id="Topic_Model">Topic Model</h3><h4 id="两种Topic_Model模型">两种Topic Model模型</h4><p>当我们看到一篇文章后，有时会推测这篇文章是如何生成的。我们可能会认为作者先确定这篇文章的几个主题，然后围绕这几个主题遣词造句，表达成文。一篇文档可以包含多个主题，文档中每一个词都由其中的一个主题生成。</p>
+<p><img src="/illustration/topic_model_1.jpg" class="img-center" width="60%" height="60%"></p>
+<p>那么，能不能分析各篇文章分别都写了哪些主题，且文章中各个主题出现的概率大小（主题分布）是多少？</p>
+<p>要解决上述问题，可以使用Topic Model模型。Topic Model 模型主要有<code>pLSA</code> 和 <code>LDA</code>。</p>
+<ul>
+<li>pLSA，即 Probabilistic Latent Semantic Analysis，1999年由 Hoffmn提出。pLSA 假设文章中有多个主题，并且给出每个主题的概率，以及每个主题下出现的词的概率，pLSA 假设文章中的各个主题概率是一定的，每个主题下出现的词的概率也是一定的；</li>
+<li>LDA，即 Latent Dirichlet Allocation，2003年由 Blei David M.、Ng, Andrew Y.、Jordan 提出。LDA 假设文章中有多个主题，并且给出每个主题的概率，以及每个主题下出现的词的概率，和 pLSA 不同的是，LDA 认为文章中每个主题的概率不是一定的，每个主题的概率满足一定的概率分布，并且每个主题下出现的词的概率也不是一定的，每个词在当前主题下出现的概率满足一定的概率分布。</li>
+</ul>
+<p><img src="/illustration/topic_model_2.jpg" class="img-center" width="50%" height="50%"></p>
+<p>本文主要讲述 $pLSA$，为说清楚 $pLSA$，先简要介绍下 <strong>文本建模</strong>。</p>
+<h4 id="文本建模">文本建模</h4><p>我们日常生活中总会产生大量的文本，如果每一个文本存储为一篇文档，那每篇文档从人的观察来说就是有序的词序列。为了方便描述，首先定义一些变量</p>
+<ul>
+<li>$w$ 表示词，$V$ 表示词典中单词的个数；</li>
+<li>$z$ 表示主题，$K$ 是主题的个数；</li>
+<li>$d=(w_{1}, w_{2}, \cdots, w_{N})$ 表示文档，其中 $N$ 表示一个文档中的词个数；</li>
+<li>$s=(d_{1}, d_{2}, \cdots, d_{M})$ 表示语料库，其中 $M$ 表示语料库中的文档个数。</li>
+</ul>
+<p>那么，包含 $m$ 篇文档的语料库可以表示如下</p>
+<p><img src="/illustration/topic_model_3.png" class="img-center" width="50%" height="50%"></p>
+<p>在 Unigram Model 中，我们假设文档之间是独立可交换的，而文档中的词也是独立可交换的，所以一篇文档相当于一个袋子，里面装了一些词，而词的顺序信息就无关紧要了，这样的模型也称为 <strong>词袋模型(Bag-of-words)</strong> 。</p>
+<p>基于词袋模型，含有 $N$ 个词的文档的生成概率课表示为</p>
+<p>$$\begin{eqnarray}<br>p(d) &amp; = &amp; p(w_{1}, w_{2}, \cdots, w_{N}) \\<br>{} &amp; = &amp; p(w_{1}) \cdot p(w_{1}) \cdot p(w_{2}), \cdots, p(w_{N}) \\<br>{} &amp; = &amp; \prod_{i=1}^{N}P(w_{i})<br>\end{eqnarray}$$</p>
+<p>其中，$p(d)$ 表示生成文档 $d$ 的概率，而 $P(w_{i})$ 表示从词典中生成词 $w_{i}$ 的概率。用图模型表示为</p>
+<p><img src="/illustration/topic_model_4.png" class="img-center" width="30%" height="30%"></p>
+<p>其中，被涂色的 $w$ 为观察量，$N$ 表示一篇文档中的单词数量，$M$ 表示语料库中的文档数。</p>
+<h4 id="pLSA">pLSA</h4><p>我们在构思文章时，往往是先确定要写哪几个主题，比如构思一篇NLP相关的文章，可能40%篇幅谈语言学，30%篇幅谈概率论，30%篇幅谈计算机：</p>
+<ol>
+<li>语言学，容易想到的词汇：语法、句子、语法分析…</li>
+<li>概率论，容易想到的词汇：概率、模型、均值…</li>
+<li>计算机，容易想到的词汇：CPU、内存、二进制…</li>
+</ol>
+<p>一篇文章通常由多个主题构成，而每个主题大概可以用与该主题相关的频率最高的词来描述。</p>
+<p>按照 pLSA 模型的文档生成过程，我们并未关注词与词之间的顺序，形式化过程</p>
+<ol>
+<li>$P(d_{i})$，海量文档中某篇文档被选中的概率；</li>
+<li>$P(w_{j}|d_{i})$，词 $w_{j}$ 在给定的文档 $d_{i}$ 中出现的概率；</li>
+<li>$P(z_{k}|d_{i})$，具体某个主题 $z_{k}$ 在给定文档 $d_{i}$ 下出现的概率；</li>
+<li>$P(w_{j}|z_{k})$，具体某个词 $w_{j}$ 在给定主题 $z_{k}$ 下出现的概率；</li>
+</ol>
+<p>根据上述1、3 和 4 的概率，可按照如下步骤得到 “文档-词项” 的生成模型：</p>
+<ol>
+<li>按照概率 $P(d_{i})$ 选择一篇文档 $d_{i}$；</li>
+<li>选定文档 $d_{i}$ 之后，从主题分布中按照概率 $P(z_{k}|d_{i})$ 选择一个隐含的主题类别 $z_{k}$；</li>
+<li>选定 $z_{k}$ 之后，从词分布中按照概率 $P(w_{j}|z_{k})$ 选择一个词 $w_{j}$.</li>
+</ol>
+<p>根据以上过程，文档 $d_{i}$ 中词 $w_{j}$ 的生成概率</p>
+<p>$$P(w_{j}|d_{i})=\sum_{k=1}^{K}P(w_{j}|z_{k})\cdot P(z_{k}|d_{i}).$$</p>
+<p>文档中每个词的生成概率</p>
+<p>$$\begin{eqnarray}<br>P(d_{i}, w_{j}) &amp; = &amp; P(d_{i})\cdot P(w_{j}|d_{i}) \\<br>{} &amp; = &amp; P(d_{i})\cdot \sum_{k=1}^{K}[P(w_{j}|z_{k})\cdot P(z_{k}|d_{i})]<br>\end{eqnarray}$$</p>
+<p>pLSA 的图模型如下</p>
+<p><img src="/illustration/topic_model_5.png" class="img-center" width="30%" height="30%"></p>
+<p>由于 $P(w_{j}|d_{i})$ 可观测到，$P(d_{i})$ 可事先计算求出，因此，$P(w_{j}|z_{k})$ 和 $P(z_{k}|d_{i})$ 是需要估计的参数，通过 $EM算法$ 估计。</p>
+<h3 id="基于Topic_Model的商品排序">基于Topic Model的商品排序</h3><p>用户在逛楚楚街APP时，每个用户都有自己的兴趣，并会对自己感兴趣的商品，进行点击(CLICK)、收藏(FAV)、加购(CART)或者下单(ORDER)。这里做如下假设</p>
+<ul>
+<li>每一个商品是都是一个词 $w$，$V$ 表示商品的个数；</li>
+<li>$z$ 表示用户的兴趣，$K$ 是用户兴趣的个数；</li>
+<li>$d=(w_{1}, w_{2}, \cdots, w_{N})$ 表示用户有过行为的商品，其中 $N$ 表示用户有过行为的商品的个数；</li>
+<li>$s=(d_{1}, d_{2}, \cdots, d_{M})$ 表示访问过楚楚街APP的用户集合，其中 $M$ 表示集合中用户的个数。</li>
+</ul>
+<p>按上述假设，每个商品类比为词，每个用户有过上述4种行为的商品集合作为文档，所有用户有过行为商品集合作为语料库。借鉴 pLSA 的思想，可以应用到电商场景中。</p>
+<p>已知每个用户有过行为的商品集合，需要估计用户有哪些兴趣，并且每个兴趣下代表性的商品和商品的概率分布。即已知用户 $d_{i}$，和用户有过行为的商品集合 $d=(w_{1}, w_{2}, \cdots, w_{N})$，需要估计用户的兴趣分布 $P(z_{k}|d_{i})$ 和每个兴趣下的商品概率分布 $P(w_{j}|z_{k})$。</p>
+<p>本文开始的问题背景中，在9块9模块中，如何对 200 多个商品排序，使得用户感兴趣的商品排在前面，提高99模块的点击率？</p>
+<p>即对于一个用户 $d_{i}$ 和一个商品 $w_{j}$，需要知道用户 $d_{i}$ 对这个商品 $w_{j}$ 感兴趣概率是多少。如果知道用户的兴趣分布 $P(z_{k}|d_{i})$，以及每个兴趣下的商品概率分布 $P(w_{j}|z_{k})$，就可以知道用户对这个商品感兴趣的概率，即</p>
+<p>$$\begin{eqnarray}<br>P(d_{i}, w_{j}|z_{k}) = \sum_{k=1}^{K}[P(w_{j}|z_{k})\cdot P(z_{k}|d_{i})]<br>\end{eqnarray}$$</p>
+<h3 id="电商场景的语料库构建">电商场景的语料库构建</h3><p>考虑到用户不同行为，对商品感兴趣程度强弱不同，从点击(CLICK)、收藏(FAV)、加购(CART)到下单(ORDER)，用户的兴趣越来越强，因此，如果4种行为的权重为</p>
+<p>$$W = (w_{click}, w_{fav}, w_{cart}, w_{order}).$$</p>
+<p>并且4种行为对同一个商品的行为次数分别为</p>
+<p>$$cnt = (cnt_{click}, cnt_{fav}, cnt_{cart}, cnt_{order})$$</p>
+<p>则最终用户对商品的最终行为次数可以表示为</p>
+<p>$$cnt_{d_{i}, w_{j}}=\sum_{b \in \{click, fav, cart, order\}}(w_{b}\cdot cnt_{b}).$$</p>
+<p>考虑到不同行为表达用户对商品不同的感兴趣程度差异，则电商场景的语料库构建如下</p>
+<p>$$<br>\left(<br>\begin{matrix}<br>   (d_{1}, w_{11}, cnt_{1, 11}) &amp; (d_{1}, w_{12}, cnt_{1, 12}) &amp; \cdots &amp;  (d_{1}, w_{1n_{1}}, cnt_{1, 1n_{1}})\\<br>   (d_{2}, w_{21}, cnt_{2, 21}) &amp; (d_{2}, w_{22}, cnt_{1, 22}) &amp; \cdots &amp;  (d_{2}, w_{2n_{2}}, cnt_{2, 2n_{2}})\\<br>   \cdots &amp; \cdots &amp; \cdots &amp; \cdots \\<br>   (d_{m}, w_{m1}, cnt_{m, m1}) &amp; (d_{m}, w_{m2}, cnt_{1, m2}) &amp; \cdots &amp;  (d_{m}, w_{mn_{m}}, cnt_{m, mn_{m}})<br>\end{matrix}<br>\right)<br>$$</p>
+<p>上面矩阵中，每一行表示用户有过行为的商品，及行为次数统计，类比于一篇文档；共 $m$ 个用户即代表语料库有 $m$ 篇文档。</p>
+<p>基于以上语料库，可通过 <strong>EM算法</strong> 得到用户的兴趣分布 $P(z_{k}|d_{i})$，以及每个兴趣下的商品概率分布 $P(w_{j}|z_{k})$，再根据公式(6)就可以得到用户对任意商品的感兴趣概率。</p>
+<h3 id="总结">总结</h3><p>本文讲述了基于Topic Model中 pLSA 算法进行商品排序，解决在楚楚街9块9模块中，对 200 多个商品排序，使得用户感兴趣的商品排在前面，提高99模块的点击率的问题。借鉴 pLSA 的思想，通过将商品类比为词，用户有过行为的商品集合作为文档，所有用户有过行为商品集合作为语料库，分析用户的兴趣分布，以及每个兴趣下商品的概率分布，得到用户对任意商品的感兴趣概率。</p>
+<h3 id="参考资料">参考资料</h3><ol>
+<li>Rickjin(靳志辉), 《LDA数学八卦》</li>
+<li>v_JULY_v, <a href="http://blog.csdn.net/v_july_v/ar ticle/details/41209515" target="_blank" rel="external">通俗理解LDA主题模型</a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Machining-Learning/">Machining Learning</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://whlminds.com/2017/02/18/sort_based_plsa/" data-title="基于Topic Model的商品排序 | WHLMinds" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/02/19/guess_you_like_with_item_cf/" title="基于协同过滤的的商品推荐">
+  <strong>上一篇：</strong><br/>
+  <span>
+  基于协同过滤的的商品推荐</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/02/18/sort_based_naive_bayes/"  title="基于朴素贝叶斯分类器的商品排序">
+ <strong>下一篇：</strong><br/> 
+ <span>基于朴素贝叶斯分类器的商品排序
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/02/18/sort_based_plsa/" data-title="基于Topic Model的商品排序" data-url="http://whlminds.com/2017/02/18/sort_based_plsa/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题背景"><span class="toc-number">1.</span> <span class="toc-text">问题背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Topic_Model"><span class="toc-number">2.</span> <span class="toc-text">Topic Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#两种Topic_Model模型"><span class="toc-number">2.1.</span> <span class="toc-text">两种Topic Model模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文本建模"><span class="toc-number">2.2.</span> <span class="toc-text">文本建模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pLSA"><span class="toc-number">2.3.</span> <span class="toc-text">pLSA</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于Topic_Model的商品排序"><span class="toc-number">3.</span> <span class="toc-text">基于Topic Model的商品排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#电商场景的语料库构建"><span class="toc-number">4.</span> <span class="toc-text">电商场景的语料库构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Math/" title="Math">Math<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Machining-Learning/" title="Machining Learning">Machining Learning<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Oozie/" title="Oozie">Oozie<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hive/" title="Hive">Hive<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Sqoop/" title="Sqoop">Sqoop<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MapReduce/" title="MapReduce">MapReduce<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数学/" title="数学">数学<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/机器学习/" title="机器学习">机器学习<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12.5px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 17.5px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 15px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12.5px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 12.5px;">booknotes</a>
+    </div>
+  </div>
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="120" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=250&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1907586883&verifier=50d45b85&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m HongliangWEI. <br/>
+			This is my blog. Believe it or not!</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:helloweihl@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"whlminds"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F9c533e8f9930cffc806c36de6a517fbe' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>

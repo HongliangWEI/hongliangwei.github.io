@@ -11,36 +11,33 @@
     
 
     
-    <meta name="description" content="逻辑回归学习笔记，文中部分内容直接从参考资料拿来。
-
-逻辑回归（Logistic Regression）是机器学习中有监督学习的分类模型，应用于二分类问题，或者说用来分类0/1问题，也就是预测结果属于0或者1的二值分类问题。
+    <meta name="description" content="逻辑回归（Logistic Regression）是机器学习中有监督学习的分类模型，应用于二分类问题，或者说用来分类0/1问题，也就是预测结果属于0或者1的二值分类问题。
 在电商中，逻辑回归常用于预测一个用户是否点击特定的商品，应用于排序等场景中。
 分类问题对于某个分类任务，如判定一封邮件是否为垃圾邮件，我们需要通过分类器预测分类结果
 
-是（记">
+是（记为1）
+不是（记为0）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="逻辑回归">
 <meta property="og:url" content="http://whlminds.com/2016/12/18/logistic-regression/index.html">
 <meta property="og:site_name" content="WHLMinds">
-<meta property="og:description" content="逻辑回归学习笔记，文中部分内容直接从参考资料拿来。
-
-逻辑回归（Logistic Regression）是机器学习中有监督学习的分类模型，应用于二分类问题，或者说用来分类0/1问题，也就是预测结果属于0或者1的二值分类问题。
+<meta property="og:description" content="逻辑回归（Logistic Regression）是机器学习中有监督学习的分类模型，应用于二分类问题，或者说用来分类0/1问题，也就是预测结果属于0或者1的二值分类问题。
 在电商中，逻辑回归常用于预测一个用户是否点击特定的商品，应用于排序等场景中。
 分类问题对于某个分类任务，如判定一封邮件是否为垃圾邮件，我们需要通过分类器预测分类结果
 
-是（记">
+是（记为1）
+不是（记为0）">
 <meta property="og:image" content="/illustration/logistic-regression-2.png">
 <meta property="og:image" content="/illustration/logistic-regression-1.jpg">
 <meta property="og:image" content="/illustration/logistic-regression-3.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逻辑回归">
-<meta name="twitter:description" content="逻辑回归学习笔记，文中部分内容直接从参考资料拿来。
-
-逻辑回归（Logistic Regression）是机器学习中有监督学习的分类模型，应用于二分类问题，或者说用来分类0/1问题，也就是预测结果属于0或者1的二值分类问题。
+<meta name="twitter:description" content="逻辑回归（Logistic Regression）是机器学习中有监督学习的分类模型，应用于二分类问题，或者说用来分类0/1问题，也就是预测结果属于0或者1的二值分类问题。
 在电商中，逻辑回归常用于预测一个用户是否点击特定的商品，应用于排序等场景中。
 分类问题对于某个分类任务，如判定一封邮件是否为垃圾邮件，我们需要通过分类器预测分类结果
 
-是（记">
+是（记为1）
+不是（记为0）">
 
     
     
@@ -117,10 +114,7 @@
 		
 		</div>
 		
-		<blockquote>
-<p>逻辑回归学习笔记，文中部分内容直接从参考资料拿来。</p>
-</blockquote>
-<p>逻辑回归（Logistic Regression）是机器学习中有监督学习的分类模型，应用于二分类问题，或者说用来分类0/1问题，也就是预测结果属于0或者1的二值分类问题。</p>
+		<p>逻辑回归（Logistic Regression）是机器学习中有监督学习的分类模型，应用于二分类问题，或者说用来分类0/1问题，也就是预测结果属于0或者1的二值分类问题。</p>
 <p>在电商中，逻辑回归常用于预测一个用户是否点击特定的商品，应用于排序等场景中。</p>
 <h2 id="分类问题">分类问题</h2><p>对于某个分类任务，如判定一封邮件是否为垃圾邮件，我们需要通过分类器预测分类结果</p>
 <ul>
@@ -177,7 +171,7 @@
 <p>逻辑回归看似就是线性回归，它们俩都要学习一个线性函数，逻辑回归无非是多加了一层函数映射，但线性回归是在拟合输入向量 $X$ 的分布，而逻辑回归中的线性函数是在拟合决策边界，它们的目标是不一样的。</p>
 <p>线性回归和逻辑回归是属于同一种模型，但是它们要解决的问题不一样，前者解决的是regression问题，后者解决的是classification问题，前者的输出是连续值，后者的输出是离散值，而且前者的损失函数是输出 $y$ 的高斯分布，后者损失函数是输出的伯努利分布。</p>
 <h2 id="总结">总结</h2><p>本文先从判定一封邮件是否为垃圾邮件的分类问题开始，预测分类结果，并通过事件发生概率的大小来达到分类目的。线性回归的预测结果为整个实数域，因此为了将分类器输出界定在 $[0, 1]$ 之间，引出了 sigmoid 函数。并通过将对数极大似然的变换定义为损失函数，对 sigmoid 函数中的参数使用梯度下降进行估计。最后对比分析了线性回归和逻辑回归的区别，线性回归是在拟合输入向量 $X$ 的分布，而逻辑回归中的线性函数是在拟合决策边界。</p>
-<p>感谢参考资料的各位作者的精辟分析，本文中许多内容均为拿来主义，再次感谢。</p>
+<p>感谢参考资料的各位作者的精辟分析，本文中部分内容直接拿来主义，再次感谢。</p>
 <h2 id="参考资料">参考资料</h2><ol>
 <li><a href="http://www.cnblogs.com/jerrylead/archive/2011/03/05/1971867.html" target="_blank" rel="external">对线性回归，logistic回归和一般回归的认识</a></li>
 <li><a href="http://www.cnblogs.com/BYRans/p/4713624.html" target="_blank" rel="external">逻辑回归（Logistic Regression）</a></li>
@@ -271,6 +265,10 @@
 			
 		
 			
+				<li><a href="/tags/Machining-Learning/" title="Machining Learning">Machining Learning<sup>6</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Oozie/" title="Oozie">Oozie<sup>3</sup></a></li>
 			
 		
@@ -284,10 +282,6 @@
 		
 			
 				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Machining-Learning/" title="Machining Learning">Machining Learning<sup>2</sup></a></li>
 			
 		
 			
@@ -307,11 +301,11 @@
 			
 		
 			
-				<li><a href="/tags/MapReduce/" title="MapReduce">MapReduce<sup>1</sup></a></li>
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
+				<li><a href="/tags/MapReduce/" title="MapReduce">MapReduce<sup>1</sup></a></li>
 			
 		
 			
@@ -360,7 +354,7 @@
 		  
 		
 		  
-			<li><a href="/categories/机器学习/" title="机器学习">机器学习<sup>2</sup></a></li>
+			<li><a href="/categories/机器学习/" title="机器学习">机器学习<sup>6</sup></a></li>
 		  
 		
 		  
@@ -379,7 +373,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 13.33px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 16.67px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 13.33px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 13.33px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 13.33px;">booknotes</a>
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12.5px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 17.5px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 15px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12.5px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 12.5px;">booknotes</a>
     </div>
   </div>
 
