@@ -1,0 +1,701 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>基于协同过滤的的商品推荐 | WHLMinds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="HongliangWEI">
+    
+
+    
+    <meta name="description" content="问题背景用户逛电商APP时，经常会有 猜你喜欢 的场景，如下图某电商APP的猜你喜欢场景，猜测用户可能喜欢的商品，并按照喜欢的强弱程度给出Top N个商品。那么，如何猜测用户喜欢的商品呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于协同过滤的的商品推荐">
+<meta property="og:url" content="http://whlminds.com/2017/02/20/guess_you_like_with_item_cf/index.html">
+<meta property="og:site_name" content="WHLMinds">
+<meta property="og:description" content="问题背景用户逛电商APP时，经常会有 猜你喜欢 的场景，如下图某电商APP的猜你喜欢场景，猜测用户可能喜欢的商品，并按照喜欢的强弱程度给出Top N个商品。那么，如何猜测用户喜欢的商品呢？">
+<meta property="og:image" content="/illustration/guess_you_like.jpeg">
+<meta property="og:image" content="/illustration/item_cf_1.png">
+<meta property="og:image" content="/illustration/guess_you_like_1.png">
+<meta property="og:image" content="/illustration/like_log.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于协同过滤的的商品推荐">
+<meta name="twitter:description" content="问题背景用户逛电商APP时，经常会有 猜你喜欢 的场景，如下图某电商APP的猜你喜欢场景，猜测用户可能喜欢的商品，并按照喜欢的强弱程度给出Top N个商品。那么，如何猜测用户喜欢的商品呢？">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="WHLMinds" title="WHLMinds"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="WHLMinds">WHLMinds</a></h1>
+				<h2 class="blog-motto">大 胆 假 设，小 心 求 证</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:whlminds.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/20/guess_you_like_with_item_cf/" title="基于协同过滤的的商品推荐" itemprop="url">基于协同过滤的的商品推荐</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-20T13:38:21.000Z" itemprop="datePublished"> 发表于 2017-02-20</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题背景"><span class="toc-number">1.</span> <span class="toc-text">问题背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题分析"><span class="toc-number">2.</span> <span class="toc-text">问题分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#协同过滤"><span class="toc-number">3.</span> <span class="toc-text">协同过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jaccard相似系数"><span class="toc-number">3.1.</span> <span class="toc-text">Jaccard相似系数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#余弦相似系数"><span class="toc-number">3.2.</span> <span class="toc-text">余弦相似系数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#皮尔逊相关系数"><span class="toc-number">3.3.</span> <span class="toc-text">皮尔逊相关系数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#欧几里德距离"><span class="toc-number">3.4.</span> <span class="toc-text">欧几里德距离</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#个性化推荐"><span class="toc-number">4.</span> <span class="toc-text">个性化推荐</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#寻找相似商品"><span class="toc-number">4.1.</span> <span class="toc-text">寻找相似商品</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#寻找用户喜欢商品"><span class="toc-number">4.2.</span> <span class="toc-text">寻找用户喜欢商品</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法优化"><span class="toc-number">5.</span> <span class="toc-text">算法优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于业务背景优化"><span class="toc-number">5.1.</span> <span class="toc-text">基于业务背景优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#活跃用户"><span class="toc-number">5.1.1.</span> <span class="toc-text">活跃用户</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#活动商品、虚拟商品"><span class="toc-number">5.1.2.</span> <span class="toc-text">活动商品、虚拟商品</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户行为的权重、主动性、频率"><span class="toc-number">5.1.3.</span> <span class="toc-text">用户行为的权重、主动性、频率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#时间衰减"><span class="toc-number">5.1.4.</span> <span class="toc-text">时间衰减</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多样性"><span class="toc-number">5.1.5.</span> <span class="toc-text">多样性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工程实现优化"><span class="toc-number">5.2.</span> <span class="toc-text">工程实现优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#序列化和反序列化"><span class="toc-number">5.2.1.</span> <span class="toc-text">序列化和反序列化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据倾斜"><span class="toc-number">5.2.2.</span> <span class="toc-text">数据倾斜</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#广播变量"><span class="toc-number">5.2.3.</span> <span class="toc-text">广播变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#map-side预聚合"><span class="toc-number">5.2.4.</span> <span class="toc-text">map-side预聚合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Top40_VS-_Top200"><span class="toc-number">5.2.5.</span> <span class="toc-text">Top40 VS. Top200</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型问题"><span class="toc-number">6.</span> <span class="toc-text">模型问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#用户冷启动"><span class="toc-number">6.1.</span> <span class="toc-text">用户冷启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新商品"><span class="toc-number">6.2.</span> <span class="toc-text">新商品</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">8.</span> <span class="toc-text">参考资料</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="问题背景">问题背景</h2><p>用户逛电商APP时，经常会有 <strong>猜你喜欢</strong> 的场景，如下图某电商APP的猜你喜欢场景，猜测用户可能喜欢的商品，并按照喜欢的强弱程度给出Top N个商品。那么，如何猜测用户喜欢的商品呢？</p>
+<a id="more"></a>
+<p><img src="/illustration/guess_you_like.jpeg" class="img-center" width="40%" height="40%"></p>
+<h2 id="问题分析">问题分析</h2><p>用户在逛电商APP时，会浏览(PV)很多商品，看到自己喜欢的商品，一般会有点击(CLICK)、收藏(FAV)、加购(CART)和下单(ORDER)行为。从CLICK到ORDER行为隐性的反馈了用户的喜好，当用户购买过商品后，会对商品进行评价(COMMENT)，通过打分或者评价内容可以显性的表达用户的喜好。</p>
+<p>本文基于协同过滤算法，通过分析用户历史点击(CLICK)、收藏(FAV)、加购(CART)和下单(ORDER)行为，预测用户喜欢的商品，推荐给用户。</p>
+<h2 id="协同过滤">协同过滤</h2><p>协同过滤算法分为以下两类</p>
+<ul>
+<li>基于用户的协同过滤算法（user-based collaboratIve filtering）</li>
+<li>基于物品的协同过滤算法（item-based collaborative filtering）</li>
+</ul>
+<p>简单的说就是：人以类聚，物以群分。这里主要介绍基于物品的协同过滤算法。</p>
+<p>基于物品的协同过滤算法，用于计算商品之间的相似度，即对商品 $a$ 有过行为的用户还对哪些商品有过行为。这里的行为可以是CLICK、FAV、CART和ORDER，代表用户对商品的态度和偏好。如果对商品 $a$ 有过行为的用户中大部分还对商品 $b$ 有过行为，则认为商品 $a$ 和商品 $b$ 比较相似。</p>
+<p><img src="/illustration/item_cf_1.png" class="img-center" width="40%" height="40%"></p>
+<p>以商品 $a$ 和商品 $b$ 为例，如何计算商品之间的相似度呢，一般有以下几种算法：</p>
+<h3 id="Jaccard相似系数">Jaccard相似系数</h3><p>Jaccard 相似系数是衡量两个集合相似度的一种指标，公式如下：</p>
+<p>$$sim_{Jaccard}(a, b) = \frac{|A \cap B|}{|A \cup B|}.$$</p>
+<p>其中，$A$ 代表对商品 $a$ 有过行为的用户集合，$B$ 代表对商品 $b$ 有过行为的用户集合。如果对商品 $a$ 和商品 $b$ 有过行为的用户中，对两个商品都有行为的用户数量越多，则代表两个商品越相似。</p>
+<h3 id="余弦相似系数">余弦相似系数</h3><p>余弦相似系数，也称余弦距离或余弦相似度，是用向量空间中两个向量夹角的余弦值作为衡量两个个体间差异的大小的度量。公式如下：</p>
+<p>$$sim_{cosine}(a, b) = \frac{\vec{A}\cdot\vec{B}}{\Vert A \Vert \cdot \Vert B \Vert}.$$</p>
+<p>当用于计算两个商品相似度时，上面公式中 $A$ 表示对商品 $a$ 有过行为的每一个用户对商品 $a$ 的评分，$B$ 表示对商品 $b$ 有过行为的每一个用户对商品 $b$ 的评分。</p>
+<p>例如分别有 $n$ 个用户对商品 $a$ 有过行为，有 $m$ 个用户对商品 $b$ 有过行为，评分分别为</p>
+<ul>
+<li>$(A_{1}, A_{2}, \cdots, A_{n})$</li>
+<li>$(B_{1}, B_{2}, \cdots, B_{m})$</li>
+</ul>
+<p>两个商品都有过行为的用户个数为 $k$ 个，则商品 $a$ 和 $b$ 的余弦相似度为：</p>
+<p>$$sim_{cosine}(a, b) = \frac{\sum_{i=1}^{k}A_{i}\cdot B_{i}}{\sqrt{A_{1}^{2}+A_{2}^{2}+\cdots+A_{n}^{2}}\cdot \sqrt{B_{1}^{2}+B_{2}^{2}+\cdots+B_{m}^{2}}}.$$</p>
+<h3 id="皮尔逊相关系数">皮尔逊相关系数</h3><p>皮尔逊相关系数，范围在 $[-1, 1]$ 之间，公式如下</p>
+<p>$$\begin{eqnarray}<br>\rho_{a,b} &amp; = &amp; \frac{cov(A,B)}{\sigma_{A}\cdot\sigma_{B}} \\<br>{} &amp; = &amp; \frac{E((A-\mu_{A})\cdot(B-\mu_{B}))}{\sigma_{X}\cdot\sigma_{B}} \\<br>{} &amp; = &amp; \frac{E(A\cdot B)-E(A)\cdot E(B)}{\sqrt{E(A^{2})-E^{2}(A)}\cdot\sqrt{E(B^{2})-E^{2}(B)}}.<br>\end{eqnarray}$$</p>
+<h3 id="欧几里德距离">欧几里德距离</h3><p>欧几里德距离通过计算两个商品在散点图中的距离来判断不同的商品是否相似。公式如下</p>
+<p>$$sim_{Euclid}(a, b) = \sqrt{(A_{1}-B_{1})^{2}+(A_{2}-B_{2})^{2}+\cdots+(A_{n}-B_{n})^{2}}.$$</p>
+<p>上面公式中，商品 $a$ 和 商品 $b$ 分别有 $n$ 个用户有评分。如果有用户对商品 $a$ 或者商品 $b$ 没有行为，则可假设评分为零。</p>
+<h2 id="个性化推荐">个性化推荐</h2><p>对用户进行个性化推荐，寻找用户喜欢的商品，分为两步</p>
+<ol>
+<li>基于所有用户对商品的历史行为，计算出每个商品的相似商品；</li>
+<li>对每个用户有过直接行为的商品，寻找出相似的商品推荐给用户。</li>
+</ol>
+<h3 id="寻找相似商品">寻找相似商品</h3><p>寻找每个商品相似的商品，基于上述物品的协同过滤算法。考虑用户 $U$ 对商品 $I$ 有点击(CLICK)、收藏(FAV)、加购(CART)或下单(ORDER)行为，每种行为代表了用户对商品的态度和偏好，假设对这4种行为的偏好以评分的形式进行量化，形式化如下</p>
+<p>$score=(s_{click}, s_{fav}, s_{cart}, s_{order}).$</p>
+<p>如果用户 $U$ 对商品有 $I$ 点击(CLICK)、收藏(FAV)、加购(CART)或下单(ORDER)行为，则用户 $U$ 对商品 $I$ 评分可定义如下：</p>
+<p>$score(U, I) = \sum_{b \in \{click, fav, cart, order\}}(w_{b}\cdot s_{b}).$</p>
+<p>其中，$w_{b}$ 代表4种行为的权重，定义如下</p>
+<p>$$<br>w_{b}=\begin{cases}<br>1 &amp; \text{count(b)&gt;0},\\<br>0 &amp; \text{count(b)=0}.<br>\end{cases}<br>$$</p>
+<p>$count(b)$，$b \in \{click, fav, cart, order\}$，分别代表4种行为的次数。</p>
+<p>假如商品 $a$ 和 商品 $b$ 有过行为的用户数分别为 $n$ 和 $m$ 个，评分分别为</p>
+<ul>
+<li>$((I_{a}, U_{a, 1}, score(I_{a}, U_{a, 1}), (I_{a}, U_{a, 2}, score(I_{a}, U_{a, 2}),\cdots, (I_{a}, U_{a, n}, score(I_{a}, U_{a, n}))$</li>
+<li>$((I_{b}, U_{b, 1}, score(I_{b}, U_{b, 1}), (I_{b}, U_{b, 2}, score(I_{b}, U_{b, 2}),\cdots, (I_{b}, U_{b, m}, score(I_{b}, U_{b, m}))$</li>
+</ul>
+<p>且对商品 $a$ 和 商品 $b$ 共同有过行为的用户数为 $K$ 个，则余弦相似度为</p>
+<p>$$\begin{eqnarray}<br>sim_{cosine}(a, b) = \frac{\sum_{k=1}^{K}(score(I_{a}, U_{a,k})\cdot score(I_{b}, U_{b,k}))}{\sqrt{\sum_{i=1}^{n}score^{2}(I_{a}, U_{a, i})}\cdot\sqrt{\sum_{j=1}^{m}score^{2}(I_{b}, U_{b, j})}}.<br>\end{eqnarray}$$</p>
+<p>根据公式 (4) 就可以计算出任意两个商品之间的相似度，也就可以寻找出一个商品的相似商品了。</p>
+<h3 id="寻找用户喜欢商品">寻找用户喜欢商品</h3><p>用户在逛电商APP时，会浏览(PV)很多商品，看到自己喜欢的商品，一般会有点击(CLICK)、收藏(FAV)、加购(CART)和下单(ORDER)行为。寻找用户喜欢的商品，即可以计算用户直接有过行为的商品的相似商品。方法如下图</p>
+<p><img src="/illustration/guess_you_like_1.png" class="img-center" width="70%" height="70%"></p>
+<p>用户直接有过行为的商品为 <strong><em>C++Primer中文版本</em></strong> 和 <strong><em>编程之美</em></strong>，而与 <strong><em>C++Primer中文版本</em></strong> 相似的商品有 <strong><em>C++编程思想</em></strong> 、<strong><em>算法导论</em></strong> 和 <strong><em>Effective C++中文版</em></strong>；与 <strong><em>编程之美</em></strong> 相似的商品有 <strong><em>算法导论</em></strong> 、<strong><em>代码大全第二版</em></strong> 和 <strong><em>编程珠玑</em></strong>。要计算用户对 <strong><em>算法导论</em></strong> 的喜欢程度，即用户对 <strong><em>C++Primer中文版本</em></strong> 的评分，与 <strong><em>算法导论</em></strong> 和 <strong><em>C++Primer中文版本</em></strong> 的相似度的乘积，再加上用户对 <strong><em>编程之美</em></strong> 的评分，与 <strong><em>算法导论</em></strong> 和 <strong><em>编程之美</em></strong> 的相似度的乘积，两者的和即是用户对 <strong><em>算法导论</em></strong> 的感兴趣程度。形式化寻找用户喜欢商品的过程如下</p>
+<p>用户 $U$ 直接有过行为的商品集合为</p>
+<ul>
+<li>$(I_{1}, I_{2}, \cdots, I_{n})$</li>
+</ul>
+<p>这些商品中，每个商品 $I_{i}$，$1\le i \le n$，的相似商品集合为</p>
+<ul>
+<li>$(I_{i,1}, I_{i, 2}, \cdots, I_{i, m})$</li>
+</ul>
+<p>不同的商品 $I_{i}$，相似商品的个数 $m$ 可能不同。计算用户 $U$ 对指定一个商品 $I$ 的喜好程度，公式如下</p>
+<p>$$\begin{eqnarray}<br>like(U, I)=\sum_{i=1}^{n}(score(I_{i}, U)\cdot sim_{cosine}(I_{i}, I)).<br>\end{eqnarray}$$</p>
+<p>根据公式 (5) 可以计算出感兴趣的商品集合，然后按照喜好程度选择Top N个商品就可以推荐给用户。</p>
+<h2 id="算法优化">算法优化</h2><h3 id="基于业务背景优化">基于业务背景优化</h3><h4 id="活跃用户">活跃用户</h4><p>在计算商品相似度时，基于商品的协同过滤算法使用了用户对商品的行为，用户的行为对商品的相似度产生了贡献，那么是不是每个用户的贡献都相同呢？这里使用 <strong><em>项亮</em></strong> 在 《推荐系统实践》中例子进行分析。</p>
+<p>假设有这么一个用户，他是开书店的，并且买了当当网上80%的书准备用来自己卖。那么，他的购物车里包含当当网80%的书。假设当当网有100万本书，也就是说他买了80万本书。根据余弦相似度算法，因为这样的一个用户，有80万本书两两之间就产生了相似度。</p>
+<p>这个用户虽然买书，但是买这些书并非出于自己的兴趣，而且这些书覆盖了当当网图书的很多领域，所以这个用户对于他购买书的两两相似度贡献应该小于一个只买了几十本自己喜欢的书的文学青年。</p>
+<p>因此对活跃的用户的行为，一般有两种处理方式</p>
+<ol>
+<li>活跃用户行为不纳入计算商品相似度的数据集范围中；</li>
+<li>活跃用户行为小于相对不活跃用户行为对商品相似度的贡献，活跃用户对商品的评价降权，一种降权的算法如下</li>
+</ol>
+<p>$$w^{u} = \frac{log2.0}{log(3.0+count_{U}(I))}.$$</p>
+<p>其中，$count_{U}(I)$ 表示用户 $U$ 有过行为的商品个数。</p>
+<h4 id="活动商品、虚拟商品">活动商品、虚拟商品</h4><ul>
+<li>活动商品</li>
+</ul>
+<p>电商一般会搞拉新等活动，免费给用户赠送商品，这种活动商品是用户非自己兴趣购买的商品，这种ORDER行为对商品相似度的贡献是噪音，应当忽略。</p>
+<ul>
+<li>虚拟商品</li>
+</ul>
+<p>电商一般会有虚拟商品，比如充话费，用户下单购买话费，这种特殊的虚拟商品也不能反映用户的兴趣，应当忽略对这种虚拟商品的行为。</p>
+<h4 id="用户行为的权重、主动性、频率">用户行为的权重、主动性、频率</h4><ul>
+<li>用户行为权重</li>
+</ul>
+<p>在上面 <strong>寻找相似商品</strong> 中对用户的点击(CLICK)、收藏(FAV)、加购(CART)和下单(ORDER)行为分别赋予不同的权重分数，代表用户对有过行为的商品的态度和偏好</p>
+<p>$score=(s_{click}, s_{fav}, s_{cart}, s_{order}).$</p>
+<p>给予不同行为合适的权重评分，能够更好的刻画商品之间的相似度。</p>
+<ul>
+<li>用户行为主动性</li>
+</ul>
+<p>用户逛电商APP时，如果逛特卖的电商APP，APP首页会有推送商品首先供用户浏览点击，如果用户想要购买某商品，一般会在商品分类里面去查找，或者通过搜索直接查找。</p>
+<p>对比用户对首页展示的商品的行为，用户在分类和搜索时对商品行为更能体现用户的态度和偏好。因此用户对出现在分类和搜索中的商品的评分应该更高。</p>
+<ul>
+<li>用户行为的频率</li>
+</ul>
+<p>用户对喜欢的商品，一般行为次数会比较多。分析用户 $U$ 对商品 $I$ 的行为频率，如果行为次数从0次增长到10次，代表用户对这个商品喜好越来越强；但是如果行为次数已经到了 200 次，次数再增加10次，显然没有从0次直接增加到10次时喜好程度增加多。</p>
+<p>如何去刻画用户这种随着行为频率的变化，对商品的喜好程度变化呢，这里我们采用了 $log$ 函数进行了平滑。</p>
+<p><img src="/illustration/like_log.png" class="img-center" width="50%" height="50%"></p>
+<h4 id="时间衰减">时间衰减</h4><p>个性化推荐商品，推荐出来的商品要符合用户最近的兴趣，而用户最近的行为相比历史行为更能够反应用户最近的兴趣。因此，在考虑用户行为评分时，最近的行为的评分应当比历史行为的评分要高些，即从最近一直往前，用户行为的评分应当随着时间衰减。</p>
+<p>$score_{click, n}(U, I)=\alpha^{n}\cdot score_{click}(U, I).$</p>
+<p>其中，$score_{click, n}(U, I)$ 代表距离今天往前数第 $n$ 天用户 $U$ 对商品 $I$ 的CLICK行为评分，$score_{click}(U, I)$ 代表CLICK行为的评分。则昨天的CLICK行为评分为</p>
+<p>$score_{click, 1}(U, I)=\alpha^{1}\cdot score_{click}(U, I).$</p>
+<h4 id="多样性">多样性</h4><p>在预测出用户喜欢的Top N个商品后，就可以按照喜好程度降序推荐给商品列表。如果列表中连续都是同一个类目的商品，比如列表中连续4个都是手机，这样的用户体验非常不好，资源位浪费。</p>
+<p>因此在推荐给用户前，可以按照类目对推荐的商品列表进行类目打散，展现多样性的商品。</p>
+<h3 id="工程实现优化">工程实现优化</h3><p>当算法输入的样本数据量较大时，算法的运行时间可以依靠工程技巧进行降低，下面介绍一些在基于Spark预测用户喜欢商品时的一些工程技巧。</p>
+<h4 id="序列化和反序列化">序列化和反序列化</h4><p>输入样本中，用户和商品可能以不同的字符表示，比如用户ID可能是32位的字符串，如 <code>5aec08bc4c953feb440896804535a46d</code> ，而商品可能是数字，如 <code>10057309</code>。样本数据格式统一整齐，在内存中计算时能够加快计算速度。</p>
+<p>因此，可以考虑对用户ID和商品ID进行序列化，映射到同一数据类型，比如长整型。通过长整型计算完后再反序列化映射到用户ID和商品ID原有的类型。</p>
+<h4 id="数据倾斜">数据倾斜</h4><p>在shuffle类型的算子，如join操作，在计算过程中会将相同的key数据分配的同一个partition，当key相关的数据条数分布不均时，部分partition中的key的样本条数是其他partition数据条数的10倍甚至更多，这样数据条数多的partition对应的计算任务task就会花费大量的时间进行计算，拉长算法的执行时间。</p>
+<p>对这种key下样本条数分布严重不均匀的情况，可以考虑用随机前缀和扩容RDD进行join等策略。</p>
+<h4 id="广播变量">广播变量</h4><p>在使用Spark进行计算时，会遇到需要在算子函数中使用外部变量的场景（尤其是大变量，比如100M以上的大集合），那么此时就应该使用Spark的广播（Broadcast）功能来提升性能。</p>
+<h4 id="map-side预聚合">map-side预聚合</h4><p>所谓的map-side预聚合，说的是在每个节点本地对相同的key进行一次聚合操作，类似于MapReduce中的本地combiner。map-side预聚合之后，每个节点本地就只会有一条相同的key，因为多条相同的key都被聚合起来了。其他节点在拉取所有节点上的相同key时，就会大大减少需要拉取的数据数量，从而也就减少了磁盘IO以及网络传输开销。通常来说，在可能的情况下，建议使用reduceByKey或者aggregateByKey算子来替代掉groupByKey算子。因为reduceByKey和aggregateByKey算子都会使用用户自定义的函数对每个节点本地的相同key进行预聚合。而groupByKey算子是不会进行预聚合的，全量的数据会在集群的各个节点之间分发和传输，性能相对来说比较差。</p>
+<h4 id="Top40_VS-_Top200">Top40 VS. Top200</h4><p>在预测用户感兴趣商品时，先寻找每个商品相似的商品，再寻找用户喜欢的商品。每个商品相似的商品的数据集，作为寻找用户喜欢的商品的输入数据集。</p>
+<p>选择每个商品相似商品的个数不同，会影响最终用户喜欢商品的集合，以及寻找用户喜欢商品的计算时间。在实验中发现，选择Top40的相似商品和选择Top200的相似商品，在最终寻找到用户喜欢商品的的集合中，按照喜好程度排序的Top40的商品基本一致，但寻找用户喜欢商品的计算时间有效减少了。</p>
+<p>因此，选择较合适相似商品的个数，能够平衡最终用户喜欢商品集合的效果，和寻找用户喜欢商品的计算时间。</p>
+<h2 id="模型问题">模型问题</h2><h3 id="用户冷启动">用户冷启动</h3><p>基于物品的协同过滤算法寻找用户喜欢的商品，需要依赖用户有历史行为。如果第一次逛APP，缺失用户的历史行为，就无法得到用户感兴趣的商品集合，即用户冷启动问题。</p>
+<p>对于用户冷启动问题，可以如下方式寻找用户可能感兴趣的商品</p>
+<ol>
+<li>基于用户实时的CLICK、FAV、CART和ORDER行为，寻找这些行为对应的商品的相似商品推荐给用户；</li>
+<li>基于用户的特征，如性别、地域、手机操作系统(IOS/Android)、手机品牌(如vivo、apple、xiaomi)，统计不同特征下的热销商品，组合推荐给用户。</li>
+</ol>
+<h3 id="新商品">新商品</h3><p>对于用户行为稀少的新商品，在上述基于物品的协同过滤算法中被过滤掉了，因此，在最终的推荐结果中不会出现这些商品。</p>
+<p>对于新商品，可以根据用户对商品品牌、类目等偏好，适量的插入到推荐列表中，增加这些商品的曝光次数，获取更多的用户的行为。</p>
+<h2 id="总结">总结</h2><p>本文讲述了基于商品的协同过滤算法进行商品的个性化推荐，首先介绍了基于商品的协同过滤算法，接着分寻找相似商品和寻找用户喜欢商品介绍了个性化推荐的过程，然后从基于业务背景优化和工程实现优化两方面介绍了算法优化迭代的思路，最后分析了这种算法存在的两个问题，用户冷启动问题和新商品问题。</p>
+<h2 id="参考资料">参考资料</h2><ol>
+<li>项亮，《推荐系统实践》，人民邮电出版社</li>
+<li><a href="http://tech.meituan.com/spark-tuning-basic.html" target="_blank" rel="external">Spark性能优化指南——基础篇</a></li>
+<li><a href="http://www.cnblogs.com/chaosimple/archive/2013/06/28/3160839.html" target="_blank" rel="external">余弦距离、欧氏距离和杰卡德相似性度量的对比分析</a></li>
+<li><a href="http://121.42.47.99/yuenshome/wordpress/?p=3265" target="_blank" rel="external">Spark对数据倾斜的八种处理方法</a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Machining-Learning/">Machining Learning</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://whlminds.com/2017/02/20/guess_you_like_with_item_cf/" data-title="基于协同过滤的的商品推荐 | WHLMinds" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/02/19/special_goods_based_user_profile/"  title="基于User Profile的商品推荐">
+ <strong>下一篇：</strong><br/> 
+ <span>基于User Profile的商品推荐
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/02/20/guess_you_like_with_item_cf/" data-title="基于协同过滤的的商品推荐" data-url="http://whlminds.com/2017/02/20/guess_you_like_with_item_cf/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题背景"><span class="toc-number">1.</span> <span class="toc-text">问题背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题分析"><span class="toc-number">2.</span> <span class="toc-text">问题分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#协同过滤"><span class="toc-number">3.</span> <span class="toc-text">协同过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jaccard相似系数"><span class="toc-number">3.1.</span> <span class="toc-text">Jaccard相似系数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#余弦相似系数"><span class="toc-number">3.2.</span> <span class="toc-text">余弦相似系数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#皮尔逊相关系数"><span class="toc-number">3.3.</span> <span class="toc-text">皮尔逊相关系数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#欧几里德距离"><span class="toc-number">3.4.</span> <span class="toc-text">欧几里德距离</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#个性化推荐"><span class="toc-number">4.</span> <span class="toc-text">个性化推荐</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#寻找相似商品"><span class="toc-number">4.1.</span> <span class="toc-text">寻找相似商品</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#寻找用户喜欢商品"><span class="toc-number">4.2.</span> <span class="toc-text">寻找用户喜欢商品</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法优化"><span class="toc-number">5.</span> <span class="toc-text">算法优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于业务背景优化"><span class="toc-number">5.1.</span> <span class="toc-text">基于业务背景优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#活跃用户"><span class="toc-number">5.1.1.</span> <span class="toc-text">活跃用户</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#活动商品、虚拟商品"><span class="toc-number">5.1.2.</span> <span class="toc-text">活动商品、虚拟商品</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户行为的权重、主动性、频率"><span class="toc-number">5.1.3.</span> <span class="toc-text">用户行为的权重、主动性、频率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#时间衰减"><span class="toc-number">5.1.4.</span> <span class="toc-text">时间衰减</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多样性"><span class="toc-number">5.1.5.</span> <span class="toc-text">多样性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工程实现优化"><span class="toc-number">5.2.</span> <span class="toc-text">工程实现优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#序列化和反序列化"><span class="toc-number">5.2.1.</span> <span class="toc-text">序列化和反序列化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据倾斜"><span class="toc-number">5.2.2.</span> <span class="toc-text">数据倾斜</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#广播变量"><span class="toc-number">5.2.3.</span> <span class="toc-text">广播变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#map-side预聚合"><span class="toc-number">5.2.4.</span> <span class="toc-text">map-side预聚合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Top40_VS-_Top200"><span class="toc-number">5.2.5.</span> <span class="toc-text">Top40 VS. Top200</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型问题"><span class="toc-number">6.</span> <span class="toc-text">模型问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#用户冷启动"><span class="toc-number">6.1.</span> <span class="toc-text">用户冷启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新商品"><span class="toc-number">6.2.</span> <span class="toc-text">新商品</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">8.</span> <span class="toc-text">参考资料</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Math/" title="Math">Math<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Machining-Learning/" title="Machining Learning">Machining Learning<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Oozie/" title="Oozie">Oozie<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hive/" title="Hive">Hive<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Sqoop/" title="Sqoop">Sqoop<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MapReduce/" title="MapReduce">MapReduce<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数学/" title="数学">数学<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/机器学习/" title="机器学习">机器学习<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12.5px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 17.5px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 15px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12.5px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 12.5px;">booknotes</a>
+    </div>
+  </div>
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="120" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=250&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1907586883&verifier=50d45b85&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m HongliangWEI. <br/>
+			This is my blog. Believe it or not!</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:helloweihl@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"whlminds"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F9c533e8f9930cffc806c36de6a517fbe' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
