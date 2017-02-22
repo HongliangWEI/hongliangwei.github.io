@@ -203,7 +203,7 @@
 <p><img src="/illustration/like_log.png" class="img-center" width="50%" height="50%"></p>
 <h4 id="时间衰减">时间衰减</h4><p>个性化推荐商品，推荐出来的商品要符合用户最近的兴趣，而用户最近的行为相比历史行为更能够反应用户最近的兴趣。因此，在考虑用户行为评分时，最近的行为的评分应当比历史行为的评分要高些，即从最近一直往前，用户行为的评分应当随着时间衰减。</p>
 <p>$score_{click, n}(U, I)=\alpha^{n}\cdot score_{click}(U, I).$</p>
-<p>其中，$score_{click, n}(U, I)$ 代表距离今天往前数第 $n$ 天用户 $U$ 对商品 $I$ 的CLICK行为评分，$score_{click}(U, I)$ 代表CLICK行为的评分。则昨天的CLICK行为评分为</p>
+<p>其中，$score_{click, n}(U, I)$ 代表距离今天往前数第 $n$ 天用户 $U$ 对商品 $I$ 的CLICK行为评分，$score_{click}(U, I)$ 代表CLICK行为的评分，$\alpha$ 是衰减系数，例如 <code>0.618</code>。则昨天的CLICK行为评分为</p>
 <p>$score_{click, 1}(U, I)=\alpha^{1}\cdot score_{click}(U, I).$</p>
 <h4 id="多样性">多样性</h4><p>在预测出用户喜欢的Top N个商品后，就可以按照喜好程度降序推荐给商品列表。如果列表中连续都是同一个类目的商品，比如列表中连续4个都是手机，这样的用户体验非常不好，资源位浪费。</p>
 <p>因此在推荐给用户前，可以按照类目对推荐的商品列表进行类目打散，展现多样性的商品。</p>
