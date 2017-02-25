@@ -11,15 +11,16 @@
     
 
     
-    <meta name="description" content="To be comeing">
+    <meta name="description" content="问题背景电商APP一般会有导购场景，在用户打开APP后，引导用户逛起来，帮助用户寻找自己喜欢的商品，如某电商APP的好货日报场景。导购场景做个性化推荐，用户访问时间较长、访问页数较多和点击率较高，说明导购场景比较吸引用户。那么导购场景和猜你喜欢个性化推荐有什么区别，如何能够引导用户逛起来？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于User Profile的商品推荐">
-<meta property="og:url" content="http://whlminds.com/2017/02/19/special_goods_based_user_profile/index.html">
+<meta property="og:url" content="http://whlminds.com/2017/02/23/special_goods_based_user_profile/index.html">
 <meta property="og:site_name" content="WHLMinds">
-<meta property="og:description" content="To be comeing">
+<meta property="og:description" content="问题背景电商APP一般会有导购场景，在用户打开APP后，引导用户逛起来，帮助用户寻找自己喜欢的商品，如某电商APP的好货日报场景。导购场景做个性化推荐，用户访问时间较长、访问页数较多和点击率较高，说明导购场景比较吸引用户。那么导购场景和猜你喜欢个性化推荐有什么区别，如何能够引导用户逛起来？">
+<meta property="og:image" content="/illustration/special_goods_1.jpeg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于User Profile的商品推荐">
-<meta name="twitter:description" content="To be comeing">
+<meta name="twitter:description" content="问题背景电商APP一般会有导购场景，在用户打开APP后，引导用户逛起来，帮助用户寻找自己喜欢的商品，如某电商APP的好货日报场景。导购场景做个性化推荐，用户访问时间较长、访问页数较多和点击率较高，说明导购场景比较吸引用户。那么导购场景和猜你喜欢个性化推荐有什么区别，如何能够引导用户逛起来？">
 
     
     
@@ -76,14 +77,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/19/special_goods_based_user_profile/" title="基于User Profile的商品推荐" itemprop="url">基于User Profile的商品推荐</a>
+      <a href="/2017/02/23/special_goods_based_user_profile/" title="基于User Profile的商品推荐" itemprop="url">基于User Profile的商品推荐</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
 		
   <p class="article-time">
-    <time datetime="2017-02-19T05:38:21.000Z" itemprop="datePublished"> 发表于 2017-02-19</time>
+    <time datetime="2017-02-23T12:38:21.000Z" itemprop="datePublished"> 发表于 2017-02-23</time>
     
   </p>
 </header>
@@ -92,11 +93,79 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题背景"><span class="toc-number">1.</span> <span class="toc-text">问题背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题分析"><span class="toc-number">2.</span> <span class="toc-text">问题分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于User_Profile的商品推荐"><span class="toc-number">3.</span> <span class="toc-text">基于User Profile的商品推荐</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#用户类目偏好"><span class="toc-number">3.1.</span> <span class="toc-text">用户类目偏好</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户类目多样化"><span class="toc-number">3.2.</span> <span class="toc-text">用户类目多样化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建立兴趣商品池"><span class="toc-number">3.3.</span> <span class="toc-text">建立兴趣商品池</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型问题"><span class="toc-number">4.</span> <span class="toc-text">模型问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
 		
 		</div>
 		
-		<p>To be comeing</p>
+		<h2 id="问题背景">问题背景</h2><p>电商APP一般会有导购场景，在用户打开APP后，引导用户逛起来，帮助用户寻找自己喜欢的商品，如某电商APP的<strong>好货日报</strong>场景。导购场景做个性化推荐，用户访问时间较长、访问页数较多和点击率较高，说明导购场景比较吸引用户。那么导购场景和猜你喜欢个性化推荐有什么区别，如何能够引导用户逛起来？</p>
+<a id="more"></a>
+<p><img src="/illustration/special_goods_1.jpeg" class="img-center" width="30%" height="30%"></p>
+<h2 id="问题分析">问题分析</h2><p>猜你喜欢个性化推荐，预测用户最喜欢哪些商品，把用户最可能喜欢的商品直接推荐给用户；而个性化的导购场景，即要推荐给用户可能喜欢的商品，还希望用户能够逛，浏览更多的商品，发掘更多可能喜欢的商品。</p>
+<p>基于以上分析，个性化的导购场景能够根据用户的兴趣分布，推荐用户兴趣相关的商品。这里用户兴趣从商品粒度拔高到类目粒度，建立用户<strong>User Profile</strong>，分析用户对类目的偏好，推荐给用户兴趣类目下的商品。</p>
+<h2 id="基于User_Profile的商品推荐">基于User Profile的商品推荐</h2><p>基于User Profile的商品推荐，分为以下两步</p>
+<ul>
+<li>分析用户的类目偏好；</li>
+<li>建立兴趣商品池。</li>
+</ul>
+<p>在得到用户类目偏好和商品池后，可以从每个类目筛选如3个商品按照类目偏好强弱依次排序推给用户，再接着从每个类目筛选如3个商品按照类目偏好强弱依次排序推给用户，这样循环推荐给用户 $N$ 个商品。在筛选类目时，也可以对类目偏好强的多选商品，类目偏好弱的少选商品，按类目排好序后推给用户。</p>
+<h3 id="用户类目偏好">用户类目偏好</h3><p>分析用户类目偏好，量化用户类目偏好，寻找用户兴趣类目。一般商品的类目如下</p>
+<ul>
+<li>女装<ul>
+<li>裙子、半身群、衬衫、T恤、西装外套、羽绒服、风衣、连衣裙、马甲</li>
+</ul>
+</li>
+<li>男装<ul>
+<li>Polo衫、爸爸装、裤装、卫衣、工装制服</li>
+</ul>
+</li>
+<li>零食<ul>
+<li>酒水/茶/冲饮、坚果/特产、保健食品</li>
+</ul>
+</li>
+<li>3C数码<ul>
+<li>台式机/网络设备、平板/笔记本电脑、数码相机、单反相机</li>
+</ul>
+</li>
+<li>家具百货<ul>
+<li>床上用品、收纳整理、办公用品、文具用品</li>
+</ul>
+</li>
+</ul>
+<p>上面列出了部分常见的商品类目。用户在逛电商APP时，点击(CLICK)、收藏(FAV)、加购(CART)或下单(ORDER)的商品都有自己所属的类目。因此，通过用户有过行为的商品，就可以寻找用户兴趣类目。</p>
+<p>考虑用户 $U$ 对商品 $I$ 有点击(CLICK)、收藏(FAV)、加购(CART)或下单(ORDER)行为，每种行为代表了用户对商品的态度和偏好，假设对这4种行为的偏好以评分的形式进行量化，形式化如下</p>
+<p>$score=(s^{click}, s^{fav}, s^{cart}, s^{order}).$</p>
+<p>用户最近的行为相比历史行为更能够反应用户最近的兴趣，因此，在考虑用户行为评分时，最近的行为的评分应当比历史行为的评分要高些，即从最近一直往前，用户行为的评分应当随着时间衰减。如果衰减系数为 $\alpha$，则距离今天前第 $n$ 天的用户一次CLICK行为评分可定义如下</p>
+<p>$score^{click}_{n}(U, I)=\alpha^{n}\cdot s^{(U, I, click)}$</p>
+<p>如果用户 $U$ 对商品有 $I$ 的点击(CLICK)、收藏(FAV)、加购(CART)和下单(ORDER)行为在距离今天前第 $n$ 天的行为次数为</p>
+<p>$count_{n}(U, I)=(cnt^{(U, I, click)}_{n}, cnt^{(U, I, fav)}_{n}, cnt^{(U, I, cart)}_{n}, cnt^{(U, I, order)}_{n}).$</p>
+<p>则第 $n$ 天用户 $U$ 对商品 $I$ 的评分可以定义如下</p>
+<p>$score_{n}(U, I)=\sum_{b \in \{click, fav, cart, order\}}(\alpha^{n}\cdot s^{(U, I, b)}\cdot cnt^{(U, I, b)}_{n}).$</p>
+<p>每个商品都有自己所属的类目，要量化用户 $U$ 对类目 $C$ 的感兴趣程度，可以直接对类目 $C$ 下商品的评分累加。假设近 $t$ 天用户对类目 $C$ 下有过行为的商品个数为 $m$ 个如下</p>
+<ul>
+<li>$(I_{1}, I_{2}, \cdots, I_{m})$</li>
+</ul>
+<p>则用户 $U$ 对类目 $C$ 的评分如下</p>
+<p>$$\begin{eqnarray}<br>score(U, C) &amp; = &amp; \sum_{j=1}^{t}\sum_{i=1}^{m}score_{j}(U, I_{i}) \\<br>{} &amp; = &amp; \sum_{j=1}^{t}\sum_{i=1}^{m}\sum_{b \in \{click, fav, cart, order\}}(\alpha^{j}\cdot s^{(U, I_{i}, b)}\cdot cnt^{(U, I_{i}, b)}_{j}).<br>\end{eqnarray}$$</p>
+<h3 id="用户类目多样化">用户类目多样化</h3><p>通过用户直接有过行为的商品计算用户类目偏好性，存在以下两个问题：</p>
+<ul>
+<li>当用户行为比较稀疏，或者用户兴趣非常集中时，寻找到的用户兴趣个数非常少，如1个、2个。这时推给用户的列表商品比较单一；</li>
+<li>用户对直接有过行为的商品的类目有兴趣，按兴趣类目推荐出来的商品惊喜度不够。</li>
+</ul>
+<p>为解决以上两个问题，需要丰富用户兴趣类目，即寻找用户感兴趣类目的相似类目，这样推给用户的商品列表的类目较丰富，另外，兴趣类目的相似类目也可以提高惊喜度。</p>
+<p>在 <a href="http://whlminds.com/2017/02/20/guess_you_like_with_item_cf/" target="_blank" rel="external">基于协同过滤的的商品推荐</a>介绍了基于商品的协同过滤算法，计算商品之间的相似度。每个商品都有所属的类目，因此，可以基于商品相似度计算类目之间的相似度。假设类目 $C_{i}$ 和类目 $C_{j}$ 之间相似的商品集合如下</p>
+<ul>
+<li>$\{(I_{1}^{C_{i}}, I_{1}^{C_j}, sim_{cosine}(I_{1}^{C_{i}}, I_{1}^{C_j}), (I_{2}^{C_{i}}, I_{2}^{C_j}, sim_{cosine}(I_{2}^{C_{i}}, I_{2}^{C_j}),\cdots,(I_{n}^{C_{i}}, I_{n}^{C_j}, sim_{cosine}(I_{n}^{C_{i}}, I_{n}^{C_j})).$</li>
+</ul>
+<p>则类目 $C_{i}$ 和类目 $c_{j}$ 之间的相似度可定义如下：</p>
+<p>$$sim(C_{i}, C_{j})=\sum_{t=1}^{n}sim_{cosine}(I_{t}^{C_{i}}, I_{t}^{C_{j}}).$$</p>
+<h3 id="建立兴趣商品池">建立兴趣商品池</h3><p>在寻找到用户兴趣类目和兴趣类目的相似类目之后，推荐用户兴趣类目下哪些商品成为关键。导购场景下类目选品，选出来的商品要具有吸引力，如下面的策略</p>
+<ul>
+<li>各类目下的热销商品；</li>
+<li>根据各类目种子商品寻找相似商品。</li>
+</ul>
+<p>根据各类目种子商品寻找相似商品策略中，根据各类目的运营挑选的种子商品，可以通过基于商品的协同过滤算法，在计算出来商品相似度之后，寻找种子商品的相似商品。</p>
+<h2 id="模型问题">模型问题</h2><p>上述模型中，根据用户类目偏好性，推荐给用户类目偏好的商品。然而，用户的兴趣在一段时间内一般比较稳定，因此导购场景中，用户偏好类目基本不变，推荐给用户偏好类目下的商品尽管定时更新，推荐的商品比较相似，用户容易产生疲劳。</p>
+<h2 id="总结">总结</h2><p>本文主要介绍了导购场景下，基于User Profile的商品推荐，通过对用户建立类目偏好，推荐给用户偏好类目的商品。考虑用户偏好类目可能较少，以及惊喜度，通过计算用户偏好类目的相似类目丰富用户偏好类目。然后介绍了建立用户兴趣商品池的策略，最后，说明了用户类目偏好在一段时间内一般比较稳定，推荐的商品用户容易产生疲劳。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -119,7 +188,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2017/02/19/special_goods_based_user_profile/" data-title="基于User Profile的商品推荐 | WHLMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2017/02/23/special_goods_based_user_profile/" data-title="基于User Profile的商品推荐 | WHLMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -132,19 +201,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/02/20/guess_you_like_with_item_cf/" title="基于协同过滤的的商品推荐">
-  <strong>上一篇：</strong><br/>
-  <span>
-  基于协同过滤的的商品推荐</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/02/18/sort_based_plsa/"  title="基于Topic Model的商品排序">
+<a href="/2017/02/20/guess_you_like_with_item_cf/"  title="基于协同过滤的的商品推荐">
  <strong>下一篇：</strong><br/> 
- <span>基于Topic Model的商品排序
+ <span>基于协同过滤的的商品推荐
 </span>
 </a>
 </div>
@@ -153,7 +214,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2017/02/19/special_goods_based_user_profile/" data-title="基于User Profile的商品推荐" data-url="http://whlminds.com/2017/02/19/special_goods_based_user_profile/"></div>
+	<div class="ds-thread" data-thread-key="2017/02/23/special_goods_based_user_profile/" data-title="基于User Profile的商品推荐" data-url="http://whlminds.com/2017/02/23/special_goods_based_user_profile/"></div>
 </section>
 
 
@@ -163,7 +224,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题背景"><span class="toc-number">1.</span> <span class="toc-text">问题背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题分析"><span class="toc-number">2.</span> <span class="toc-text">问题分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于User_Profile的商品推荐"><span class="toc-number">3.</span> <span class="toc-text">基于User Profile的商品推荐</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#用户类目偏好"><span class="toc-number">3.1.</span> <span class="toc-text">用户类目偏好</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户类目多样化"><span class="toc-number">3.2.</span> <span class="toc-text">用户类目多样化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建立兴趣商品池"><span class="toc-number">3.3.</span> <span class="toc-text">建立兴趣商品池</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型问题"><span class="toc-number">4.</span> <span class="toc-text">模型问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
  
   </div>
 
