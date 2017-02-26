@@ -1,0 +1,693 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>ROC和AUC | WHLMinds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="HongliangWEI">
+    
+
+    
+    <meta name="description" content="概述ROC（Receiver Operating Characteristic） 曲线和 AUC（Area Under Curve） 常被用来评价一个二值分类器（binary classifier）的优劣。
+ROC二元分类模型ROC曲线首先是由二战中的电子工程师和雷达工程师发明的，用来侦测战场上的敌军载具（飞机、船舰），也就是信号检测理论。ROC曲线是一种坐标图式的分析工具，在机器学习和数据挖掘领">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROC和AUC">
+<meta property="og:url" content="http://whlminds.com/2017/02/25/roc_and_auc/index.html">
+<meta property="og:site_name" content="WHLMinds">
+<meta property="og:description" content="概述ROC（Receiver Operating Characteristic） 曲线和 AUC（Area Under Curve） 常被用来评价一个二值分类器（binary classifier）的优劣。
+ROC二元分类模型ROC曲线首先是由二战中的电子工程师和雷达工程师发明的，用来侦测战场上的敌军载具（飞机、船舰），也就是信号检测理论。ROC曲线是一种坐标图式的分析工具，在机器学习和数据挖掘领">
+<meta property="og:image" content="/illustration/roc_auc_2.png">
+<meta property="og:image" content="/illustration/roc_auc_1.png">
+<meta property="og:image" content="/illustration/roc_auc_6.png">
+<meta property="og:image" content="/illustration/roc_auc_3.png">
+<meta property="og:image" content="/illustration/roc_auc_4.png">
+<meta property="og:image" content="/illustration/roc_auc_5.png">
+<meta property="og:image" content="/illustration/roc_auc_7.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ROC和AUC">
+<meta name="twitter:description" content="概述ROC（Receiver Operating Characteristic） 曲线和 AUC（Area Under Curve） 常被用来评价一个二值分类器（binary classifier）的优劣。
+ROC二元分类模型ROC曲线首先是由二战中的电子工程师和雷达工程师发明的，用来侦测战场上的敌军载具（飞机、船舰），也就是信号检测理论。ROC曲线是一种坐标图式的分析工具，在机器学习和数据挖掘领">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="WHLMinds" title="WHLMinds"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="WHLMinds">WHLMinds</a></h1>
+				<h2 class="blog-motto">大 胆 假 设，小 心 求 证</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:whlminds.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/25/roc_and_auc/" title="ROC和AUC" itemprop="url">ROC和AUC</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-25T09:38:21.000Z" itemprop="datePublished"> 发表于 2017-02-25</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROC"><span class="toc-number">2.</span> <span class="toc-text">ROC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#二元分类模型"><span class="toc-number">2.1.</span> <span class="toc-text">二元分类模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ROC空间"><span class="toc-number">2.2.</span> <span class="toc-text">ROC空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ROC曲线"><span class="toc-number">2.3.</span> <span class="toc-text">ROC曲线</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AUC"><span class="toc-number">3.</span> <span class="toc-text">AUC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AUC的意义"><span class="toc-number">3.1.</span> <span class="toc-text">AUC的意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#样本均衡的敏感性"><span class="toc-number">3.2.</span> <span class="toc-text">样本均衡的敏感性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算AUC"><span class="toc-number">3.3.</span> <span class="toc-text">计算AUC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#面积计算法"><span class="toc-number">3.3.1.</span> <span class="toc-text">面积计算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#直接计算法"><span class="toc-number">3.3.2.</span> <span class="toc-text">直接计算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#交叉计算法"><span class="toc-number">3.3.3.</span> <span class="toc-text">交叉计算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对比精确率、召回率和F值"><span class="toc-number">4.</span> <span class="toc-text">对比精确率、召回率和F值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="概述">概述</h2><p><strong><em>ROC（Receiver Operating Characteristic）</em></strong> 曲线和 <strong><em>AUC（Area Under Curve）</em></strong> 常被用来评价一个二值分类器（binary classifier）的优劣。</p>
+<h2 id="ROC">ROC</h2><h3 id="二元分类模型">二元分类模型</h3><p>ROC曲线首先是由二战中的电子工程师和雷达工程师发明的，用来侦测战场上的敌军载具（飞机、船舰），也就是信号检测理论。ROC曲线是一种坐标图式的分析工具，在机器学习和数据挖掘领域，用于评价二元分类模型。</p>
+<a id="more"></a>
+<p>分类模型，是将一个实例映射到一个特定类的过程，而二元分类模型是输出结果只有两种类别的模型，例如：（正类／负类）、（有病／没病）、（垃圾邮件／非垃圾邮件）和（敌军／非敌军）等。二元分类模型对实例预测类别，有四种结果</p>
+<ul>
+<li>真阳性(True Positive)：预测为正类，实际上是正类；</li>
+<li>假阳性(False Positive)：预测为正类，实际上是负类；</li>
+<li>真阴性(True Negative)：预测为负类，实际上是负类；</li>
+<li>假阴性(False Negative)：预测为负类，实际上是正类</li>
+</ul>
+<p>这四种结果可以画成 $2\times 2$ 的矩阵如下</p>
+<p><img src="/illustration/roc_auc_2.png" class="img-center" width="65%" height="65%"></p>
+<h3 id="ROC空间">ROC空间</h3><p>ROC空间将 <strong>假阳性率(FPR)</strong> 定义为 $X$ 轴，<strong>真阳性率(TPR)</strong> 定义为 $Y$ 轴。如下图</p>
+<p><img src="/illustration/roc_auc_1.png" class="img-center" width="60%" height="60%"></p>
+<p>其中，FPR 和 TPR 定义如下</p>
+<ul>
+<li>TPR，在所有实际为正类的样本中，被正确地预测为正类之比率，$TPR = \frac{TP}{TP+FN}$；</li>
+<li>FPR，在所有实际为负类的样本中，被错误地预测为正类之比率，$FPR = \frac{FP}{FP+TN}$。</li>
+</ul>
+<p>如上图，接下来考虑ROC空间中的4个坐标点和对角线</p>
+<ul>
+<li>坐标点 $(0, 1)$，即 $FPR=0, TPR=1$，这意味着 $FP=0$，且 $FN=0$，这是一个完美的分类模型，不存在将负样本预测为正样本，并且将所有的正样本都预测为正样本；</li>
+<li>坐标点 $(1, 0)$，即 $FPR=1, TPR=0$，这意味着 $TN=0$，且 $TP=0$，没有比这个更糟糕的分类模型，将所有的负样本识别为正样本，并将所有正样本识别为负样本；</li>
+<li>坐标点 $(0, 0)$，即 $FPR=0, TPR=0$，这意味着 $FP=TP=0$，分类模型将所有的样本都预测为负样本；</li>
+<li>坐标点 $(1, 1)$，即 $FPR=1, TPR=1$，分类模型将所有的样本都预测为正样本；</li>
+<li>虚线 $y=x$，这条对角线上的点表示的是一个采用随机猜测策略的分类模型的结果，例如 $(0.5,0.5)$，表示该分类模型随机对于一半的样本预测为正样本，另外一半的样本为负样本。</li>
+</ul>
+<h3 id="ROC曲线">ROC曲线</h3><p>对于一个特定的二元分类模型和测试数据集，要得到一个曲线，需要一系列FPR和TPR的值。在 <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic" target="_blank" rel="external">Wikipedia</a> 上对ROC曲线定义如下</p>
+<blockquote>
+<p>In statistics, a receiver operating characteristic curve, or ROC curve, is a graphical plot that illustrates the performance of a binary classifier system as its discrimination threshold is varied. The curve is created by plotting the true positive rate (TPR) against the false positive rate (FPR) at various threshold settings.</p>
+</blockquote>
+<p>即二元分类模型会对测试数据集中的每个样本一个预测为正样本（或负样本）的概率，随着 <strong>阈值</strong> 变化，会得到多组 $(FPR, TPR)$ 值，如下图</p>
+<p><img src="/illustration/roc_auc_6.png" class="img-center" width="40%" height="40%"></p>
+<p>假设我们已经得到所有样本的概率输出（属于正样本的概率），我们根据每个测试样本属于正样本的概率值从大到小排序。下图是一个示例，图中共有20个测试样本，<strong><em>Class</em></strong> 一栏表示每个测试样本真正的标签（$p$ 表示正样本，$n$ 表示负样本），<strong><em>Score</em></strong> 表示每个测试样本属于正样本的概率。</p>
+<p><img src="/illustration/roc_auc_3.png" class="img-center" width="60%" height="60%"></p>
+<p>20个测试样本中，正样本的个数，即 <strong><em>Class</em></strong> 为 <code>p</code> 的共有 $10$ 个，则 $TP+FN=10$；负样本的个数，即 <strong><em>Class</em></strong> 为 <code>n</code> 的共有 $10$ 个，则 $FP+TN=10$。</p>
+<p>接下来，我们从高到低，依次将 <strong><em>Score</em></strong> 值作为阈值，当测试样本属于正样本的概率大于或等于这个阈值时，识别它为正样本，否则为负样本。</p>
+<ul>
+<li>当阈值 $t &gt; 0.9$ 时，实际正样本识别为正样本的个数为 $0$ 个，则 $TP=0$；实际负样本被识别为正样本的个数为 $0$ 个，则 $FP=0$；此时 $TPR=0$，且 $FPR=0$，坐标点为 $(0, 0)$；</li>
+<li><strong>当阈值 $t &gt;= 0.9$ 时</strong>，实际正样本识别为正样本的个数为 $1$ 个，即 $Inst#$ 为1的样本，则 $TP=1$；实际负样本被识别为正样本的个数为 $0$ 个，则 $FP=0$；此时 $TPR=0$，且 $FPR=0$，坐标点为 $(0.1, 0)$；</li>
+<li><strong>当阈值 $t &gt;= 0.8$ 时</strong>，实际正样本识别为正样本的个数为 $2$ 个，即 $Inst#$ 为1和2的样本，则 $TP=2$；实际负样本被识别为正样本的个数为 $0$ 个，则 $FP=0$；此时 $TPR=0.2$，且 $FPR=0$，坐标点为 $(0.2, 0)$；</li>
+<li><strong>当阈值 $t &gt;= 0.7$ 时</strong>，实际正样本识别为正样本的个数为 $2$ 个，即 $Inst#$ 为1和2的样本，则 $TP=2$；实际负样本被识别为正样本的个数为 $1$ 个，即 $Inst#$ 为3的样本，则 $FP=1$；此时 $TPR=0.2$，且 $FPR=0.1$，坐标点为 $(0.2, 0.1)$；</li>
+<li><strong>当阈值 $t &gt;= 0.6$ 时</strong>，实际正样本识别为正样本的个数为 $3$ 个，即 $Inst#$ 为1、2和4的样本，则 $TP=3$；实际负样本被识别为正样本的个数为 $1$ 个，即 $Inst#$ 为3的样本，则 $FP=1$；此时 $TPR=0.3$，且 $FPR=0.1$，坐标点为 $(0.3, 0.1)$；<br>$\cdots$</li>
+<li><strong>当阈值 $t &gt;= 0.1$ 时</strong>，实际正样本识别为正样本的个数为 $10$ 个，则 $TP=10$；实际负样本被识别为正样本的个数为 $10$ 个，则 $FP=10$；此时 $TPR=1.0$，且 $FPR=1.0$，坐标点为 $(1.0, 1.0)$；</li>
+</ul>
+<p>不断变化阈值，将得到一组FPR和TPR对值，在ROC空间描点并用虚线连接起来，得到ROC曲线如下图</p>
+<p><img src="/illustration/roc_auc_4.png" class="img-center" width="60%" height="60%"></p>
+<h2 id="AUC">AUC</h2><p>AUC（Area Under Curve）被定义为ROC曲线下的面积，显然这个面积的数值不会大于1。又由于ROC曲线一般都处于 $y=x$ 这条直线的上方，所以AUC的取值范围在$[0.5, 1]$之间。使用AUC值作为评价标准是因为很多时候ROC曲线并不能清晰的说明哪个分类器的效果更好，而作为一个数值，对应AUC更大的分类器效果更好。</p>
+<h3 id="AUC的意义">AUC的意义</h3><p>在论文 <strong><em>An introduction to ROC analysis</em></strong> 中对AUC值如下表述</p>
+<blockquote>
+<p>The AUC value is equivalent to the probability that a randomly chosen positive example is ranked higher than a randomly chosen negative example.</p>
+</blockquote>
+<p>AUC值是一个概率值，当你随机挑选一个正样本以及一个负样本，当前的分类算法根据计算得到的Score值将这个正样本排在负样本前面的概率就是AUC值。当然，AUC值越大，当前的分类算法越有可能将正样本排在负样本前面，即能够更好的分类。</p>
+<p>或者说，AUC就是从所有正样本中随机选取一个样本，从所有负样本中随机选取一个样本，然后根据分类模型对两个随机样本进行类别预测，把正样本预测为正样本的概率为 $p_{1}$，把负样本预测为正样本的概率为 $p_{0}$，则 $p_{1}&gt;p_{0}$ 的概率就等于AUC。</p>
+<p>所以，AUC反映的是分类器对样本的排序能力，可以分以下几种情况</p>
+<ul>
+<li>$AUC = 1$，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器；</li>
+<li>$0.5 &lt; AUC &lt; 1$，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值；</li>
+<li>$AUC = 0.5$，跟随机猜测一样（例：丢硬币），模型没有预测价值；</li>
+<li>$AUC &lt; 0.5$，比随机猜测还差；但只要总是反预测而行，就优于随机猜测，因此不存在AUC &lt; 0.5的情况。</li>
+</ul>
+<p>AUC不同的取值，对应的ROC曲线的形状如下图</p>
+<p><img src="/illustration/roc_auc_5.png" class="img-center" width="60%" height="60%"></p>
+<h3 id="样本均衡的敏感性">样本均衡的敏感性</h3><p>AUC对样本类别是否均衡并不敏感，即当测试集中的正负样本的分布变化的时候，ROC曲线能够保持不变。在实际的数据集中经常会出现类不平衡现象，即负样本比正样本多很多（或者相反），而且测试数据中的正负样本的分布也可能随着时间变化。</p>
+<p>这是因为ROC曲线上的点为 $(FPR, TPR)$，坐标点的两个值均为比例，受到正负样本数量变化影响不大。</p>
+<p><img src="/illustration/roc_auc_7.jpg" class="img-center" width="70%" height="70%"></p>
+<p>如上图，$(a)$ 和 $(b)$ 都是ROC曲线，$(b)$ 是在将测试集中负样本的数量增加到原来的10倍后，分类模型的结果。可以明显的看出，ROC曲线基本保持原貌。</p>
+<h3 id="计算AUC">计算AUC</h3><p>计算AUC，即计算ROC曲线下面的面积，下面介绍3中算法</p>
+<h4 id="面积计算法">面积计算法</h4><p>在计算得到一系列的 $(FPR, TPR)$ ，如下</p>
+<ul>
+<li>$(fpr_{1}, tpr_{1}), (fpr_{1}, tpr_{1}), \cdots, (fpr_{n}, tpr_{n}).$</li>
+</ul>
+<p>其中，$fpr_{1}=0, tpr_{1}=0, fpr_{n}=1, tpr_{n}=1$，即按照 <strong>Score</strong> 降序排列样本，不断降低阈值后计算出来的坐标值顺序组织上述坐标值。</p>
+<p>$$auc=\sum_{i=1}^{n-1}\frac{(tpr_{i+1}+tpr_{i})\cdot (fpr_{i+1}-fpr_{i})}{2.0}.$$</p>
+<p>根据坐标点的值，计算一个个矩阵的面积，然后累加得到曲线下的面积，即AUC的值。</p>
+<h4 id="直接计算法">直接计算法</h4><p>按照 <strong>Score</strong> 降序排列样本，不断降低阈值后，计算 $(FP, TP)$，得到一系列对</p>
+<ul>
+<li>$(fp_{1}, tp_{1}), (fp_{2}, tp_{2}), \cdots,(fp_{n}, tp_{n}).$</li>
+</ul>
+<p>$$auc=\frac{\sum_{i=1}^{n-1}(tp_{i+1}+tp_{i})\cdot(fp_{i+1}-fp_{i})}{2.0\cdot count(n) \cdot count(p)}.$$</p>
+<p>其中，$count(n)$是实际负样本的个数，$count(p)$ 是实际正样本的个数。</p>
+<h4 id="交叉计算法">交叉计算法</h4><p>假设正样本 $m$ 个，负样本 $n$ 个，做交叉，总共会产生 $m \cdot n$ 个样本对，统计一下在这些样本对中有多少正样本的score大于负样本的score，例如有 $k$ 对，那么AUC的值如下</p>
+<p>$$auc = \frac{k}{m\cdot n}.$$</p>
+<p>举例说明一下，正样本标记为 $1$，负样本标记为 $-1$，共 6 个样本为 $(1, 1, 1, -1, -1, -1)$</p>
+<ul>
+<li>模型1对6个样本预测正类的概率为 $(0.8, 0.7, 0.3, 0.5, 0.6, 0.9)$</li>
+<li>模型2对6个样本预测正类的概率为 $(0.1, 0.8, 0.9, 0.5, 0.85, 0.2)$</li>
+</ul>
+<p>进行交叉配对后，结果如下</p>
+<ul>
+<li>模型1正样本score大于负样本的对 $(y1,y4), (y1,y5), (y2,y4), (y2,y5)$</li>
+<li>模型2正样本score大于负样本的对 $(y2,y4), (y2,y6), (y3,y4), (y3,y5), (y3,y6)$</li>
+</ul>
+<p>模型1的 $AUC=\frac{4}{9}$，而模型2的 $AUC=\frac{5}{9}$，所以模型2比模型1要好。</p>
+<h2 id="对比精确率、召回率和F值">对比精确率、召回率和F值</h2><p>评价二元分类模型的指标还有精确率$Precision$，召回率$Recall$ 和 F值$F-Measure$。</p>
+<p>精确率和召回率是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。在评价分类模型时，定义如下</p>
+<ul>
+<li>精确率定义为对于给定的测试数据集，分类器正确分类的样本数与判定为正类的数之比。</li>
+</ul>
+<p>$$Precision = \frac{TP}{TP + FP}.$$</p>
+<ul>
+<li>召回率也称为<strong>True Positive Rate</strong>，反映了被正确判定的正类占总的正类样本的比例。</li>
+</ul>
+<p>$$Recall=\frac{TP}{TP+FN}.$$</p>
+<ul>
+<li>F值即为精确率和召回率的调和平均值</li>
+</ul>
+<p>$$F-Measure=\frac{2\cdot Precision \cdot Recall}{Precision + Recall}=\frac{2\cdot TP}{2TP + FP + FN}.$$</p>
+<p>在评价分类模型时，AUC比精确率和召回率更常用。因为很多机器学习的模型对分类问题的预测结果都是概率，如果要计算精确率和召回率，需要先把概率转化为类别，这就需要手动设置一个阈值，如果对一个样本的预测概率高于这个阈值，就把这个样本放到这个类别中，低于这个阈值，放进另一个类别里面。所以这个阈值很大程度影响了精确率和召回率的计算。而使用AUC可以避免把预测概率转换为类别。</p>
+<h2 id="总结">总结</h2><p>ROC和AUC常用于评价二元分类模型的优劣。二元分类模型输出样本被识别为正类（或负类）的概率，如果二元模型分类效果比较好，按照概率值排序的话，负样本排在正样本之后。通过计算ROC曲线下面的面积AUC，可以评价正样本是否排序在负样本前。</p>
+<h2 id="参考资料">参考资料</h2><ol>
+<li><a href="https://zh.wikipedia.org/wiki/ROC%E6%9B%B2%E7%BA%BF" target="_blank" rel="external">ROC曲线</a></li>
+<li><a href="https://www.zhihu.com/question/39840928" target="_blank" rel="external">机器学习和统计里面的auc怎么理解？</a></li>
+<li><a href="http://alexkong.net/2013/06/introduction-to-auc-and-roc/" target="_blank" rel="external">ROC和AUC介绍以及如何计算AUC</a></li>
+<li>Tom Fawcett, An introduction to ROC analysis. Pattern Recognition Letters. 2006.</li>
+<li><a href="http://beader.me/2013/12/15/auc-roc/" target="_blank" rel="external">AUC与ROC - 衡量分类器的好坏</a></li>
+<li><a href="http://blog.csdn.net/nwpuwyk/article/details/37598497?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">AUC的计算</a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Machining-Learning/">Machining Learning</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://whlminds.com/2017/02/25/roc_and_auc/" data-title="ROC和AUC | WHLMinds" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/02/23/special_goods_based_user_profile/"  title="基于User Profile的商品推荐">
+ <strong>下一篇：</strong><br/> 
+ <span>基于User Profile的商品推荐
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/02/25/roc_and_auc/" data-title="ROC和AUC" data-url="http://whlminds.com/2017/02/25/roc_and_auc/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROC"><span class="toc-number">2.</span> <span class="toc-text">ROC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#二元分类模型"><span class="toc-number">2.1.</span> <span class="toc-text">二元分类模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ROC空间"><span class="toc-number">2.2.</span> <span class="toc-text">ROC空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ROC曲线"><span class="toc-number">2.3.</span> <span class="toc-text">ROC曲线</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AUC"><span class="toc-number">3.</span> <span class="toc-text">AUC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AUC的意义"><span class="toc-number">3.1.</span> <span class="toc-text">AUC的意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#样本均衡的敏感性"><span class="toc-number">3.2.</span> <span class="toc-text">样本均衡的敏感性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算AUC"><span class="toc-number">3.3.</span> <span class="toc-text">计算AUC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#面积计算法"><span class="toc-number">3.3.1.</span> <span class="toc-text">面积计算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#直接计算法"><span class="toc-number">3.3.2.</span> <span class="toc-text">直接计算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#交叉计算法"><span class="toc-number">3.3.3.</span> <span class="toc-text">交叉计算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对比精确率、召回率和F值"><span class="toc-number">4.</span> <span class="toc-text">对比精确率、召回率和F值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Math/" title="Math">Math<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Machining-Learning/" title="Machining Learning">Machining Learning<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Oozie/" title="Oozie">Oozie<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hive/" title="Hive">Hive<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Sqoop/" title="Sqoop">Sqoop<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MapReduce/" title="MapReduce">MapReduce<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数学/" title="数学">数学<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/机器学习/" title="机器学习">机器学习<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12.5px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 17.5px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 15px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12.5px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 12.5px;">booknotes</a>
+    </div>
+  </div>
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="120" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=250&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1907586883&verifier=50d45b85&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m HongliangWEI. <br/>
+			This is my blog. Believe it or not!</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:helloweihl@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"whlminds"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F9c533e8f9930cffc806c36de6a517fbe' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
