@@ -142,7 +142,7 @@
 <p>批量梯度下降每次迭代的时候都要对所有数据集样本计算求和，计算量就会很大，尤其是训练数据集特别大的情况。</p>
 <h4 id="随机梯度下降（Stochastic_Gradient_Descent,_SGD）">随机梯度下降（Stochastic Gradient Descent, SGD）</h4><p>随机梯度下降在计算下降最快的方向时，随机选一个数据进行计算，而不是扫描全部训练数据集，这样就加快了迭代速度。随机梯度下降并不是沿着 $J(\theta)$ 下降最快的方向收敛，而是以震荡的方式趋向极小点。</p>
 <p>随机梯度下降迭代公式如下</p>
-<p>$<br>\textrm{Loop \{}\\<br>\qquad \textrm{for i=1 to m \{}\\<br>\begin{equation}<br>\qquad \qquad \theta_{j+1}:=\theta_{j}+\alpha (y^{(i)}-h_{\theta}(X^{(i)}))x_{j}^{(i)}, \textrm{(for each j)}<br>\end{equation}\\<br>\qquad \textrm{\}}\\<br>\textrm{\}}<br>$</p>
+<p>$<br>\textrm{Loop \{}\\<br>\qquad \textrm{for i=1 to m \{}\\<br>\begin{equation}<br>\qquad \qquad \theta^{‘}_{j}:=\theta_{j}+\alpha (y^{(i)}-h_{\theta}(X^{(i)}))x_{j}^{(i)}, \textrm{(for each j)}<br>\end{equation}\\<br>\qquad \textrm{\}}\\<br>\textrm{\}}<br>$</p>
 <p>执行过程如下图</p>
 <p><img src="/illustration/stochastic-gradient-descent-1.png" width="50%" height="50%"></p>
 <h2 id="总结">总结</h2><p>线性回归是回归问题中的一种，假设特征值与目标值之间满足线性相关，即满足一个多元一次方程。通过使用最小二乘法构建损失函数，用梯度下降求解损失函数最小时的参数 $\theta$。</p>
