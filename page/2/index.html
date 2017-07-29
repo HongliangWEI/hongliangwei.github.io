@@ -78,6 +78,75 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2016/11/07/math-9/" title="拉格朗日乘数法" itemprop="url">拉格朗日乘数法</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		
+  <p class="article-time">
+    <time datetime="2016-11-07T13:38:21.000Z" itemprop="datePublished"> 发表于 2016-11-07</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <blockquote>
+<p>继续！</p>
+</blockquote>
+<h2 id="多元函数的极值">多元函数的极值</h2><p>设函数 $z=f(x,y)$ 的定义域为 $D$，$P_{0}(x_{0}, y_{0})$ 为 $D$ 的内点，若存在 $P_{0}$ 的某个领域 $U(P_{0}) \subset D$，使得对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有</p>
+<p>$$f(x,y)&lt;f(x_{0}, y_{0})，$$</p>
+<p>则称函数 $f(x,y)$ 在点 $(x_{0}, y_{0})$  有极大值 $f(x_{0}, y_{0})$ ，点 $((x_{0}, y_{0}))$ 称为函数 $f(x,y)$ 的极大值点；若对于该领域内异于 $P_{0}$ 的任何点 $(x,y)$，都有</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2016/11/07/math-9/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/数学/">数学</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Math/">Math</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/11/07/math-9/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/11/07/math-9/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2016/11/06/math-8/" title="方向导数与梯度" itemprop="url">方向导数与梯度</a>
   </h1>
   <p class="article-author">By
@@ -695,73 +764,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/10/07/hive-udf-java-python/" title="在Hive中通过Java和Python实现UDF" itemprop="url">在Hive中通过Java和Python实现UDF</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
-		
-  <p class="article-time">
-    <time datetime="2015-10-07T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-10-07</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>当业务数据量过大，不能在关系型数据库中统计时，可以通过 Sqoop 导入到 HDFS 上进行统计，类似日志数据一样。导入到 HDFS 上数据，每一条记录通过 <code>\t</code> 或 <code>Ctrl+A</code> 等分割每一个字断，通过 <code>\n</code> 分割每一条记录。然后，通过建立 Hive 表指向 HDFS 对应的路径数据，对 HDFS 上的数据添加 Schema 定义，可以基于 Hive 中 SQL 的语法进行查询统计。</p>
-<p>尽管 Hive 提供了丰富的<a href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+UDF">函数</a>，有时仍然不能满足个性化的查询和统计要求。这时，需要用户实现 <code>UDF</code>。</p>
-<h2 id="概述">概述</h2><p><code>UDF</code>，即 User-Defined Function，用户通过自定义对数据的处理过程，以函数的形式在 HiveQL 中使用。</p>
-<p>有 2 种方式在 HiveQL 中实现 UDF。<strong> 第一种方式 </strong>，即通过 <code>Java</code> 或其他通过 JVM 实现的语言（Jython、JRuby、Clojure、Groovy），实现UDF；<strong> 第二种方式 </strong>，通过 <code>TRANSFORM...AS</code> 语法，使用可执行的脚步语言实现 UDF。 接下来，将分别介绍通过 Java 和 Python 实现 Hive 中的 UDF，最后，比较二者在使用过程中的异同。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/10/07/hive-udf-java-python/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Hive/">Hive</a><a href="/tags/Java/">Java</a><a href="/tags/Python/">Python</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/10/07/hive-udf-java-python/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/10/07/hive-udf-java-python/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
@@ -792,15 +794,15 @@
 			
 		
 			
+				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Hive/" title="Hive">Hive<sup>2</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/Sqoop/" title="Sqoop">Sqoop<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>2</sup></a></li>
 			
 		
 			
@@ -881,7 +883,7 @@
 		  
 		
 		  
-			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>2</sup></a></li>
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>3</sup></a></li>
 		  
 		
 		</ul>
@@ -892,7 +894,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12.5px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 17.5px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 15px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12.5px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 12.5px;">booknotes</a>
+       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12.5px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 17.5px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 15px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12.5px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 15px;">booknotes</a>
     </div>
   </div>
 
