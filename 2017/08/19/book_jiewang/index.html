@@ -4,31 +4,32 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>旋转数组中的最小值 | WHLMinds</title>
+    <title>读《结网》的笔记 | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="HongliangWEI">
     
 
     
-    <meta name="description" content="来自《剑指Offer》中的一道面试题：
-把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。
-理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）
-Naive解法在 O(n)">
+    <meta name="description" content="方法论，阅读量大，产品经验丰富，软素质，细心，回忆阅读《结网》的过程，这五个词是我对作者王坚的印象。
+
+整本书在讲如何做互联网产品经理，从在腾讯做产品经理到成为糗百创始人，作者丰富的产品实战经验在讲述如何做产品经理时体现的淋漓尽致，并且作者将这些经验总结为方法论，我这里就不再赘述。
+为了阐述自己的观点，本书中素材丰富，从本书一开始腾讯移动QQ的诞生，到书中数学常数E提出、校内网出现、今天笔记本电脑">
 <meta property="og:type" content="article">
-<meta property="og:title" content="旋转数组中的最小值">
-<meta property="og:url" content="http://whlminds.com/2015/04/05/Min-Number-in-Rotated-Array/index.html">
+<meta property="og:title" content="读《结网》的笔记">
+<meta property="og:url" content="http://whlminds.com/2017/08/19/book_jiewang/index.html">
 <meta property="og:site_name" content="WHLMinds">
-<meta property="og:description" content="来自《剑指Offer》中的一道面试题：
-把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。
-理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）
-Naive解法在 O(n)">
+<meta property="og:description" content="方法论，阅读量大，产品经验丰富，软素质，细心，回忆阅读《结网》的过程，这五个词是我对作者王坚的印象。
+
+整本书在讲如何做互联网产品经理，从在腾讯做产品经理到成为糗百创始人，作者丰富的产品实战经验在讲述如何做产品经理时体现的淋漓尽致，并且作者将这些经验总结为方法论，我这里就不再赘述。
+为了阐述自己的观点，本书中素材丰富，从本书一开始腾讯移动QQ的诞生，到书中数学常数E提出、校内网出现、今天笔记本电脑">
+<meta property="og:image" content="/illustration/book_jiewang.jpg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="旋转数组中的最小值">
-<meta name="twitter:description" content="来自《剑指Offer》中的一道面试题：
-把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。
-理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）
-Naive解法在 O(n)">
+<meta name="twitter:title" content="读《结网》的笔记">
+<meta name="twitter:description" content="方法论，阅读量大，产品经验丰富，软素质，细心，回忆阅读《结网》的过程，这五个词是我对作者王坚的印象。
+
+整本书在讲如何做互联网产品经理，从在腾讯做产品经理到成为糗百创始人，作者丰富的产品实战经验在讲述如何做产品经理时体现的淋漓尽致，并且作者将这些经验总结为方法论，我这里就不再赘述。
+为了阐述自己的观点，本书中素材丰富，从本书一开始腾讯移动QQ的诞生，到书中数学常数E提出、校内网出现、今天笔记本电脑">
 
     
     
@@ -85,14 +86,14 @@ Naive解法在 O(n)">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/04/05/Min-Number-in-Rotated-Array/" title="旋转数组中的最小值" itemprop="url">旋转数组中的最小值</a>
+      <a href="/2017/08/19/book_jiewang/" title="读《结网》的笔记" itemprop="url">读《结网》的笔记</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
 		
   <p class="article-time">
-    <time datetime="2015-04-05T07:38:21.000Z" itemprop="datePublished"> 发表于 2015-04-05</time>
+    <time datetime="2017-08-19T07:36:32.000Z" itemprop="datePublished"> 发表于 2017-08-19</time>
     
   </p>
 </header>
@@ -101,28 +102,53 @@ Naive解法在 O(n)">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Naive解法"><span class="toc-number">1.</span> <span class="toc-text">Naive解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改进的解法"><span class="toc-number">2.</span> <span class="toc-text">改进的解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+			
 		
 		</div>
 		
-		<p>来自《剑指Offer》中的一道面试题：</p>
-<p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减的排序的数组的一个旋转，输出旋转数组的最小元素。例如数组 {3, 4, 5, 1, 2} 为 {1, 2, 3, 4, 5} 的一个旋转， 该数组的最小元素为 1。</p>
-<p>理清了算法思路后写出了代码，后面看了书上的解法，觉得有些不直观，分享下自己的代码；）</p>
-<h2 id="Naive解法">Naive解法</h2><p>在 <code>O(n)</code> 时间范围内遍历旋转后的数组，可以找到最小的元素。但是，这种解法没有利用旋转数组的特点，即数组内部元素间部分有序，因此，查找效率不高。</p>
+		<p><img src="/illustration/book_jiewang.jpg" class="img-logo"></p>
+<blockquote>
+<p>方法论，阅读量大，产品经验丰富，软素质，细心，回忆阅读《结网》的过程，这五个词是我对作者王坚的印象。</p>
+</blockquote>
+<p>整本书在讲如何做互联网产品经理，从在腾讯做产品经理到成为糗百创始人，作者丰富的产品实战经验在讲述如何<strong>做</strong>产品经理时体现的淋漓尽致，并且作者将这些经验总结为方法论，我这里就不再赘述。</p>
+<p>为了阐述自己的观点，本书中素材丰富，从本书一开始腾讯移动QQ的诞生，到书中数学常数E提出、校内网出现、今天笔记本电脑和平板电脑的原型、hao123从无到被百度收购、张小龙觉察Kik Messenger到微信爆发式增长等，增加了阅读过程中的趣味性；同时，作者善于观察生活，从自己驾校练车的经历阐释刻意练习的体会，能让读者身同感受；另外，如何做好一名互联网产品经理，作者长篇幅讲述了如何做好沟通，我非常感兴趣，并在另外一篇中摘录读书笔记。</p>
+<p>从PC时代的网站到移动互联网时代的APP，产品经理在“执行”时应该如何转变；移动互联网时代与PC时代，产品经理对产品的思考有何不同，作者在书中没有讲述。</p>
+<p>下面就我在阅读过程中，对作者的方法论或观点印象比较深刻的部分摘录。</p>
 <a id="more"></a>
-<h2 id="改进的解法">改进的解法</h2><p>旋转数组是对非递增的排序的数组进行旋转的结果，因此，数组内部元素被分为了2个区间，在各区间内部是有序的，例如 {3, 4, 5, 1, 2} ，被分为了 {3, 4, 5 } 和 { 1, 2} 两个有序的子区间，对于有序的数组的查找问题，可以考虑二分查找算法，时间复杂度 <code>O(log(n))</code>。</p>
-<p>那么，如何对旋转的数组采用二分查找法寻找最小的元素呢，基本思路如下：</p>
-<ol>
-<li>对旋转数组二分， 必然有一个区间内的元素间是严格的非递增有序的；</li>
-<li>比较中间的元素与二分后两个区间的元素，可以筛选掉一个区间的元素；</li>
-<li>再二分，再重复第二步骤，直到中间的元素都不大于二分后两个区间内的元素。</li>
-</ol>
-<p>呃，感觉还是confusing，上菜：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> findMin(<span class="keyword">int</span> numbers[], <span class="keyword">int</span> <span class="keyword">size</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(numbers == <span class="keyword">NULL</span> || <span class="keyword">size</span> == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> exception(<span class="string">"Invalid parameters"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> low = <span class="number">0</span>, high = <span class="keyword">size</span> - <span class="number">1</span>, mid = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">while</span>(low &lt; high)&#123;</span><br><span class="line">	    mid = (low + high) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">	</span><br><span class="line">	    <span class="keyword">if</span>(A[low] &lt; A[high])&#123; <span class="comment">//数组是严格非递增排序的</span></span><br><span class="line">		    <span class="keyword">break</span>;</span><br><span class="line">	    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(A[low] == A[high])&#123; <span class="comment">// 见下方 `dateset6` 情况</span></span><br><span class="line">		    high--;</span><br><span class="line">	    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(A[low] &gt; A[high])&#123; </span><br><span class="line">		    <span class="keyword">if</span>(A[mid] &gt;= A[low])&#123; <span class="comment">// 最小元素必在 mid 位置后的子区间，因为包括mid索引的元素之前的元素排序是递增的</span></span><br><span class="line">			    low = mid + <span class="number">1</span>;</span><br><span class="line">		    &#125;<span class="keyword">else</span>&#123;                 </span><br><span class="line">				high = mid; <span class="comment">// 有可能 mid 索引的元素就是最小元素</span></span><br><span class="line">		    &#125;	</span><br><span class="line">	    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">return</span> A[low];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>测试数据：</p>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">dataset1</span>: <span class="string">&#123;4, 5, 1, 2, 3&#125;</span></span><br><span class="line"><span class="attribute">dataset2</span>: <span class="string">&#123;5, 1, 2, 3, 4&#125;</span></span><br><span class="line"><span class="attribute">dataset3</span>: <span class="string">&#123;1, 2, 3, 4, 5&#125;</span></span><br><span class="line"><span class="attribute">dataset4</span>: <span class="string">&#123;2, 3, 4, 5, 1&#125;</span></span><br><span class="line"><span class="attribute">dataset5</span>: <span class="string">&#123;3, 4, 5, 1, 2&#125;</span></span><br><span class="line"><span class="attribute">dataset6</span>: <span class="string">&#123;1, 1, 1, 0, 1&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="总结">总结</h2><p>二分查找算法在面试题中经常遇到，算法很简单，但非常重要，面试题经常会以各种变化的形式[^1]考察。当看到对有序或部分有序的数组进行查找时，可以考虑用二分查找算法。</p>
-<p>[^1]: 《剑指Offer》中另一道面试题：统计一个数字在排序数组中出现的次数。例如输入排序数组 {1, 2, 3, 3, 3, 3, 4, 5}, 由于 3 在这个数组中出现了 4 次，因此输出 4。</p>
+<p><a href="#">NOTES-01</a></p>
+<p>我认为最有潜力的产品经理一定是非常敏感的，不管是身处现实环境，还是在网络中穿行，都能感受到周围每个人情绪的波动，只有在平凡和平常中能够感受到人们的烦躁、厌恶、绝望，才有机会和动力去重新设计人类的生活;</p>
+<p><a href="#">NOTES-02</a></p>
+<p>知识和投资组合非常类似，有复合增长效应，资金越多就能越快地生出更多的资金，知识越多也越能加速你学习新知识的速度；</p>
+<p><a href="#">NOTES-03</a></p>
+<p>两条法则：（1）创造用户价值是第一要务；（2）机遇只光顾能力上做好准备的人；</p>
+<p><a href="#">NOTES-04</a></p>
+<p>然而，创建一款产品，并不是从外观开始的，Scott McCloud在《理解漫画》(Understanding Comics) 中谈到，一切媒介中的一切作品的创作都遵循6个步骤：概念-&gt;形式-&gt;风格-&gt;结构-&gt;工艺-&gt;外观</p>
+<p><a href="#">NOTES-05</a></p>
+<p>一款产品的概念是指它想要创建什么样的用户价值，满足用户哪些方面的需求，外围的一切工作都是基于产品的核心概念展开的；形式对应产品形态，邮件和即时通信都能满足用户沟通的需求，两种产品形态却大相径庭；风格在互联网产品中，可以对应产品的定位（并非视觉风格），同样是即时通信软件，QQ比较娱乐化，Google Talk则简单平实；结构对应信息架构和HCI（Human-Computer Interaction）设计；工艺对应技术研发和项目管理；外观对应GUI（Graphical User Interface）设计；</p>
+<p><a href="#">NOTES-06</a></p>
+<p>投资者或潜在伙伴关注的问题比较类似，我们可以看一下天使投资者王啸总结的三大问题：（1）产品概念是否处于趋势上，是否在满足强需求和频发需求？（2）是否找到了有效的突破口，突破之后如何建立壁垒？（3）团队能力与产品概念是否匹配？</p>
+<p><a href="#">NOTES-07</a></p>
+<p>突破口的作用是让用户觉得产品有用，壁垒的作用是让这种有用变得难以复制。</p>
+<p><a href="#">NOTES-08</a></p>
+<p>在考虑一个功能或网页的时候，产品经理需要认真评估它是否真的必要，是否符合产品当前所处的阶段，以及实现它到底需要多大的成本。要实现任何一个功能都会包括两块成本：一块是研发相关成本，这是绕不过去的，要把它实现出来就要投入相应的研发资源；另外一块是非研发相关成本，这部分成本往往会被忽视。如何推广这个功能，如何教育用户使用它，是否需要人工对它所带来的内容进行审核过滤，等等，这些都是非研发相关成本，是如何让用户使用它并喜欢它的成本，产品经理很多判断上的失误正是由于忽视这一块成本。解决这个问题其实很简单，在考虑成本的时候，想着研发相关成本占20%，其余的80%都是非研发相关就好了。剩下的问题是，确认这80%的非研发成本都在哪里。</p>
+<p><a href="#">NOTES-09</a></p>
+<p>墨菲定律网站版本：（1）凡是输入框，都会遭遇灌水、SPAM、脚本注入；（2）凡是积分，都会被刷；（2）凡是推到网站首页的内容，都会出现色情、政治；（3）凡是用户间沟通的渠道，都会被广告机器人利用。</p>
+<p><a href="#">NOTES-10</a></p>
+<p>用户体验三要素：别让我等！别让我想！别让我烦！</p>
+<p><a href="#">NOTES-11</a></p>
+<p>墨菲定律项目版：（1）一项工作如果只有一个人负责，这个人肯定会休假或者离职；（2）认为没有技术难点的地方，都会成为技术难点或性能瓶颈。</p>
+<p><a href="#">NOTES-12</a></p>
+<p>Trello</p>
+<p><a href="#">NOTES-13</a></p>
+<p>Mark Goldenson在关闭自己创建的playcafe.com之后总结道：如果允许一个新手一次走两步，那么他就可以击败象棋大师（A chess novice can dedeat a master if moving twice each round）。</p>
+<p><a href="#">NOTES-14</a></p>
+<p>产品更新包括两个要素：（1）更新本身；（2）更新频率。在这两个方面，都要管理用户的期望，不能在内容方面“放卫星”。</p>
+<p><a href="#">NOTES-15</a></p>
+<p>每一个岗位都有可以学习的地方，都有优秀的同事值得我们学习，值得我们用心投入去体验。无论我们今后的职业生涯如何发展，这种全力投入的过程，都是有意义的积累。<br>有的朋友很心急，对一个岗位、一个公司、一个行业，一遇到困难的问题就浅尝即止，还未体会到精髓所在，就急于换岗、换公司、换行业。有位艺术大师曾说过，“不精一艺莫谈艺”。我个人建议，年轻的朋友可以更耐心一些，尝试用心投入去发现工作之美，尝试体会工作本身的快乐。<br>当我们经受住极大的压力，在重重危机和困难之中，经过不懈的努力，终于找到可行的解决之道的时候，那种豁然开朗的感觉，难以言传，是未经历极限挑战的人所不能理解的，只有用心投入的人，才能体会这种工作的快乐。<br>一直很欣赏华为公司的一句话，“胜则举杯相庆祝，败则拼死相救”。在工作中，能结识一群志同道合的同事，能相互信任和相互欣赏彼此的激情，大家一起并肩作战，创造价值，是一件很开心的事情。<br>一个人是否绝顶高手，是否绝顶聪明，并不是最重要的。最重要的是，你是否对团队有激情。你是否学会欣赏团队成员的努力，你是否愿意建设性的帮助他人成功，只有对团队有激情的人，才能赢得团队的尊重。<br>—— Tony</p>
+<p><a href="#">NOTES-16</a></p>
+<p>人比想法更重要：如果你把一个好的想法交给一支平庸的队伍，他们会把它搞砸；如果你把一个平庸的想法交给一支出色的队伍，他们要么能够挽救它，要么会把它扔掉然后找出一些管用的办法来，找到一群有创意，能够发现创意，能够紧密合作共同实现创意的同事在一起工作，是非常非常重要的事情。<br>——Pixar 创始人 Ed Catmull</p>
+<p><a href="#">NOTES-17</a></p>
+<p>给自己设定一个极限的思维模式叫固定型思维模式，拥有这种思维的人认为做人是有天赋的，天赋不会增多，也不会减少。基于这样的认定，他们认为犯错误是因为天赋不足，而由于天赋是固定的，他们选择回避挑战，因为挑战意味着犯更多错误，意味着看上去很笨拙。<br>与固定型思维模式相对的是成长型思维模式，拥有成长型思维模式的人认为天赋并不是特别重要，人的才能是可以通过教育和努力提升的，由此，他们相信犯错误是由于缺乏努力，而非缺乏天赋，他们把挑战看作是学习的机会，他们认为在挑战中犯错误是非常正常的事情，这是不犯错误的必经之路。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -130,13 +156,13 @@ Naive解法在 O(n)">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/算法/">算法</a>
+  <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/algorithm/">algorithm</a>
+  <span></span> <a href="/tags/booknotes/">booknotes</a>
   </div>
 
 </div>
@@ -145,7 +171,7 @@ Naive解法在 O(n)">
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2015/04/05/Min-Number-in-Rotated-Array/" data-title="旋转数组中的最小值 | WHLMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2017/08/19/book_jiewang/" data-title="读《结网》的笔记 | WHLMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -159,18 +185,18 @@ Naive解法在 O(n)">
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/04/05/where-and-having-in-sql/" title="SQL中WHERE与HAVING用法">
+ <a href="/2017/08/19/book_jiewang_goutong/" title="读《结网》关于如何沟通的笔记">
   <strong>上一篇：</strong><br/>
   <span>
-  SQL中WHERE与HAVING用法</span>
+  读《结网》关于如何沟通的笔记</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/04/05/Factorial-Trailing-Zeroes/"  title="Factorial-Trailing-Zeroes">
+<a href="/2017/07/29/book_zhouhongyi/"  title="读《周鸿祎自述：我的互联网方法论》的摘要">
  <strong>下一篇：</strong><br/> 
- <span>Factorial-Trailing-Zeroes
+ <span>读《周鸿祎自述：我的互联网方法论》的摘要
 </span>
 </a>
 </div>
@@ -179,7 +205,7 @@ Naive解法在 O(n)">
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/04/05/Min-Number-in-Rotated-Array/" data-title="旋转数组中的最小值" data-url="http://whlminds.com/2015/04/05/Min-Number-in-Rotated-Array/"></div>
+	<div class="ds-thread" data-thread-key="2017/08/19/book_jiewang/" data-title="读《结网》的笔记" data-url="http://whlminds.com/2017/08/19/book_jiewang/"></div>
 </section>
 
 
@@ -189,7 +215,7 @@ Naive解法在 O(n)">
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Naive解法"><span class="toc-number">1.</span> <span class="toc-text">Naive解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改进的解法"><span class="toc-number">2.</span> <span class="toc-text">改进的解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+ 
  
   </div>
 
