@@ -7,7 +7,7 @@
     <title>基于 Amazon S3 和 HIVE 的统计 | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
-    <meta name="author" content="HongliangWEI">
+    <meta name="author" content="WEIHongliang">
     
 
     
@@ -86,7 +86,7 @@
   </h1>
   <p class="article-author">By
        
-		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		<a href="http://whlminds.com/about" title="WEIHongliang" target="_blank" itemprop="author">WEIHongliang</a>
 		
   <p class="article-time">
     <time datetime="2015-05-02T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-05-02</time>
@@ -144,14 +144,14 @@
 <li>外部表和内部表一样，都可以有分区；</li>
 </ul>
 <p>创建外部表：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">EXTERNAL</span> <span class="keyword">TABLE</span> thu_student_s3(</span><br><span class="line">     id <span class="built_in">INT</span>, </span><br><span class="line">     stu_no <span class="built_in">BIGINT</span>,</span><br><span class="line">     name <span class="keyword">STRING</span>, </span><br><span class="line">     age <span class="built_in">INT</span>,</span><br><span class="line">     gender TINYINT)</span><br><span class="line"> COMMENT <span class="string">'This is the student info table'</span></span><br><span class="line"> <span class="keyword">ROW</span> <span class="keyword">FORMAT</span> DELIMITED <span class="keyword">FIELDS</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">'\t'</span></span><br><span class="line"> STORED <span class="keyword">AS</span> TEXTFILE</span><br><span class="line"> LOCATION <span class="string">'s3://thu.whlminds.com/mysql/thu_student'</span>;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">EXTERNAL</span> <span class="keyword">TABLE</span> thu_student_s3(</span><br><span class="line">     id <span class="built_in">INT</span>,</span><br><span class="line">     stu_no <span class="built_in">BIGINT</span>,</span><br><span class="line">     name <span class="keyword">STRING</span>,</span><br><span class="line">     age <span class="built_in">INT</span>,</span><br><span class="line">     gender TINYINT)</span><br><span class="line"> COMMENT <span class="string">'This is the student info table'</span></span><br><span class="line"> <span class="keyword">ROW</span> <span class="keyword">FORMAT</span> DELIMITED <span class="keyword">FIELDS</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">'\t'</span></span><br><span class="line"> STORED <span class="keyword">AS</span> TEXTFILE</span><br><span class="line"> LOCATION <span class="string">'s3://thu.whlminds.com/mysql/thu_student'</span>;</span></span><br></pre></td></tr></table></figure>
 <p>创建内部表：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> thu_student_intl(</span><br><span class="line">     id <span class="built_in">INT</span>, </span><br><span class="line">     stu_no <span class="built_in">BIGINT</span>,</span><br><span class="line">     name <span class="keyword">STRING</span>, </span><br><span class="line">     age <span class="built_in">INT</span>,</span><br><span class="line">     gender TINYINT)</span><br><span class="line"> PARTITIONED <span class="keyword">BY</span>(major TINYINT)</span><br><span class="line"> <span class="keyword">ROW</span> <span class="keyword">FORMAT</span> DELIMITED</span><br><span class="line">   <span class="keyword">FIELDS</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">'\t'</span></span><br><span class="line"> STORED <span class="keyword">AS</span> TEXTFILE;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> thu_student_intl(</span><br><span class="line">     id <span class="built_in">INT</span>,</span><br><span class="line">     stu_no <span class="built_in">BIGINT</span>,</span><br><span class="line">     name <span class="keyword">STRING</span>,</span><br><span class="line">     age <span class="built_in">INT</span>,</span><br><span class="line">     gender TINYINT)</span><br><span class="line"> PARTITIONED <span class="keyword">BY</span>(major TINYINT)</span><br><span class="line"> <span class="keyword">ROW</span> <span class="keyword">FORMAT</span> DELIMITED</span><br><span class="line">   <span class="keyword">FIELDS</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">'\t'</span></span><br><span class="line"> STORED <span class="keyword">AS</span> TEXTFILE;</span></span><br></pre></td></tr></table></figure>
 <h3 id="向Hive表中导入数据">向Hive表中导入数据</h3><p>向 Hive 的表中上传数据时，可以在建表时指定数据源，也可以在建好表之后在通过 <code>Hive QL</code> 再 load。</p>
 <ul>
 <li>建外部表时指定数据源</li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">EXTERNAL</span> <span class="keyword">TABLE</span> thu_student_s3(</span><br><span class="line">    id <span class="built_in">INT</span>, </span><br><span class="line">    stu_no <span class="built_in">BIGINT</span>,</span><br><span class="line">    name <span class="keyword">STRING</span>, </span><br><span class="line">    age <span class="built_in">INT</span>,</span><br><span class="line">    gender TINYINT) </span><br><span class="line"><span class="keyword">ROW</span> <span class="keyword">FORMAT</span> DELIMITED <span class="keyword">FIELDS</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">'\t'</span> STORED <span class="keyword">AS</span> TEXTFILE </span><br><span class="line">LOCATION <span class="string">'s3://thu.whlminds.com/mysql/thu_student/2015/04/01/'</span>;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">EXTERNAL</span> <span class="keyword">TABLE</span> thu_student_s3(</span><br><span class="line">    id <span class="built_in">INT</span>,</span><br><span class="line">    stu_no <span class="built_in">BIGINT</span>,</span><br><span class="line">    name <span class="keyword">STRING</span>,</span><br><span class="line">    age <span class="built_in">INT</span>,</span><br><span class="line">    gender TINYINT)</span><br><span class="line"><span class="keyword">ROW</span> <span class="keyword">FORMAT</span> DELIMITED <span class="keyword">FIELDS</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">'\t'</span> STORED <span class="keyword">AS</span> TEXTFILE</span><br><span class="line">LOCATION <span class="string">'s3://thu.whlminds.com/mysql/thu_student/2015/04/01/'</span>;</span></span><br></pre></td></tr></table></figure>
 <p>上面建外部表程序中，最后一句 <code>LOCATION &#39;s3://thu.whlminds.com/mysql/thu_student/2015/04/01/&#39;</code> ，即指定了 <code>S3</code>上的数据位置，其中，<code>thu.whlminds.com</code> 为存储桶，<code>/mysql/thu_student/2015/04/01/</code> 为桶中存储目录。</p>
 <ul>
 <li>建表后再 load 数据</li>
@@ -177,7 +177,7 @@
 <h3 id="统计结果存入本地">统计结果存入本地</h3><ul>
 <li>方法一</li>
 </ul>
-<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive<span class="subst">&gt;</span> insert overwrite <span class="built_in">local</span> directory <span class="string">'/home/hadoop/hive/thu_student_result_000'</span> </span><br><span class="line"><span class="subst">&gt;</span> row format delimited fields terminated <span class="keyword">by</span> <span class="string">'\t'</span> </span><br><span class="line"><span class="subst">&gt;</span> <span class="keyword">select</span> <span class="subst">*</span> from thu_student_result;</span><br></pre></td></tr></table></figure>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive<span class="subst">&gt;</span> insert overwrite <span class="built_in">local</span> directory <span class="string">'/home/hadoop/hive/thu_student_result_000'</span></span><br><span class="line"><span class="subst">&gt;</span> row format delimited fields terminated <span class="keyword">by</span> <span class="string">'\t'</span></span><br><span class="line"><span class="subst">&gt;</span> <span class="keyword">select</span> <span class="subst">*</span> from thu_student_result;</span><br></pre></td></tr></table></figure>
 <p>其中，得到的结果 <code>thu_student_result_000</code> 中每一条记录的字段间是用 <code>\t</code> 分割的:</p>
 <ul>
 <li>方法二</li>
@@ -210,7 +210,7 @@
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; <span class="function"><span class="keyword">select</span> <span class="title">dboutput</span><span class="params">(<span class="string">'jdbc:mysql://xxxxxx.amazonaws.com.cn/thu_university'</span>,<span class="string">'$username'</span>,<span class="string">'$password'</span>,</span><br><span class="line">&gt; <span class="string">'INSERT INTO thu_student_result_from_s3(id, stu_no, name) VALUES (?,?,?)'</span>, id, stu_no, name)</span> <span class="keyword">from</span> thu_student_result</span>;</span><br></pre></td></tr></table></figure>
 <p><strong>注：</strong> <code>thu_university</code> 为 mysql 业务数据库名，<code>thu_student_result_from_s3</code> 为数据库 <code>thu_university</code> 中的表名。 <code>thu_student_result_from_s3(id, stu_no, name)</code>，括号中的字段为 mysql 表 <code>thu_student_result_from_s3</code> 字段，<code>values(?,?,?)</code> 对应 Hive 统计结果的值，后面的 <code>id</code>, <code>stu_no</code>, <code>name</code> 为 hive 表中的字段，<code>thu_student_result</code> 表示 Hive 中的表名称。</p>
 <p>另外，<code>$username</code> 和 <code>$password</code> 是 <code>thu_university</code> 用户名和密码。</p>
-<p>通过以上步骤即可将 Hive 统计结果直接导入到 mysql 数据库中。 </p>
+<p>通过以上步骤即可将 Hive 统计结果直接导入到 mysql 数据库中。</p>
 <h2 id="总结">总结</h2><p>大数据量统计通过在数据库中写SQL语句已经力所不及，可以通过将线上数据同步到 Hadoop文件系统，并使用 HVIE 进行统计分析，最后，将统计结果同步到业务数据库供使用。</p>
 <h2 id="参考资料">参考资料</h2><ol>
 <li><a href="https://cwiki.apache.org/confluence/display/Hive/GettingStarted" target="_blank" rel="external">HIVE-GettingStarted</a></li>
@@ -228,7 +228,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+  <a class="article-category-link" href="/categories/大数据/">大数据</a>
 </div>
 
 
@@ -301,15 +301,19 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Math/" title="Math">Math<sup>10</sup></a></li>
+				<li><a href="/tags/读书笔记/" title="读书笔记">读书笔记<sup>11</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Machining-Learning/" title="Machining Learning">Machining Learning<sup>7</sup></a></li>
+				<li><a href="/tags/数学/" title="数学">数学<sup>10</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>5</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/程序设计/" title="程序设计">程序设计<sup>3</sup></a></li>
 			
 		
 			
@@ -325,7 +329,7 @@
 			
 		
 			
-				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -341,10 +345,6 @@
 			
 		
 			
-				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/MapReduce/" title="MapReduce">MapReduce<sup>1</sup></a></li>
 			
 		
@@ -357,11 +357,17 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+		
+			
+		
+			
+		
+			
+		
 			
 		
 		</ul>
@@ -374,15 +380,13 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>7</sup></a></li>
+		
 		  
 		
 		  
-			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
-		  
 		
 		  
-			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+			<li><a href="/categories/大数据/" title="大数据">大数据<sup>7</sup></a></li>
 		  
 		
 		  
@@ -398,11 +402,13 @@
 		  
 		
 		  
-			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+			<li><a href="/categories/程序设计/" title="程序设计">程序设计<sup>4</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>5</sup></a></li>
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>11</sup></a></li>
 		  
 		
 		</ul>
@@ -413,7 +419,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 18px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 14px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 12px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 16px;">booknotes</a>
+       <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 14px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12px;">Sqoop</a><a href="/tags/数学/" style="font-size: 18px;">数学</a><a href="/tags/机器学习/" style="font-size: 16px;">机器学习</a><a href="/tags/程序设计/" style="font-size: 14px;">程序设计</a><a href="/tags/读书笔记/" style="font-size: 20px;">读书笔记</a>
     </div>
   </div>
 
@@ -458,9 +464,9 @@
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
-		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
+		<a href="http://whlminds.com/about" target="_blank" title="WEIHongliang">WEIHongliang</a>
 		
 		
 		</p>

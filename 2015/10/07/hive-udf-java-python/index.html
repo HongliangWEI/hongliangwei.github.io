@@ -7,7 +7,7 @@
     <title>在Hive中通过Java和Python实现UDF | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
-    <meta name="author" content="HongliangWEI">
+    <meta name="author" content="WEIHongliang">
     
 
     
@@ -83,7 +83,7 @@
   </h1>
   <p class="article-author">By
        
-		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		<a href="http://whlminds.com/about" title="WEIHongliang" target="_blank" itemprop="author">WEIHongliang</a>
 		
   <p class="article-time">
     <time datetime="2015-10-07T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-10-07</time>
@@ -105,11 +105,11 @@
 <p>有 2 种方式在 HiveQL 中实现 UDF。<strong> 第一种方式 </strong>，即通过 <code>Java</code> 或其他通过 JVM 实现的语言（Jython、JRuby、Clojure、Groovy），实现UDF；<strong> 第二种方式 </strong>，通过 <code>TRANSFORM...AS</code> 语法，使用可执行的脚步语言实现 UDF。 接下来，将分别介绍通过 Java 和 Python 实现 Hive 中的 UDF，最后，比较二者在使用过程中的异同。</p>
 <a id="more"></a>
 <p>假设有一张 Hive 表，描述订单基本信息：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> order_base(</span><br><span class="line">id                 <span class="built_in">INT</span>         COMMENT  <span class="string">'自增ID'</span>,      </span><br><span class="line">order_sn           <span class="keyword">STRING</span>      COMMENT  <span class="string">'订单编号'</span>,</span><br><span class="line">user_id            <span class="built_in">INT</span>         COMMENT  <span class="string">'用户ID'</span>,</span><br><span class="line">shop_id            <span class="built_in">INT</span>         COMMENT  <span class="string">'店铺ID'</span>,</span><br><span class="line">add_time           <span class="built_in">INT</span>         COMMENT  <span class="string">'下单时间'</span>,</span><br><span class="line">pay_time           <span class="built_in">INT</span>         COMMENT  <span class="string">'付款时间'</span>,</span><br><span class="line">delivery_name      <span class="keyword">STRING</span>      COMMENT  <span class="string">'收件人姓名'</span>,</span><br><span class="line">delivery_address   <span class="keyword">STRING</span>      COMMENT  <span class="string">'收件人地址'</span>,</span><br><span class="line">delivery_phone     <span class="keyword">STRING</span>      COMMENT  <span class="string">'收件人电话'</span></span><br><span class="line">)COMMENT <span class="string">'订单基本信息表'</span></span><br><span class="line"><span class="keyword">ROW</span> <span class="keyword">FORMAT</span> DELIMITED <span class="keyword">FIELDS</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">'\t'</span> <span class="keyword">LINES</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">'\n'</span> </span><br><span class="line">STORED <span class="keyword">AS</span> TEXTFILE</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> order_base(</span><br><span class="line">id                 <span class="built_in">INT</span>         COMMENT  <span class="string">'自增ID'</span>,      </span><br><span class="line">order_sn           <span class="keyword">STRING</span>      COMMENT  <span class="string">'订单编号'</span>,</span><br><span class="line">user_id            <span class="built_in">INT</span>         COMMENT  <span class="string">'用户ID'</span>,</span><br><span class="line">shop_id            <span class="built_in">INT</span>         COMMENT  <span class="string">'店铺ID'</span>,</span><br><span class="line">add_time           <span class="built_in">INT</span>         COMMENT  <span class="string">'下单时间'</span>,</span><br><span class="line">pay_time           <span class="built_in">INT</span>         COMMENT  <span class="string">'付款时间'</span>,</span><br><span class="line">delivery_name      <span class="keyword">STRING</span>      COMMENT  <span class="string">'收件人姓名'</span>,</span><br><span class="line">delivery_address   <span class="keyword">STRING</span>      COMMENT  <span class="string">'收件人地址'</span>,</span><br><span class="line">delivery_phone     <span class="keyword">STRING</span>      COMMENT  <span class="string">'收件人电话'</span></span><br><span class="line">)COMMENT <span class="string">'订单基本信息表'</span></span><br><span class="line"><span class="keyword">ROW</span> <span class="keyword">FORMAT</span> DELIMITED <span class="keyword">FIELDS</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">'\t'</span> <span class="keyword">LINES</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">'\n'</span></span><br><span class="line">STORED <span class="keyword">AS</span> TEXTFILE</span></span><br></pre></td></tr></table></figure>
 <p>现在需要查询收件人地址中出现关键字 <code>大学</code> 的记录，找出对应的 <code>(order_sn， delivery_address)</code>，通过 UDF 实现。</p>
 <h2 id="Java实现UDF">Java实现UDF</h2><p>通过 Java 实现 UDF 时，Java 中的类必须继承类 <code>the org.apache.hadoop.hive.ql.exec.UDF</code>。 并且，UDF 的实现过程必须写在名称为 <code>evaluate</code> 的函数中。由于 <code>evaluate</code> 并未在 UDF 父类中具体说明，因此，用户实现的UDF中，函数 <code>evaluate</code> 的返回类型和参数可以自己指定。当用户实现的 UDF 在 Hive 中执行时，Hive 将会执行函数 <code>evaluate</code> 中的内容。</p>
 <p>这里，查询出现指定关键字记录的UDF的Java实现过程如下：</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.whlminds.hive.udf;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hive.ql.exec.<span class="type">UDF</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @date Oct 7, 2015</span><br><span class="line"> *</span><br><span class="line"> * @author whlminds</span><br><span class="line"> *</span><br><span class="line"> * @Description:  查询出现指定关键字的记录，出现则返回 1，否则返回 0</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">FindSpecifiedWords</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">UDF</span> &#123;</span></span><br><span class="line">	</span><br><span class="line">	public int evaluate(<span class="type">String</span> targetWords, <span class="type">String</span> rawWords) &#123;</span><br><span class="line">		int found = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span> (rawWords.contains(targetWords)) &#123;</span><br><span class="line">			found = <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> found;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.whlminds.hive.udf;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hive.ql.exec.<span class="type">UDF</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @date Oct 7, 2015</span><br><span class="line"> *</span><br><span class="line"> * @author whlminds</span><br><span class="line"> *</span><br><span class="line"> * @Description:  查询出现指定关键字的记录，出现则返回 1，否则返回 0</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">FindSpecifiedWords</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">UDF</span> &#123;</span></span><br><span class="line"></span><br><span class="line">	public int evaluate(<span class="type">String</span> targetWords, <span class="type">String</span> rawWords) &#123;</span><br><span class="line">		int found = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span> (rawWords.contains(targetWords)) &#123;</span><br><span class="line">			found = <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> found;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>由于 <code>org.apache.hadoop.hive.ql.exec.UDF</code> 并非 Java 自带库函数，因此，这里需要引用包含 Hive API的 jar 包，这里是 <a href="http://www.java2s.com/Code/Jar/h/Downloadhive041jar.htm" target="_blank" rel="external">hive-0.4.1.jar</a>。</p>
 <p>用 Java 实现的 UDF 完成了，打包为 <code>hive-udf-java.jar</code>，现在，需要在 HiveQL 中调用。</p>
 <p>在 HiveQL 中使用 UDF 前，首先需要添加 jar 包至 Hive 中，对自定义函数 <code>com.whlminds.hive.udf.FindSpecifiedWords</code> 进行注册，可以被 Hive 中脚本使用：</p>
@@ -117,9 +117,9 @@
 <p>这里，对 <code>com.whlminds.hive.udf.FindSpecifiedWords</code> 起别名，方便调用：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TEMPORARY</span> <span class="keyword">FUNCTION</span> findwords <span class="keyword">AS</span> <span class="string">'com.whlminds.hive.udf.FindSpecifiedWords'</span>;</span></span><br></pre></td></tr></table></figure>
 <p>上述步骤，实现了 UDF，在Hive中注册，并起别名方便调用，接下来，就可以在 HiveQL 中使用了：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> t1.order_sn, t1.delivery_address</span><br><span class="line"><span class="keyword">FROM</span> order_base t1 </span><br><span class="line"><span class="keyword">WHERE</span> t1.pay_time &gt;= <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-04 00:00:00'</span>) </span><br><span class="line"><span class="keyword">AND</span> t1.pay_time &lt; <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-05 00:00:00'</span>) </span><br><span class="line"><span class="keyword">AND</span> findwords(<span class="string">'大学'</span>, t1.delivery_address) = <span class="number">1</span>;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> t1.order_sn, t1.delivery_address</span><br><span class="line"><span class="keyword">FROM</span> order_base t1</span><br><span class="line"><span class="keyword">WHERE</span> t1.pay_time &gt;= <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-04 00:00:00'</span>)</span><br><span class="line"><span class="keyword">AND</span> t1.pay_time &lt; <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-05 00:00:00'</span>)</span><br><span class="line"><span class="keyword">AND</span> findwords(<span class="string">'大学'</span>, t1.delivery_address) = <span class="number">1</span>;</span></span><br></pre></td></tr></table></figure>
 <p>为查询方便，可以将 Hive 中注册，起别名，以及调用过程一起写在SQL脚本 <code>find_specified_order.sql</code> 中：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ADD JAR /mnt/whlminds/hive-udf-java.jar;</span><br><span class="line"></span><br><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TEMPORARY</span> <span class="keyword">FUNCTION</span> findwords <span class="keyword">AS</span> <span class="string">'com.whlminds.hive.udf.FindSpecifiedWords'</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="operator"><span class="keyword">SELECT</span> t1.order_sn, t1.delivery_address</span><br><span class="line"><span class="keyword">FROM</span> order_base t1 </span><br><span class="line"><span class="keyword">WHERE</span> t1.pay_time &gt;= <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-04 00:00:00'</span>) </span><br><span class="line"><span class="keyword">AND</span> t1.pay_time &lt; <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-05 00:00:00'</span>) </span><br><span class="line"><span class="keyword">AND</span> findwords(<span class="string">'大学'</span>, t1.delivery_address) = <span class="number">1</span>;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ADD JAR /mnt/whlminds/hive-udf-java.jar;</span><br><span class="line"></span><br><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TEMPORARY</span> <span class="keyword">FUNCTION</span> findwords <span class="keyword">AS</span> <span class="string">'com.whlminds.hive.udf.FindSpecifiedWords'</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="operator"><span class="keyword">SELECT</span> t1.order_sn, t1.delivery_address</span><br><span class="line"><span class="keyword">FROM</span> order_base t1</span><br><span class="line"><span class="keyword">WHERE</span> t1.pay_time &gt;= <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-04 00:00:00'</span>)</span><br><span class="line"><span class="keyword">AND</span> t1.pay_time &lt; <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-05 00:00:00'</span>)</span><br><span class="line"><span class="keyword">AND</span> findwords(<span class="string">'大学'</span>, t1.delivery_address) = <span class="number">1</span>;</span></span><br></pre></td></tr></table></figure>
 <p>然后，执行 SQL 脚本：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; hive <span class="operator">-f</span> find_specified_order.sql</span><br></pre></td></tr></table></figure>
 <h2 id="Python实现UDF">Python实现UDF</h2><p>通过 Python 实现 Hive 的 UDF，Python 脚本需要以特定的方式读入和输出，除了必须引用 <code>sys</code> 包外，无须引用其他外部包。</p>
@@ -132,9 +132,9 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> TRANSFORM (&lt;<span class="keyword">columns</span>&gt;)</span><br><span class="line"><span class="keyword">USING</span> <span class="string">'python &lt;python_script&gt;'</span></span><br><span class="line"><span class="keyword">AS</span> (&lt;<span class="keyword">columns</span>&gt;)</span><br><span class="line"><span class="keyword">FROM</span> &lt;<span class="keyword">table</span>&gt;;</span></span><br></pre></td></tr></table></figure>
 <p>其中， <code>SELECT</code> 中的 <code>columns</code> 是 <code>FROM</code> 中 <code>table</code> 的列名， 而 <code>AS</code> 中的 <code>columns</code> 是经过 <code>USING</code> 中 Python 脚本 <code>python_script</code> 计算返回的列名。</p>
 <p>这里，查找包含指定关键字的 HiveQL 脚本如下：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> t2.order_sn, t2.delivery_address</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line"></span><br><span class="line">(<span class="keyword">SELECT</span> TRANSFORM (t1.order_sn, t1.delivery_address) </span><br><span class="line"><span class="keyword">USING</span> <span class="string">'python FindSpecifiedWords.py'</span> </span><br><span class="line"><span class="keyword">AS</span> (order_sn <span class="keyword">STRING</span>, delivery_address <span class="keyword">STRING</span>, <span class="keyword">found</span> <span class="keyword">STRING</span>)</span><br><span class="line"><span class="keyword">FROM</span> order_base t1</span><br><span class="line"><span class="keyword">WHERE</span> t1.pay_time &gt;= <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-04 00:00:00'</span>)</span><br><span class="line"><span class="keyword">AND</span> t1.pay_time &lt; <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-05 00:00:00'</span>)) t2</span><br><span class="line"></span><br><span class="line"><span class="keyword">WHERE</span> t2.<span class="keyword">found</span> = <span class="string">'Y'</span>;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> t2.order_sn, t2.delivery_address</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line"></span><br><span class="line">(<span class="keyword">SELECT</span> TRANSFORM (t1.order_sn, t1.delivery_address)</span><br><span class="line"><span class="keyword">USING</span> <span class="string">'python FindSpecifiedWords.py'</span></span><br><span class="line"><span class="keyword">AS</span> (order_sn <span class="keyword">STRING</span>, delivery_address <span class="keyword">STRING</span>, <span class="keyword">found</span> <span class="keyword">STRING</span>)</span><br><span class="line"><span class="keyword">FROM</span> order_base t1</span><br><span class="line"><span class="keyword">WHERE</span> t1.pay_time &gt;= <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-04 00:00:00'</span>)</span><br><span class="line"><span class="keyword">AND</span> t1.pay_time &lt; <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-05 00:00:00'</span>)) t2</span><br><span class="line"></span><br><span class="line"><span class="keyword">WHERE</span> t2.<span class="keyword">found</span> = <span class="string">'Y'</span>;</span></span><br></pre></td></tr></table></figure>
 <p>为查询方便，可以将 Hive 中注册，以及调用过程一起写在 SQL 脚本 <code>find_specified_order.sql</code> 中：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ADD FILE /mnt/whlminds/FindSpecifiedWords.py;</span><br><span class="line"></span><br><span class="line"><span class="operator"><span class="keyword">SELECT</span> t2.order_sn, t2.delivery_address</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line"></span><br><span class="line">(<span class="keyword">SELECT</span> TRANSFORM (t1.order_sn, t1.delivery_address) </span><br><span class="line"><span class="keyword">USING</span> <span class="string">'python FindSpecifiedWords.py'</span> </span><br><span class="line"><span class="keyword">AS</span> (order_sn <span class="keyword">STRING</span>, delivery_address <span class="keyword">STRING</span>, <span class="keyword">found</span> <span class="keyword">STRING</span>)</span><br><span class="line"><span class="keyword">FROM</span> order_base t1</span><br><span class="line"><span class="keyword">WHERE</span> t1.pay_time &gt;= <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-04 00:00:00'</span>)</span><br><span class="line"><span class="keyword">AND</span> t1.pay_time &lt; <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-05 00:00:00'</span>)) t2</span><br><span class="line"></span><br><span class="line"><span class="keyword">WHERE</span> t2.<span class="keyword">found</span> = <span class="string">'Y'</span>;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ADD FILE /mnt/whlminds/FindSpecifiedWords.py;</span><br><span class="line"></span><br><span class="line"><span class="operator"><span class="keyword">SELECT</span> t2.order_sn, t2.delivery_address</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line"></span><br><span class="line">(<span class="keyword">SELECT</span> TRANSFORM (t1.order_sn, t1.delivery_address)</span><br><span class="line"><span class="keyword">USING</span> <span class="string">'python FindSpecifiedWords.py'</span></span><br><span class="line"><span class="keyword">AS</span> (order_sn <span class="keyword">STRING</span>, delivery_address <span class="keyword">STRING</span>, <span class="keyword">found</span> <span class="keyword">STRING</span>)</span><br><span class="line"><span class="keyword">FROM</span> order_base t1</span><br><span class="line"><span class="keyword">WHERE</span> t1.pay_time &gt;= <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-04 00:00:00'</span>)</span><br><span class="line"><span class="keyword">AND</span> t1.pay_time &lt; <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2015-10-05 00:00:00'</span>)) t2</span><br><span class="line"></span><br><span class="line"><span class="keyword">WHERE</span> t2.<span class="keyword">found</span> = <span class="string">'Y'</span>;</span></span><br></pre></td></tr></table></figure>
 <p>然后，执行 SQL 脚本：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; hive <span class="operator">-f</span> find_specified_order.sql</span><br></pre></td></tr></table></figure>
 <h2 id="Java-UDF_vs-_Python-UDF">Java-UDF vs. Python-UDF</h2><p>上述2部分分别介绍了通过 Java 和 Python 实现 Hive 中 UDF 过程，这里比较下二者的异同：</p>
@@ -157,7 +157,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+  <a class="article-category-link" href="/categories/大数据/">大数据</a>
 </div>
 
 
@@ -230,15 +230,19 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Math/" title="Math">Math<sup>10</sup></a></li>
+				<li><a href="/tags/读书笔记/" title="读书笔记">读书笔记<sup>11</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Machining-Learning/" title="Machining Learning">Machining Learning<sup>7</sup></a></li>
+				<li><a href="/tags/数学/" title="数学">数学<sup>10</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>5</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/程序设计/" title="程序设计">程序设计<sup>3</sup></a></li>
 			
 		
 			
@@ -254,7 +258,7 @@
 			
 		
 			
-				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -270,10 +274,6 @@
 			
 		
 			
-				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/MapReduce/" title="MapReduce">MapReduce<sup>1</sup></a></li>
 			
 		
@@ -286,11 +286,17 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+		
+			
+		
+			
+		
+			
+		
 			
 		
 		</ul>
@@ -303,15 +309,13 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>7</sup></a></li>
+		
 		  
 		
 		  
-			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
-		  
 		
 		  
-			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+			<li><a href="/categories/大数据/" title="大数据">大数据<sup>7</sup></a></li>
 		  
 		
 		  
@@ -327,11 +331,13 @@
 		  
 		
 		  
-			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+			<li><a href="/categories/程序设计/" title="程序设计">程序设计<sup>4</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>5</sup></a></li>
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>11</sup></a></li>
 		  
 		
 		</ul>
@@ -342,7 +348,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 18px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 14px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 12px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 16px;">booknotes</a>
+       <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 14px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12px;">Sqoop</a><a href="/tags/数学/" style="font-size: 18px;">数学</a><a href="/tags/机器学习/" style="font-size: 16px;">机器学习</a><a href="/tags/程序设计/" style="font-size: 14px;">程序设计</a><a href="/tags/读书笔记/" style="font-size: 20px;">读书笔记</a>
     </div>
   </div>
 
@@ -387,9 +393,9 @@
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
-		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
+		<a href="http://whlminds.com/about" target="_blank" title="WEIHongliang">WEIHongliang</a>
 		
 		
 		</p>

@@ -7,7 +7,7 @@
     <title>浅谈MapReduce | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
-    <meta name="author" content="HongliangWEI">
+    <meta name="author" content="WEIHongliang">
     
 
     
@@ -87,7 +87,7 @@
   </h1>
   <p class="article-author">By
        
-		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		<a href="http://whlminds.com/about" title="WEIHongliang" target="_blank" itemprop="author">WEIHongliang</a>
 		
   <p class="article-time">
     <time datetime="2015-11-30T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-11-30</time>
@@ -115,7 +115,7 @@
 <p>形式化表述  <code>Map</code> 函数和 <code>Reduce</code> 函数的过程如下：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">map     (k1, v1)          --&gt;  <span class="function"><span class="title">list</span><span class="params">(k2, v2)</span></span></span><br><span class="line">reduce  (k2, <span class="function"><span class="title">list</span><span class="params">(v2)</span></span>)    --&gt;  <span class="function"><span class="title">list</span><span class="params">(v2)</span></span></span><br></pre></td></tr></table></figure>
 <h2 id="MapReduce应用CASE">MapReduce应用CASE</h2><h3 id="WordCount">WordCount</h3><p>在一组文档中，需要统计所有文档中，每一个单词出现的频率。使用 MapReduce 进行统计时，伪代码可能是这样的：</p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>(<span class="keyword">String</span> <span class="variable">key</span>, <span class="keyword">String</span> value):</span><br><span class="line">    <span class="comment">// key  : document name</span></span><br><span class="line">    <span class="comment">// value: document contents</span></span><br><span class="line">    <span class="keyword">for</span> each word w in values:</span><br><span class="line">      GenerateIntermediate(w, <span class="string">"1"</span>);</span><br><span class="line">      </span><br><span class="line">reduce(<span class="keyword">String</span> <span class="variable">key</span>, Iterator values):</span><br><span class="line">    <span class="comment">// key   : a word</span></span><br><span class="line">    <span class="comment">// vaules: a list of counts</span></span><br><span class="line">    <span class="built_in">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> each v in values:</span><br><span class="line">      count += ParseInt(v);</span><br><span class="line">    GenerateOutput(<span class="variable">key</span>, ParseString(count));</span><br></pre></td></tr></table></figure>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>(<span class="keyword">String</span> <span class="variable">key</span>, <span class="keyword">String</span> value):</span><br><span class="line">    <span class="comment">// key  : document name</span></span><br><span class="line">    <span class="comment">// value: document contents</span></span><br><span class="line">    <span class="keyword">for</span> each word w in values:</span><br><span class="line">      GenerateIntermediate(w, <span class="string">"1"</span>);</span><br><span class="line"></span><br><span class="line">reduce(<span class="keyword">String</span> <span class="variable">key</span>, Iterator values):</span><br><span class="line">    <span class="comment">// key   : a word</span></span><br><span class="line">    <span class="comment">// vaules: a list of counts</span></span><br><span class="line">    <span class="built_in">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> each v in values:</span><br><span class="line">      count += ParseInt(v);</span><br><span class="line">    GenerateOutput(<span class="variable">key</span>, ParseString(count));</span><br></pre></td></tr></table></figure>
 <p>在 <code>Map</code> 函数中，对于文档中每一个单词，均生成 <code>(word, 1)</code> 这样的 <code>key/value</code> 对，传递给 <code>Reduce</code> 函数，在 <code>Reduce</code> 函数中，对每一个具有相同 <code>word</code> 的  <code>key/value</code> 对，累加值为<code>1</code>的 <code>value</code>，最终即可得到每一个单词在这组文档中出现的频率。</p>
 <h3 id="分布式Grep查找">分布式Grep查找</h3><p>运维经常会有这样的需求，即在大量非结构化的日志中，通过<code>grep</code>命令查找包含指定关键字的日志，并抽取出来。在使用 MapReduce 时， <code>Map</code> 函数以每一条日志作为输入，查找包含指定关键字的日志，然后传递给 <code>Reduce</code> 函数，而 <code>Reduce</code> 函数直接进行输出即可。<code>Map</code> 函数和 <code>Reduce</code> 函数均可以在集群中的多台机器上依次并行的计算。</p>
 <h2 id="MapReduce实现">MapReduce实现</h2><p>MapReduce的执行过程可以通过下图进行描述：</p>
@@ -142,7 +142,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+  <a class="article-category-link" href="/categories/大数据/">大数据</a>
 </div>
 
 
@@ -215,15 +215,19 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Math/" title="Math">Math<sup>10</sup></a></li>
+				<li><a href="/tags/读书笔记/" title="读书笔记">读书笔记<sup>11</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Machining-Learning/" title="Machining Learning">Machining Learning<sup>7</sup></a></li>
+				<li><a href="/tags/数学/" title="数学">数学<sup>10</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>5</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/程序设计/" title="程序设计">程序设计<sup>3</sup></a></li>
 			
 		
 			
@@ -239,7 +243,7 @@
 			
 		
 			
-				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -255,10 +259,6 @@
 			
 		
 			
-				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/MapReduce/" title="MapReduce">MapReduce<sup>1</sup></a></li>
 			
 		
@@ -271,11 +271,17 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+		
+			
+		
+			
+		
+			
+		
 			
 		
 		</ul>
@@ -288,15 +294,13 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>7</sup></a></li>
+		
 		  
 		
 		  
-			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
-		  
 		
 		  
-			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+			<li><a href="/categories/大数据/" title="大数据">大数据<sup>7</sup></a></li>
 		  
 		
 		  
@@ -312,11 +316,13 @@
 		  
 		
 		  
-			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+			<li><a href="/categories/程序设计/" title="程序设计">程序设计<sup>4</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>5</sup></a></li>
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>11</sup></a></li>
 		  
 		
 		</ul>
@@ -327,7 +333,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 18px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 14px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 12px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 16px;">booknotes</a>
+       <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 14px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12px;">Sqoop</a><a href="/tags/数学/" style="font-size: 18px;">数学</a><a href="/tags/机器学习/" style="font-size: 16px;">机器学习</a><a href="/tags/程序设计/" style="font-size: 14px;">程序设计</a><a href="/tags/读书笔记/" style="font-size: 20px;">读书笔记</a>
     </div>
   </div>
 
@@ -372,9 +378,9 @@
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
-		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
+		<a href="http://whlminds.com/about" target="_blank" title="WEIHongliang">WEIHongliang</a>
 		
 		
 		</p>

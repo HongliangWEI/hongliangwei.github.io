@@ -7,7 +7,7 @@
     <title>Sqoop 简介 | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
-    <meta name="author" content="HongliangWEI">
+    <meta name="author" content="WEIHongliang">
     
 
     
@@ -86,7 +86,7 @@
   </h1>
   <p class="article-author">By
        
-		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		<a href="http://whlminds.com/about" title="WEIHongliang" target="_blank" itemprop="author">WEIHongliang</a>
 		
   <p class="article-time">
     <time datetime="2015-05-16T17:13:55.000Z" itemprop="datePublished"> 发表于 2015-05-17</time>
@@ -125,7 +125,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span><br><span class="line"></span></span><br><span class="line">JdbcURI=<span class="string">"jdbc:mysql://student.whlminds.com:3306/thu?tinyInt1isBit=false&amp;autoReconnect=true&amp;NetTimeoutForStreamingResults=3600&amp;characterEncoding=UTF-8"</span></span><br><span class="line">UserName=<span class="string">"root"</span></span><br><span class="line">PassWD=<span class="string">"whlminds"</span></span><br><span class="line">S3Bucket=<span class="string">"s3n://&lt;your_account&gt;:&lt;your_password&gt;@thu.whlminds.com"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> student &#123;</span><br><span class="line">/home/whlminds/sqoop/bin/sqoop import --connect <span class="variable">$JdbcURI</span> --username <span class="variable">$UserName</span> --password <span class="variable">$PassWD</span> \</span><br><span class="line">--query <span class="string">"select st.id, st.name, st.gender from student st where <span class="variable">$CONDITIONS</span>"</span> \</span><br><span class="line">--split-by st.id \</span><br><span class="line">--mapreduce-job-name StudentImport \</span><br><span class="line">--target-dir <span class="variable">$S3Bucket</span>//student --fields-terminated-by <span class="string">'\t'</span> -hive-drop-import-delims</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如上例 Shell 脚本中，将 MySQL 数据库 <code>thu</code> 中表 <code>student</code> 导入 Amazon S3 的存储桶 <code>thu.whlminds.com</code> 中。其中，选择了表部分字段 <code>id</code> 、<code>name</code> 和 <code>gender</code>。</p>
 <p>其中，<code>$CONDITIONS</code> 是在并行导入数据时分隔数据源的条件。即如果想并行的导入查询的结果，则每一个 <code>Map</code> 任务需要执行一个查询的拷贝，每一个拷贝中，根据 <code>$CONDITIONS</code> 不同，每一个 <code>Map</code> 任务导入的数据不同，每一个 <code>Map</code> 任务在执行时会将 <code>$CONDITIONS</code> 替换成一个唯一的条件表达式，同时，需要通过 <code>--split-by</code> 来指定根据哪一列数据将需要导入的数据源分割，供多个并行的<code>Map</code> 任务导入。</p>
-<p>而 <code>--hive-drop-import-delims</code> 指定在导数据时丢弃字符串中的 <code>\n</code>，<code>\r</code> 和 <code>\01</code> 供 Hive 查询。 </p>
+<p>而 <code>--hive-drop-import-delims</code> 指定在导数据时丢弃字符串中的 <code>\n</code>，<code>\r</code> 和 <code>\01</code> 供 Hive 查询。</p>
 <p>具体的，关于 Sqoop 的语法，请参考 <a href="http://sqoop.apache.org/docs/1.4.5/SqoopUserGuide.html" target="_blank" rel="external">SqoopUserGuide</a>。</p>
 <h2 id="总结">总结</h2><p>从 Sqoop 是什么，到如何安装，再到 Sqoop 导入数据的原理，本篇博客给出了简要的说明，最后，通过一个简单的例子简要的说明如何利用 Sqoop 编写数据在 RDBMS 和 Hadoop 文件系统间导入数据。</p>
 <p>关于每一个 <code>Sqoop Job</code> 如何具体的通过 <code>sqoop connector API</code> 导数据，将在<a href="http://whlminds.com/2015/05/17/Sqoop2-Connector/" target="_blank" rel="external">Sqoop2 Connector</a> 中介绍。</p>
@@ -145,7 +145,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/BIGDATA/">BIGDATA</a>
+  <a class="article-category-link" href="/categories/大数据/">大数据</a>
 </div>
 
 
@@ -218,15 +218,19 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Math/" title="Math">Math<sup>10</sup></a></li>
+				<li><a href="/tags/读书笔记/" title="读书笔记">读书笔记<sup>11</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Machining-Learning/" title="Machining Learning">Machining Learning<sup>7</sup></a></li>
+				<li><a href="/tags/数学/" title="数学">数学<sup>10</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>5</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/程序设计/" title="程序设计">程序设计<sup>3</sup></a></li>
 			
 		
 			
@@ -242,7 +246,7 @@
 			
 		
 			
-				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -258,10 +262,6 @@
 			
 		
 			
-				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/MapReduce/" title="MapReduce">MapReduce<sup>1</sup></a></li>
 			
 		
@@ -274,11 +274,17 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+		
+			
+		
+			
+		
+			
+		
 			
 		
 		</ul>
@@ -291,15 +297,13 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>7</sup></a></li>
+		
 		  
 		
 		  
-			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
-		  
 		
 		  
-			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+			<li><a href="/categories/大数据/" title="大数据">大数据<sup>7</sup></a></li>
 		  
 		
 		  
@@ -315,11 +319,13 @@
 		  
 		
 		  
-			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+			<li><a href="/categories/程序设计/" title="程序设计">程序设计<sup>4</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>5</sup></a></li>
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>11</sup></a></li>
 		  
 		
 		</ul>
@@ -330,7 +336,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 18px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 14px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 12px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 16px;">booknotes</a>
+       <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 14px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12px;">Sqoop</a><a href="/tags/数学/" style="font-size: 18px;">数学</a><a href="/tags/机器学习/" style="font-size: 16px;">机器学习</a><a href="/tags/程序设计/" style="font-size: 14px;">程序设计</a><a href="/tags/读书笔记/" style="font-size: 20px;">读书笔记</a>
     </div>
   </div>
 
@@ -375,9 +381,9 @@
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
-		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
+		<a href="http://whlminds.com/about" target="_blank" title="WEIHongliang">WEIHongliang</a>
 		
 		
 		</p>

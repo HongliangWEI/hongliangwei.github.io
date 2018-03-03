@@ -7,7 +7,7 @@
     <title>Factorial-Trailing-Zeroes | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
-    <meta name="author" content="HongliangWEI">
+    <meta name="author" content="WEIHongliang">
     
 
     
@@ -95,7 +95,7 @@ Note: Your solution should be in logarithmic time complexity.
   </h1>
   <p class="article-author">By
        
-		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		<a href="http://whlminds.com/about" title="WEIHongliang" target="_blank" itemprop="author">WEIHongliang</a>
 		
   <p class="article-time">
     <time datetime="2015-04-05T07:34:47.000Z" itemprop="datePublished"> 发表于 2015-04-05</time>
@@ -132,11 +132,11 @@ Note: Your solution should be in logarithmic time complexity.
 <p><code>[n/2^p] &gt; [n/5^p]</code>(左边是逢 <code>2^p</code> 增1，右边是逢 <code>5^p</code> 增1)</p>
 <p>随着幂次<code>p</code>的上升，出现<code>2^p</code>的概率会远大于出现<code>2^p</code>的概率。</p>
 <p>即 2 的各个幂次的加和一定大于 5 的各个幂次的加和，也就是 <code>n!</code> 质因数分解中，2 的次幂一定大于 5 的次幂；）</p>
-<h2 id="解法_1">解法 1</h2><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">trailingZeroes</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123; </span><br><span class="line">    <span class="keyword">int</span> ret = <span class="number">0</span>; </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123; </span><br><span class="line">        <span class="keyword">int</span> tmp = i; </span><br><span class="line">        <span class="keyword">while</span>(tmp % <span class="number">5</span> == <span class="number">0</span>) &#123; </span><br><span class="line">            ret++; </span><br><span class="line">            tmp /= <span class="number">5</span>; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> ret; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="解法_1">解法 1</h2><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">trailingZeroes</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = i;</span><br><span class="line">        <span class="keyword">while</span>(tmp % <span class="number">5</span> == <span class="number">0</span>) &#123;</span><br><span class="line">            ret++;</span><br><span class="line">            tmp /= <span class="number">5</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>解法1还有优化的空间…….</p>
 <h2 id="解法_2">解法 2</h2><p>根据上面的证明过程分析可以看出，起作用的只有被5整除的那些数。能不能只对这些数进行计数呢？</p>
 <p>存在这样的规律：<code>[n/k]</code> 代表 <code>1~n</code> 中能被 <code>k</code> 整除的个数。有一点要注意的就是25这种，5和5相乘的结果，所以，还要看 <code>n/5</code> 里面有多少个5，也就相当于看n里面有多少个25，还有125，625…..</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int trailingZeroes(int <span class="keyword">n</span>) &#123;</span><br><span class="line">    int <span class="keyword">ret</span> = 0;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">n</span>) &#123;</span><br><span class="line">        <span class="keyword">ret</span> += <span class="keyword">n</span> / 5;</span><br><span class="line">        <span class="keyword">n</span> /= 5;</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">ret</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int trailingZeroes(int <span class="keyword">n</span>) &#123;</span><br><span class="line">    int <span class="keyword">ret</span> = 0;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">n</span>) &#123;</span><br><span class="line">        <span class="keyword">ret</span> += <span class="keyword">n</span> / 5;</span><br><span class="line">        <span class="keyword">n</span> /= 5;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">ret</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>看到解法2这么简洁优美的代码，我已经醉了…</p>
 <h2 id="总结">总结</h2><p>数学功底很关键，很重要！</p>
 <p>突然想到“我是歌手3”里歌手李健看到数字 2 后，第一个反应是 “2 是质数里面的第一个啊，挺好的”，也是醉了；）</p>
@@ -147,13 +147,13 @@ Note: Your solution should be in logarithmic time complexity.
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/算法/">算法</a>
+  <a class="article-category-link" href="/categories/程序设计/">程序设计</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/algorithm/">algorithm</a>
+  <span></span> <a href="/tags/程序设计/">程序设计</a>
   </div>
 
 </div>
@@ -220,15 +220,19 @@ Note: Your solution should be in logarithmic time complexity.
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Math/" title="Math">Math<sup>10</sup></a></li>
+				<li><a href="/tags/读书笔记/" title="读书笔记">读书笔记<sup>11</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Machining-Learning/" title="Machining Learning">Machining Learning<sup>7</sup></a></li>
+				<li><a href="/tags/数学/" title="数学">数学<sup>10</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>5</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/程序设计/" title="程序设计">程序设计<sup>3</sup></a></li>
 			
 		
 			
@@ -244,7 +248,7 @@ Note: Your solution should be in logarithmic time complexity.
 			
 		
 			
-				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -260,10 +264,6 @@ Note: Your solution should be in logarithmic time complexity.
 			
 		
 			
-				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/MapReduce/" title="MapReduce">MapReduce<sup>1</sup></a></li>
 			
 		
@@ -276,11 +276,17 @@ Note: Your solution should be in logarithmic time complexity.
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+		
+			
+		
+			
+		
+			
+		
 			
 		
 		</ul>
@@ -293,15 +299,13 @@ Note: Your solution should be in logarithmic time complexity.
 		<ul>
 		
 		  
-			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>7</sup></a></li>
+		
 		  
 		
 		  
-			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
-		  
 		
 		  
-			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+			<li><a href="/categories/大数据/" title="大数据">大数据<sup>7</sup></a></li>
 		  
 		
 		  
@@ -317,11 +321,13 @@ Note: Your solution should be in logarithmic time complexity.
 		  
 		
 		  
-			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+			<li><a href="/categories/程序设计/" title="程序设计">程序设计<sup>4</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>5</sup></a></li>
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>11</sup></a></li>
 		  
 		
 		</ul>
@@ -332,7 +338,7 @@ Note: Your solution should be in logarithmic time complexity.
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 18px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 14px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 12px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 16px;">booknotes</a>
+       <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 14px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12px;">Sqoop</a><a href="/tags/数学/" style="font-size: 18px;">数学</a><a href="/tags/机器学习/" style="font-size: 16px;">机器学习</a><a href="/tags/程序设计/" style="font-size: 14px;">程序设计</a><a href="/tags/读书笔记/" style="font-size: 20px;">读书笔记</a>
     </div>
   </div>
 
@@ -377,9 +383,9 @@ Note: Your solution should be in logarithmic time complexity.
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
-		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
+		<a href="http://whlminds.com/about" target="_blank" title="WEIHongliang">WEIHongliang</a>
 		
 		
 		</p>

@@ -7,7 +7,7 @@
     <title>旋转数组中的最小值 | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
-    <meta name="author" content="HongliangWEI">
+    <meta name="author" content="WEIHongliang">
     
 
     
@@ -89,7 +89,7 @@ Naive解法在 O(n)">
   </h1>
   <p class="article-author">By
        
-		<a href="http://whlminds.com/about" title="HongliangWEI" target="_blank" itemprop="author">HongliangWEI</a>
+		<a href="http://whlminds.com/about" title="WEIHongliang" target="_blank" itemprop="author">WEIHongliang</a>
 		
   <p class="article-time">
     <time datetime="2015-04-05T07:38:21.000Z" itemprop="datePublished"> 发表于 2015-04-05</time>
@@ -118,7 +118,7 @@ Naive解法在 O(n)">
 <li>再二分，再重复第二步骤，直到中间的元素都不大于二分后两个区间内的元素。</li>
 </ol>
 <p>呃，感觉还是confusing，上菜：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> findMin(<span class="keyword">int</span> numbers[], <span class="keyword">int</span> <span class="keyword">size</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(numbers == <span class="keyword">NULL</span> || <span class="keyword">size</span> == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> exception(<span class="string">"Invalid parameters"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> low = <span class="number">0</span>, high = <span class="keyword">size</span> - <span class="number">1</span>, mid = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">while</span>(low &lt; high)&#123;</span><br><span class="line">	    mid = (low + high) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">	</span><br><span class="line">	    <span class="keyword">if</span>(A[low] &lt; A[high])&#123; <span class="comment">//数组是严格非递增排序的</span></span><br><span class="line">		    <span class="keyword">break</span>;</span><br><span class="line">	    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(A[low] == A[high])&#123; <span class="comment">// 见下方 `dateset6` 情况</span></span><br><span class="line">		    high--;</span><br><span class="line">	    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(A[low] &gt; A[high])&#123; </span><br><span class="line">		    <span class="keyword">if</span>(A[mid] &gt;= A[low])&#123; <span class="comment">// 最小元素必在 mid 位置后的子区间，因为包括mid索引的元素之前的元素排序是递增的</span></span><br><span class="line">			    low = mid + <span class="number">1</span>;</span><br><span class="line">		    &#125;<span class="keyword">else</span>&#123;                 </span><br><span class="line">				high = mid; <span class="comment">// 有可能 mid 索引的元素就是最小元素</span></span><br><span class="line">		    &#125;	</span><br><span class="line">	    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">return</span> A[low];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> findMin(<span class="keyword">int</span> numbers[], <span class="keyword">int</span> <span class="keyword">size</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(numbers == <span class="keyword">NULL</span> || <span class="keyword">size</span> == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> exception(<span class="string">"Invalid parameters"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> low = <span class="number">0</span>, high = <span class="keyword">size</span> - <span class="number">1</span>, mid = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(low &lt; high)&#123;</span><br><span class="line">	    mid = (low + high) &gt;&gt; <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	    <span class="keyword">if</span>(A[low] &lt; A[high])&#123; <span class="comment">//数组是严格非递增排序的</span></span><br><span class="line">		    <span class="keyword">break</span>;</span><br><span class="line">	    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(A[low] == A[high])&#123; <span class="comment">// 见下方 `dateset6` 情况</span></span><br><span class="line">		    high--;</span><br><span class="line">	    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(A[low] &gt; A[high])&#123;</span><br><span class="line">		    <span class="keyword">if</span>(A[mid] &gt;= A[low])&#123; <span class="comment">// 最小元素必在 mid 位置后的子区间，因为包括mid索引的元素之前的元素排序是递增的</span></span><br><span class="line">			    low = mid + <span class="number">1</span>;</span><br><span class="line">		    &#125;<span class="keyword">else</span>&#123;                 </span><br><span class="line">				high = mid; <span class="comment">// 有可能 mid 索引的元素就是最小元素</span></span><br><span class="line">		    &#125;</span><br><span class="line">	    &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> A[low];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>测试数据：</p>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">dataset1</span>: <span class="string">&#123;4, 5, 1, 2, 3&#125;</span></span><br><span class="line"><span class="attribute">dataset2</span>: <span class="string">&#123;5, 1, 2, 3, 4&#125;</span></span><br><span class="line"><span class="attribute">dataset3</span>: <span class="string">&#123;1, 2, 3, 4, 5&#125;</span></span><br><span class="line"><span class="attribute">dataset4</span>: <span class="string">&#123;2, 3, 4, 5, 1&#125;</span></span><br><span class="line"><span class="attribute">dataset5</span>: <span class="string">&#123;3, 4, 5, 1, 2&#125;</span></span><br><span class="line"><span class="attribute">dataset6</span>: <span class="string">&#123;1, 1, 1, 0, 1&#125;</span></span><br></pre></td></tr></table></figure>
 <h2 id="总结">总结</h2><p>二分查找算法在面试题中经常遇到，算法很简单，但非常重要，面试题经常会以各种变化的形式[^1]考察。当看到对有序或部分有序的数组进行查找时，可以考虑用二分查找算法。</p>
@@ -130,13 +130,13 @@ Naive解法在 O(n)">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/算法/">算法</a>
+  <a class="article-category-link" href="/categories/程序设计/">程序设计</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/algorithm/">algorithm</a>
+  <span></span> <a href="/tags/程序设计/">程序设计</a>
   </div>
 
 </div>
@@ -203,15 +203,19 @@ Naive解法在 O(n)">
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Math/" title="Math">Math<sup>10</sup></a></li>
+				<li><a href="/tags/读书笔记/" title="读书笔记">读书笔记<sup>11</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Machining-Learning/" title="Machining Learning">Machining Learning<sup>7</sup></a></li>
+				<li><a href="/tags/数学/" title="数学">数学<sup>10</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/booknotes/" title="booknotes">booknotes<sup>5</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/程序设计/" title="程序设计">程序设计<sup>3</sup></a></li>
 			
 		
 			
@@ -227,7 +231,7 @@ Naive解法在 O(n)">
 			
 		
 			
-				<li><a href="/tags/algorithm/" title="algorithm">algorithm<sup>2</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -243,10 +247,6 @@ Naive解法在 O(n)">
 			
 		
 			
-				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/MapReduce/" title="MapReduce">MapReduce<sup>1</sup></a></li>
 			
 		
@@ -259,11 +259,17 @@ Naive解法在 O(n)">
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+		
+			
+		
+			
+		
+			
+		
 			
 		
 		</ul>
@@ -276,15 +282,13 @@ Naive解法在 O(n)">
 		<ul>
 		
 		  
-			<li><a href="/categories/BIGDATA/" title="BIGDATA">BIGDATA<sup>7</sup></a></li>
+		
 		  
 		
 		  
-			<li><a href="/categories/C-C-plus-plus/" title="C/C plus plus">C/C plus plus<sup>1</sup></a></li>
-		  
 		
 		  
-			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+			<li><a href="/categories/大数据/" title="大数据">大数据<sup>7</sup></a></li>
 		  
 		
 		  
@@ -300,11 +304,13 @@ Naive解法在 O(n)">
 		  
 		
 		  
-			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+			<li><a href="/categories/程序设计/" title="程序设计">程序设计<sup>4</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>5</sup></a></li>
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>11</sup></a></li>
 		  
 		
 		</ul>
@@ -315,7 +321,7 @@ Naive解法在 O(n)">
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GC/" style="font-size: 10px;">GC</a><a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/Machining-Learning/" style="font-size: 18px;">Machining Learning</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/Math/" style="font-size: 20px;">Math</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 14px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12px;">Sqoop</a><a href="/tags/algorithm/" style="font-size: 12px;">algorithm</a><a href="/tags/booknotes/" style="font-size: 16px;">booknotes</a>
+       <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 14px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12px;">Sqoop</a><a href="/tags/数学/" style="font-size: 18px;">数学</a><a href="/tags/机器学习/" style="font-size: 16px;">机器学习</a><a href="/tags/程序设计/" style="font-size: 14px;">程序设计</a><a href="/tags/读书笔记/" style="font-size: 20px;">读书笔记</a>
     </div>
   </div>
 
@@ -360,9 +366,9 @@ Naive解法在 O(n)">
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
-		<a href="http://whlminds.com/about" target="_blank" title="HongliangWEI">HongliangWEI</a>
+		<a href="http://whlminds.com/about" target="_blank" title="WEIHongliang">WEIHongliang</a>
 		
 		
 		</p>
