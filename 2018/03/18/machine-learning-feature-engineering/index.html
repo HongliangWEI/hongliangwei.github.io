@@ -4,46 +4,23 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>我喜欢的书 | WHLMinds</title>
+    <title>特征工程 | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="WEIHongliang">
     
 
     
-    <meta name="description" content="信息科技
-《浪潮之巅》
-《文明之光》（三册）
-《数学之美》
-《黑客与画家》
-
-数学
-《思考的乐趣》
-《概率论基础教程》">
+    <meta name="description" content="如果需要预测房价，就要考虑什么因素可能会影响房价，综合这些可能影响房价的因素作为自变量，房价作为因变量。这些影响房价的因素，如房子位置、面积、户型、朝向、楼层、周边医疗、学校、交通等因素分别对房价的影响大小不同。在使用线性回归或逻辑回归模型预估房价时，这些影响房价的因素就是特征，如何选择特征，对特征进行预处理，如连续值特征离散化、离散特征编码，特征组合，生成中间特征等，属于特征工程的范畴。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我喜欢的书">
-<meta property="og:url" content="http://whlminds.com/2015/04/01/my-favourite-books/index.html">
+<meta property="og:title" content="特征工程">
+<meta property="og:url" content="http://whlminds.com/2018/03/18/machine-learning-feature-engineering/index.html">
 <meta property="og:site_name" content="WHLMinds">
-<meta property="og:description" content="信息科技
-《浪潮之巅》
-《文明之光》（三册）
-《数学之美》
-《黑客与画家》
-
-数学
-《思考的乐趣》
-《概率论基础教程》">
+<meta property="og:description" content="如果需要预测房价，就要考虑什么因素可能会影响房价，综合这些可能影响房价的因素作为自变量，房价作为因变量。这些影响房价的因素，如房子位置、面积、户型、朝向、楼层、周边医疗、学校、交通等因素分别对房价的影响大小不同。在使用线性回归或逻辑回归模型预估房价时，这些影响房价的因素就是特征，如何选择特征，对特征进行预处理，如连续值特征离散化、离散特征编码，特征组合，生成中间特征等，属于特征工程的范畴。">
+<meta property="og:image" content="/illustration/feature_enginnering.jpg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我喜欢的书">
-<meta name="twitter:description" content="信息科技
-《浪潮之巅》
-《文明之光》（三册）
-《数学之美》
-《黑客与画家》
-
-数学
-《思考的乐趣》
-《概率论基础教程》">
+<meta name="twitter:title" content="特征工程">
+<meta name="twitter:description" content="如果需要预测房价，就要考虑什么因素可能会影响房价，综合这些可能影响房价的因素作为自变量，房价作为因变量。这些影响房价的因素，如房子位置、面积、户型、朝向、楼层、周边医疗、学校、交通等因素分别对房价的影响大小不同。在使用线性回归或逻辑回归模型预估房价时，这些影响房价的因素就是特征，如何选择特征，对特征进行预处理，如连续值特征离散化、离散特征编码，特征组合，生成中间特征等，属于特征工程的范畴。">
 
     
     
@@ -100,14 +77,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/04/01/my-favourite-books/" title="我喜欢的书" itemprop="url">我喜欢的书</a>
+      <a href="/2018/03/18/machine-learning-feature-engineering/" title="特征工程" itemprop="url">特征工程</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://whlminds.com/about" title="WEIHongliang" target="_blank" itemprop="author">WEIHongliang</a>
 		
   <p class="article-time">
-    <time datetime="2015-04-01T13:24:32.000Z" itemprop="datePublished"> 发表于 2015-04-01</time>
+    <time datetime="2018-03-18T04:04:32.000Z" itemprop="datePublished"> 发表于 2018-03-18</time>
     
   </p>
 </header>
@@ -116,41 +93,14 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#信息科技"><span class="toc-number">1.</span> <span class="toc-text">信息科技</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数学"><span class="toc-number">2.</span> <span class="toc-text">数学</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文学小说传记"><span class="toc-number">3.</span> <span class="toc-text">文学小说传记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">4.</span> <span class="toc-text">其他</span></a></li></ol>
+			
 		
 		</div>
 		
-		<h3 id="信息科技">信息科技</h3><ul>
-<li><em>《浪潮之巅》</em></li>
-<li><em>《文明之光》</em>（三册）</li>
-<li><em>《数学之美》</em></li>
-<li><em>《黑客与画家》</em></li>
-</ul>
-<h3 id="数学">数学</h3><ul>
-<li><em>《<a href="http://book.douban.com/subject/10779597/" target="_blank" rel="external">思考的乐趣</a>》</em></li>
-<li><em>《<a href="http://book.douban.com/subject/4291764/" target="_blank" rel="external">概率论基础教程</a>》</em></li>
-</ul>
+		<p>如果需要预测房价，就要考虑什么因素可能会影响房价，综合这些可能影响房价的因素作为自变量，房价作为因变量。这些影响房价的因素，如房子位置、面积、户型、朝向、楼层、周边医疗、学校、交通等因素分别对房价的影响大小不同。在使用线性回归或逻辑回归模型预估房价时，这些影响房价的因素就是特征，如何选择特征，对特征进行预处理，如连续值特征离散化、离散特征编码，特征组合，生成中间特征等，属于特征工程的范畴。</p>
 <a id="more"></a>
-<h3 id="文学小说传记">文学小说传记</h3><ul>
-<li><em>《明朝那些事儿》</em></li>
-<li><em>《平凡的世界》</em></li>
-<li><em>《百年孤独》</em></li>
-<li><em>《听杨绛谈往事》</em></li>
-<li><em>《走到人生边上》</em></li>
-<li><em>《我们仨》</em></li>
-<li><em>《杰克·韦尔奇自传》</em></li>
-<li><em>《野心优雅》</em></li>
-<li><em>《人类的群星闪耀时》</em></li>
-<li><em>《乡土中国》</em></li>
-</ul>
-<h3 id="其他">其他</h3><ul>
-<li><em>《天才在左，疯子在右》</em></li>
-<li><em>《<a href="http://book.douban.com/subject/24523169/" target="_blank" rel="external">策略思维</a>》</em></li>
-<li><em>《写给大家看的设计书》</em></li>
-<li><em>《影响力》</em></li>
-<li><em>《<a href="http://book.douban.com/subject/1012611/" target="_blank" rel="external">乌合之众</a>》</em></li>
-<li><em>《<a href="http://book.douban.com/subject/1032501/" target="_blank" rel="external">心理学与生活</a>》</em></li>
-</ul>
+<p>特征工程体现对业务的理解深度，对业务熟悉、熟练特征工程技巧，才有可能训练出好模型。下面思维导图是特征工程一般流程和技巧。</p>
+<p><img src="/illustration/feature_enginnering.jpg" width="90%" height="90%"></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -158,13 +108,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
+  <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/读书笔记/">读书笔记</a>
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
   </div>
 
 </div>
@@ -173,7 +123,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2015/04/01/my-favourite-books/" data-title="我喜欢的书 | WHLMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2018/03/18/machine-learning-feature-engineering/" data-title="特征工程 | WHLMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -186,20 +136,20 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/04/02/Baby's-First-Garbage-Collector/" title="简易的垃圾回收器">
-  <strong>上一篇：</strong><br/>
-  <span>
-  简易的垃圾回收器</span>
+
+<div class="next">
+<a href="/2018/03/02/standford-economy-p6/"  title="读《斯坦福极简经济学》笔记之宏观经济学-Part3">
+ <strong>下一篇：</strong><br/> 
+ <span>读《斯坦福极简经济学》笔记之宏观经济学-Part3
+</span>
 </a>
 </div>
-
 
 </nav>
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/04/01/my-favourite-books/" data-title="我喜欢的书" data-url="http://whlminds.com/2015/04/01/my-favourite-books/"></div>
+	<div class="ds-thread" data-thread-key="2018/03/18/machine-learning-feature-engineering/" data-title="特征工程" data-url="http://whlminds.com/2018/03/18/machine-learning-feature-engineering/"></div>
 </section>
 
 
@@ -209,7 +159,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#信息科技"><span class="toc-number">1.</span> <span class="toc-text">信息科技</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数学"><span class="toc-number">2.</span> <span class="toc-text">数学</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文学小说传记"><span class="toc-number">3.</span> <span class="toc-text">文学小说传记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">4.</span> <span class="toc-text">其他</span></a></li></ol>
+ 
  
   </div>
 
