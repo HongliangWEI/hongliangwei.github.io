@@ -78,6 +78,141 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/11/30/mapreduce-intro/" title="浅谈MapReduce" itemprop="url">浅谈MapReduce</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="WEIHongliang" target="_blank" itemprop="author">WEIHongliang</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-30T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-11-30</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <blockquote>
+<p>MapReduce被提出，已有10年多，广泛应用于大数据领域，在21世纪这信息爆炸时代，有效地帮助无数多的攻城狮解决处理海量数据的困扰。</p>
+</blockquote>
+<h2 id="概述">概述</h2><p>在 <code>OSDI 2004</code>，Google 的两名科学家 <code>Jeffrefy Dean</code> 和 <code>Sanjay Ghemawat</code> 在一篇名为 <code>MapReduce: Simplified Data Processing on Large Clusters</code> 的 paper 中讲述了 <code>MapReduce</code>，该 paper 在写本文时已被引用高达 <code>15542</code> 次。本篇主要以该 paper 中对 <code>MapReduce</code> 的描述，以及自己的开发经验，简要谈一下对 <code>MapReduce</code> 的理解。</p>
+<p><code>MapReduce</code>是一个编程模型，用于处理海量数据，生成目标数据结果。MapReduce 将任务的计算过程划分为2个阶段： <code>Map</code> 阶段和 <code>Reduce</code> 阶段。计算过程中，在 <code>Map</code> 阶段，对业务逻辑的每一条 <code>记录</code> 作为输入，生成一组 <code>&lt;key, value&gt;</code> 对作为中间结果；接着，在 <code>Reduce</code> 阶段，将 <code>Map</code> 阶段中生成的一组 <code>&lt;key, value&gt;</code> 对中间结果进行合并，即对具有相同 <code>key</code> 的 <code>value</code> 进行合并，这里的<code>合并</code>可能是做聚合操作，也可能是进行排序等操作，然后将最终合并后的结果输出。让人欣喜的是，现实世界中的许多问题处理过程，都可以表达成这样的模型。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/11/30/mapreduce-intro/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/大数据/">大数据</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/MapReduce/">MapReduce</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/11/30/mapreduce-intro/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/11/30/mapreduce-intro/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/10/07/hive-udf-java-python/" title="在Hive中通过Java和Python实现UDF" itemprop="url">在Hive中通过Java和Python实现UDF</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://whlminds.com/about" title="WEIHongliang" target="_blank" itemprop="author">WEIHongliang</a>
+		
+  <p class="article-time">
+    <time datetime="2015-10-07T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-10-07</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>当业务数据量过大，不能在关系型数据库中统计时，可以通过 Sqoop 导入到 HDFS 上进行统计，类似日志数据一样。导入到 HDFS 上数据，每一条记录通过 <code>\t</code> 或 <code>Ctrl+A</code> 等分割每一个字断，通过 <code>\n</code> 分割每一条记录。然后，通过建立 Hive 表指向 HDFS 对应的路径数据，对 HDFS 上的数据添加 Schema 定义，可以基于 Hive 中 SQL 的语法进行查询统计。</p>
+<p>尽管 Hive 提供了丰富的<a href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+UDF">函数</a>，有时仍然不能满足个性化的查询和统计要求。这时，需要用户实现 <code>UDF</code>。</p>
+<h2 id="概述">概述</h2><p><code>UDF</code>，即 User-Defined Function，用户通过自定义对数据的处理过程，以函数的形式在 HiveQL 中使用。</p>
+<p>有 2 种方式在 HiveQL 中实现 UDF。<strong> 第一种方式 </strong>，即通过 <code>Java</code> 或其他通过 JVM 实现的语言（Jython、JRuby、Clojure、Groovy），实现UDF；<strong> 第二种方式 </strong>，通过 <code>TRANSFORM...AS</code> 语法，使用可执行的脚步语言实现 UDF。 接下来，将分别介绍通过 Java 和 Python 实现 Hive 中的 UDF，最后，比较二者在使用过程中的异同。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/10/07/hive-udf-java-python/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/大数据/">大数据</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Hive/">Hive</a><a href="/tags/Java/">Java</a><a href="/tags/Python/">Python</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/10/07/hive-udf-java-python/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/10/07/hive-udf-java-python/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/10/06/php-nginx-mysql-mac/" title="Mac下安装Nginx、PHP和MySQL" itemprop="url">Mac下安装Nginx、PHP和MySQL</a>
   </h1>
   <p class="article-author">By
@@ -611,149 +746,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/05/Factorial-Trailing-Zeroes/" title="Factorial-Trailing-Zeroes" itemprop="url">Factorial-Trailing-Zeroes</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://whlminds.com/about" title="WEIHongliang" target="_blank" itemprop="author">WEIHongliang</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-05T07:34:47.000Z" itemprop="datePublished"> 发表于 2015-04-05</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>来自<a href="https://leetcode.com/">LeetCode</a>的第172道算法题<a href="https://leetcode.com/problems/factorial-trailing-zeroes/">Factorial Trailing Zeroes</a>：</p>
-<blockquote>
-<p>Given an integer n, return the number of trailing zeroes in n!.</p>
-<p><strong><em>Note</em></strong>: Your solution should be in logarithmic time complexity.</p>
-</blockquote>
-<p>即给一个整数 <code>n</code>, 给出 <code>n</code> 的阶乘 <code>n!</code> 中有多少个 0，要求算法时间复杂度是 <code>O(log(n))</code></p>
-<h2 id="思路">思路</h2><p>看到题目后，有人直接拔“刀”切“菜”，先 ‘％’ 再 ‘/‘ ，各种挥舞之后，发现提示 “Out of Range” 的错误，然后绞尽脑汁，回忆各种数据结构与算法，尝试是否能够尽快“吞”下，最后发现还是被“噎”住了:(</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/04/05/Factorial-Trailing-Zeroes/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/程序设计/">程序设计</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/程序设计/">程序设计</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/04/05/Factorial-Trailing-Zeroes/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/05/Factorial-Trailing-Zeroes/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/02/Baby's-First-Garbage-Collector/" title="简易的垃圾回收器" itemprop="url">简易的垃圾回收器</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://whlminds.com/about" title="WEIHongliang" target="_blank" itemprop="author">WEIHongliang</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-02T13:03:32.000Z" itemprop="datePublished"> 发表于 2015-04-02</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>在<a href="http://blog.jobbole.com/">伯乐在线</a>上看到这篇<a href="http://blog.jobbole.com/53376/">Google工程师教你编写你的第一个垃圾回收器</a>文章，着实被作者<a href="http://www.stuffwithstuff.com/bob-nystrom.html">Bob Nystrom</a>深入浅出、娓娓道来讲述垃圾回收机制的思路所吸引，必须收藏与分享；）</p>
-<h2 id="Bob_Nystrom的话">Bob Nystrom的话</h2><blockquote>
-<p>每当我倍感压力以及有很多事情要做的时候，我总是有这样一种反常的反应，那就是希望做一些其他的事情来摆脱这种状况。通常情况下，这些事情都是些我能够编写并实现的独立的小程序。</p>
-<p>一天早上，我几乎要被一堆事情给整疯了——我得写我那本《游戏编程模式》、处理一些工作上的事情、还要准备一场Strange Loop的演讲，然后这时我突然想到：“我该写一个垃圾回收器了”。</p>
-<p>是的，我知道那一刻让我看上去有多疯狂。不过我的神经故障却是你实现一段基础的程序语言设计的免费教程！在100行左右毫无新意的c代码中，我设法实现一个基本的标记和扫描模块。</p>
-<p>有人认为，垃圾回收好比是有更多鲨鱼出没的危险水域，但在这篇文章中，我会给你一个漂亮的儿童游泳池去玩耍。可能这里面仍然会有一些坑，但至少这是一个浅水区。</p>
-</blockquote>
-<h2 id="精简、复用、再复用">精简、复用、再复用</h2><p>垃圾回收背后有这样一个基本的观念：编程语言(大多数的)似乎总能访问无限的内存。而开发者可以一直分配、分配再分配——像魔法一样，取之不尽用之不竭。</p>
-<p>当然，我们从来都没有无限的内存。所以计算机实现回收的方式就是当机器需要分配一些内存，而内存又不足时，让它回收垃圾。</p>
-<p><strong>“垃圾(Garbage)”</strong>在这里表示那些事先分配过但后来不再被使用的内存。而基于对无限内存的幻想，我们需要确保“不再被使用”对于编程语言来说是非常安全的。要知道在你的程序试图访问一些随机的对象时它们却刚好正在得到回收，这可不是一件好玩的事情。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/04/02/Baby's-First-Garbage-Collector/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/程序设计/">程序设计</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/程序设计/">程序设计</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/04/02/Baby's-First-Garbage-Collector/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/02/Baby's-First-Garbage-Collector/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/3/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next<span></span></a>
@@ -776,11 +768,11 @@
 			
 		
 			
-				<li><a href="/tags/数学/" title="数学">数学<sup>10</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>10</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>8</sup></a></li>
+				<li><a href="/tags/数学/" title="数学">数学<sup>10</sup></a></li>
 			
 		
 			
@@ -853,7 +845,7 @@
 		  
 		
 		  
-			<li><a href="/categories/机器学习/" title="机器学习">机器学习<sup>8</sup></a></li>
+			<li><a href="/categories/机器学习/" title="机器学习">机器学习<sup>10</sup></a></li>
 		  
 		
 		  
@@ -872,7 +864,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 14px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12px;">Sqoop</a><a href="/tags/数学/" style="font-size: 18px;">数学</a><a href="/tags/机器学习/" style="font-size: 16px;">机器学习</a><a href="/tags/程序设计/" style="font-size: 14px;">程序设计</a><a href="/tags/读书笔记/" style="font-size: 20px;">读书笔记</a>
+       <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a><a href="/tags/Hive/" style="font-size: 12.5px;">Hive</a><a href="/tags/Java/" style="font-size: 10px;">Java</a><a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a><a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a><a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a><a href="/tags/Oozie/" style="font-size: 15px;">Oozie</a><a href="/tags/PHP/" style="font-size: 10px;">PHP</a><a href="/tags/Python/" style="font-size: 10px;">Python</a><a href="/tags/SQL/" style="font-size: 10px;">SQL</a><a href="/tags/Sqoop/" style="font-size: 12.5px;">Sqoop</a><a href="/tags/数学/" style="font-size: 17.5px;">数学</a><a href="/tags/机器学习/" style="font-size: 17.5px;">机器学习</a><a href="/tags/程序设计/" style="font-size: 15px;">程序设计</a><a href="/tags/读书笔记/" style="font-size: 20px;">读书笔记</a>
     </div>
   </div>
 

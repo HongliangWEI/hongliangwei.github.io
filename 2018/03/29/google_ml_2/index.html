@@ -4,32 +4,42 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>读《结网》关于如何沟通的笔记 | WHLMinds</title>
+    <title>Google的《机器学习速成课程》学习笔记二 | WHLMinds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="WEIHongliang">
     
 
     
-    <meta name="description" content="项目失败，复盘寻找原因时往往少不了沟通不畅的因素；项目成功，总结成功的关键时往往容易遗忘沟通顺利的因素。
+    <meta name="description" content="降低损失迭代方法下图显示了机器学习算法用于训练模型的迭代试错过程：
 
-从腾讯的产品经理到糗百创始人，《结网》作者王坚总结的如何沟通技巧，对帮助个人提升沟通软素质甚有帮助。下面为我的阅读摘要。
-一定的私交基础，对沟通是非常有帮助的。另外，绝大多数无效沟通的根源在于把沟通这个过程本身当成了沟通的目标。">
+迭代策略在机器学习中的应用非常普遍，这主要是因为它们可以很好地扩展到大型数据集。
+“模型”部分将一个或多个特征作为输入，然后返回一个预测 $y^{‘}$ 作为输出。为了进行简化，不妨考虑一种采用一个特征并返回一个预测的模型：
+$$y^{‘}=b+w_{1}x_{1}$$">
 <meta property="og:type" content="article">
-<meta property="og:title" content="读《结网》关于如何沟通的笔记">
-<meta property="og:url" content="http://whlminds.com/2017/08/19/book_jiewang_goutong/index.html">
+<meta property="og:title" content="Google的《机器学习速成课程》学习笔记二">
+<meta property="og:url" content="http://whlminds.com/2018/03/29/google_ml_2/index.html">
 <meta property="og:site_name" content="WHLMinds">
-<meta property="og:description" content="项目失败，复盘寻找原因时往往少不了沟通不畅的因素；项目成功，总结成功的关键时往往容易遗忘沟通顺利的因素。
+<meta property="og:description" content="降低损失迭代方法下图显示了机器学习算法用于训练模型的迭代试错过程：
 
-从腾讯的产品经理到糗百创始人，《结网》作者王坚总结的如何沟通技巧，对帮助个人提升沟通软素质甚有帮助。下面为我的阅读摘要。
-一定的私交基础，对沟通是非常有帮助的。另外，绝大多数无效沟通的根源在于把沟通这个过程本身当成了沟通的目标。">
-<meta property="og:image" content="/illustration/book_jiewang.jpg">
+迭代策略在机器学习中的应用非常普遍，这主要是因为它们可以很好地扩展到大型数据集。
+“模型”部分将一个或多个特征作为输入，然后返回一个预测 $y^{‘}$ 作为输出。为了进行简化，不妨考虑一种采用一个特征并返回一个预测的模型：
+$$y^{‘}=b+w_{1}x_{1}$$">
+<meta property="og:image" content="/illustration/loss0.jpeg">
+<meta property="og:image" content="/illustration/loss1.jpg">
+<meta property="og:image" content="/illustration/loss2.jpg">
+<meta property="og:image" content="/illustration/loss3.jpg">
+<meta property="og:image" content="/illustration/loss4.jpg">
+<meta property="og:image" content="/illustration/loss5.jpg">
+<meta property="og:image" content="/illustration/loss6.jpg">
+<meta property="og:image" content="/illustration/loss7.jpg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="读《结网》关于如何沟通的笔记">
-<meta name="twitter:description" content="项目失败，复盘寻找原因时往往少不了沟通不畅的因素；项目成功，总结成功的关键时往往容易遗忘沟通顺利的因素。
+<meta name="twitter:title" content="Google的《机器学习速成课程》学习笔记二">
+<meta name="twitter:description" content="降低损失迭代方法下图显示了机器学习算法用于训练模型的迭代试错过程：
 
-从腾讯的产品经理到糗百创始人，《结网》作者王坚总结的如何沟通技巧，对帮助个人提升沟通软素质甚有帮助。下面为我的阅读摘要。
-一定的私交基础，对沟通是非常有帮助的。另外，绝大多数无效沟通的根源在于把沟通这个过程本身当成了沟通的目标。">
+迭代策略在机器学习中的应用非常普遍，这主要是因为它们可以很好地扩展到大型数据集。
+“模型”部分将一个或多个特征作为输入，然后返回一个预测 $y^{‘}$ 作为输出。为了进行简化，不妨考虑一种采用一个特征并返回一个预测的模型：
+$$y^{‘}=b+w_{1}x_{1}$$">
 
     
     
@@ -86,14 +96,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/08/19/book_jiewang_goutong/" title="读《结网》关于如何沟通的笔记" itemprop="url">读《结网》关于如何沟通的笔记</a>
+      <a href="/2018/03/29/google_ml_2/" title="Google的《机器学习速成课程》学习笔记二" itemprop="url">Google的《机器学习速成课程》学习笔记二</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://whlminds.com/about" title="WEIHongliang" target="_blank" itemprop="author">WEIHongliang</a>
 		
   <p class="article-time">
-    <time datetime="2017-08-19T08:04:32.000Z" itemprop="datePublished"> 发表于 2017-08-19</time>
+    <time datetime="2018-03-29T14:57:21.000Z" itemprop="datePublished"> 发表于 2018-03-29</time>
     
   </p>
 </header>
@@ -102,51 +112,56 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#维系并促进人际关系"><span class="toc-number">1.</span> <span class="toc-text">维系并促进人际关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#达到沟通目标"><span class="toc-number">2.</span> <span class="toc-text">达到沟通目标</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#降低损失"><span class="toc-number">1.</span> <span class="toc-text">降低损失</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#迭代方法"><span class="toc-number">1.1.</span> <span class="toc-text">迭代方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#梯度下降法"><span class="toc-number">1.2.</span> <span class="toc-text">梯度下降法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导数和梯度"><span class="toc-number">1.2.1.</span> <span class="toc-text">导数和梯度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#学习速率"><span class="toc-number">1.3.</span> <span class="toc-text">学习速率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#随机梯度下降法"><span class="toc-number">1.4.</span> <span class="toc-text">随机梯度下降法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#资料"><span class="toc-number">2.</span> <span class="toc-text">资料</span></a></li></ol>
 		
 		</div>
 		
-		<p><img src="/illustration/book_jiewang.jpg" class="img-logo"></p>
-<blockquote>
-<p>项目失败，复盘寻找原因时往往少不了沟通不畅的因素；项目成功，总结成功的关键时往往容易遗忘沟通顺利的因素。</p>
-</blockquote>
-<p>从腾讯的产品经理到糗百创始人，《结网》作者王坚总结的如何沟通技巧，对帮助个人提升沟通软素质甚有帮助。下面为我的阅读摘要。</p>
-<p>一定的私交基础，对沟通是非常有帮助的。另外，绝大多数无效沟通的根源在于把沟通这个过程本身当成了沟通的目标。</p>
+		<h2 id="降低损失">降低损失</h2><h3 id="迭代方法">迭代方法</h3><p>下图显示了机器学习算法用于训练模型的迭代试错过程：</p>
+<p><img src="/illustration/loss0.jpeg" class="img-center" width="90%" height="90%"></p>
+<p>迭代策略在机器学习中的应用非常普遍，这主要是因为它们可以很好地扩展到大型数据集。</p>
+<p>“模型”部分将一个或多个特征作为输入，然后返回一个预测 $y^{‘}$ 作为输出。为了进行简化，不妨考虑一种采用一个特征并返回一个预测的模型：</p>
+<p>$$y^{‘}=b+w_{1}x_{1}$$</p>
 <a id="more"></a>
-<h2 id="维系并促进人际关系">维系并促进人际关系</h2><ul>
-<li>平等原则</li>
-</ul>
-<p>在精神上互相理解、互相尊重，把对方当成和自己一样的人来看待。</p>
+<p>我们应该为 $b$ 和 $w_{1}$ 设置哪些初始值？对于线性回归问题，事实证明初始值并不重要，因为全局最后点只有一个，确定权重和偏差属于凸优化问题。我们可以随机选择值，不过我们还是选择采用以下这些无关紧要的值：</p>
 <ul>
-<li>相容原则</li>
+<li>$b=0$</li>
+<li>$w_{1}=0$</li>
 </ul>
-<p>如果对方犯了错误，怎么办？在ERP（Enterprise Resource Planning，企业资源计划）软件中有个人性化管理的概念：每个人都会犯错误，只要一个人犯错的概率没有超出统计学上的正常范围，企业就应当容忍，因为换了其他人进行同样的工作，一样会有犯错误的时候。</p>
+<p>假设第一个特征值是 10。将该特征值代入预测函数会得到以下结果：</p>
+<p>$<br>y^{‘}=0+0(10) \\<br>y^{‘}=0<br>$</p>
+<p>图中的“计算损失”部分是模型将要使用的损失函数。假设我们使用平方损失函数。损失函数将采用两个输入值：</p>
 <ul>
-<li>互利原则</li>
-<li>信用原则</li>
+<li>$y^{‘}$，模型对特征 $x$ 的预测</li>
+<li>$y$，特征 $x$ 对应的正确标签</li>
 </ul>
-<h2 id="达到沟通目标">达到沟通目标</h2><p>沟通是个系统工程，要达到某个既定的目的，很多时候不是一次沟通就可以解决问题的，而是需要进行很多次沟通。</p>
-<p>就单次沟通而言，可以分为沟通前、沟通中和沟通后三个阶段。按照20：80原则，一次有效的沟通，有80%的工作是在沟通前完成的（很多战争在开始之前就已经结束了）。</p>
-<p>在沟通前，需要确认好沟通目标、沟通对象、要传递的信息、沟通渠道、信息的展现方式和最终要达成的协议。</p>
-<ul>
-<li>沟通目的</li>
-</ul>
-<p>对于单次沟通来说，目的越明确、越单纯越好，一次沟通若想要解决太多的问题往往成功率并不高，并预留一定的弹性空间。</p>
-<ul>
-<li>沟通对象</li>
-<li>要传递的信息</li>
-</ul>
-<p>首先要传递整个目标的背景，让对方有个宏观层面的认识，传递目标，传递细节</p>
-<ul>
-<li>沟通渠道</li>
-<li>信息的展现方式</li>
-</ul>
-<p>善于运用图形对促进对方的理解是非常有效的；把想要传递的信息包装到一个故事里面。</p>
-<ul>
-<li>最终要达成的协议</li>
-</ul>
-<p>SMART原则</p>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">S</span>: <span class="string">具体</span></span><br><span class="line"><span class="attribute">M</span>: <span class="string">可衡量</span></span><br><span class="line"><span class="attribute">A</span>: <span class="string">可实现</span></span><br><span class="line"><span class="attribute">R</span>: <span class="string">相关性</span></span><br><span class="line"><span class="attribute">T</span>: <span class="string">时限性</span></span><br></pre></td></tr></table></figure>
+<p>最后，我们来看图的“计算参数更新”部分。机器学习系统就是在此部分检查损失函数的值，并为 $b$ 和 $w_{1}$ 生成新值，然后机器学习系统将根据所有标签重新评估所有特征，为损失函数生成一个新值，而该值又产生新的参数值。这种学习过程会持续迭代，直到该算法发现损失可能最低的模型参数。通常，您可以不断迭代，直到总体损失不再变化或至少变化极其缓慢为止。这时候，我们可以说该模型已收敛。</p>
+<p><strong>在训练机器学习模型时，首先对权重和偏差进行初始猜测，然后反复调整这些猜测，直到获得损失可能最低的权重和偏差为止。</strong></p>
+<h3 id="梯度下降法">梯度下降法</h3><p>假设我们有时间和计算资源来计算 $w_{1}$ 的所有可能值的损失。对于我们一直在研究的回归问题，所产生的损失与 $w_{1}$ 的图形始终是凸形。换言之，图形始终是碗状图，如下所示</p>
+<p><img src="/illustration/loss1.jpg" class="img-center"></p>
+<p>凸形问题只有一个最低点；即只存在一个斜率正好为 0 的位置。这个最小值就是损失函数收敛之处。</p>
+<p>通过计算整个数据集中 $w_{1}$ 每个可能值的损失函数来找到收敛点这种方法效率太低。我们来研究一种更好的机制，这种机制在机器学习领域非常热门，称为 <strong>梯度下降法</strong>。</p>
+<p>梯度下降法的第一个阶段是为 $w_{1}$ 选择一个起始值（起点）。起点并不重要；因此很多算法就直接将 $w_{1}$ 设为 0 或随机选择一个值。下图显示的是我们选择了一个稍大于 0 的起点：</p>
+<p><img src="/illustration/loss2.jpg" class="img-center"></p>
+<p>然后，梯度下降法算法会计算损失曲线在起点处的梯度。简而言之，梯度是偏导数的矢量；它可以让您了解哪个方向距离目标“更近”或“更远”。请注意，损失相对于单个权重的梯度就等于导数。</p>
+<h4 id="导数和梯度">导数和梯度</h4><p>梯度是一个矢量，因此具有以下两个特征：<strong>方向</strong> 和 <strong>大小</strong>。梯度始终指向损失函数中增长最为迅猛的方向。梯度下降法算法会沿着负梯度的方向走一步，以便尽快降低损失。</p>
+<p><img src="/illustration/loss3.jpg" class="img-center"></p>
+<p>为了确定损失函数曲线上的下一个点，梯度下降法算法会将梯度大小的一部分与起点相加。</p>
+<p><img src="/illustration/loss4.jpg" class="img-center"></p>
+<p>然后，梯度下降法会重复此过程，逐渐接近最低点。</p>
+<h3 id="学习速率">学习速率</h3><p>梯度矢量具有方向和大小。梯度下降法算法用梯度乘以一个称为学习速率（有时也称为步长）的标量，以确定下一个点的位置。例如，如果梯度大小为 2.5，学习速率为 0.01，则梯度下降法算法会选择距离前一个点 0.025 的位置作为下一个点。</p>
+<p>超参数是编程人员在机器学习算法中用于调整的旋钮。大多数机器学习编程人员会花费相当多的时间来调整学习速率。如果您选择的学习速率过小，就会花费太长的学习时间：</p>
+<p><img src="/illustration/loss5.jpg" class="img-center"></p>
+<p>相反，如果您指定的学习速率过大，下一个点将永远在 U 形曲线的底部随意弹跳，就好像量子力学实验出现了严重错误一样：</p>
+<p><img src="/illustration/loss6.jpg" class="img-center"></p>
+<p>每个回归问题都存在一个金发姑娘学习速率。“金发姑娘”值与损失函数的平坦程度相关。如果您知道损失函数的梯度较小，则可以放心地试着采用更大的学习速率，以补偿较小的梯度并获得更大的步长。</p>
+<p><img src="/illustration/loss7.jpg" class="img-center"></p>
+<h3 id="随机梯度下降法">随机梯度下降法</h3><p>在梯度下降法中，批量指的是用于在单次迭代中计算梯度的样本总数。到目前为止，我们一直假定批量是指整个数据集。就 Google 的规模而言，数据集通常包含数十亿甚至数千亿个样本。此外，Google 数据集通常包含海量特征。因此，一个批量可能相当巨大。如果是超大批量，则单次迭代就可能要花费很长时间进行计算。</p>
+<p>包含随机抽样样本的大型数据集可能包含冗余数据。实际上，批量大小越大，出现冗余的可能性就越高。一些冗余可能有助于消除杂乱的梯度，但超大批量所具备的预测价值往往并不比大型批量高。</p>
+<p>如果我们可以通过更少的计算量得出正确的平均梯度，会怎么样？通过从我们的数据集中随机选择样本，我们可以通过小得多的数据集估算（尽管过程非常杂乱）出较大的平均值。 <strong>随机梯度下降法 (SGD)</strong> 将这种想法运用到极致，它每次迭代只使用一个样本（批量大小为 1）。如果进行足够的迭代，SGD 也可以发挥作用，但过程会非常杂乱。“随机”这一术语表示构成各个批量的一个样本都是随机选择的。</p>
+<p><strong>小批量随机梯度下降法（小批量 SGD）</strong> 是介于全批量迭代与 SGD 之间的折衷方案。小批量通常包含 10-1000 个随机选择的样本。小批量 SGD 可以减少 SGD 中的杂乱样本数量，但仍然比全批量更高效。</p>
+<h2 id="资料">资料</h2><ol>
+<li>机器学习速成课程，<a href="https://developers.google.cn/machine-learning/crash-course/prereqs-and-prework" target="_blank" rel="external">https://developers.google.cn/machine-learning/crash-course/prereqs-and-prework</a></li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -154,13 +169,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
+  <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/读书笔记/">读书笔记</a>
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
   </div>
 
 </div>
@@ -169,7 +184,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://whlminds.com/2017/08/19/book_jiewang_goutong/" data-title="读《结网》关于如何沟通的笔记 | WHLMinds" data-tsina="null" class="share clearfix">
+	  <div data-url="http://whlminds.com/2018/03/29/google_ml_2/" data-title="Google的《机器学习速成课程》学习笔记二 | WHLMinds" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -182,19 +197,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2018/03/02/standford-economy-p1/" title="读《斯坦福极简经济学》笔记之微观经济学-Part1">
-  <strong>上一篇：</strong><br/>
-  <span>
-  读《斯坦福极简经济学》笔记之微观经济学-Part1</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/08/19/book_jiewang/"  title="读《结网》的笔记">
+<a href="/2018/03/29/google_ml_1/"  title="Google的《机器学习速成课程》学习笔记一">
  <strong>下一篇：</strong><br/> 
- <span>读《结网》的笔记
+ <span>Google的《机器学习速成课程》学习笔记一
 </span>
 </a>
 </div>
@@ -203,7 +210,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2017/08/19/book_jiewang_goutong/" data-title="读《结网》关于如何沟通的笔记" data-url="http://whlminds.com/2017/08/19/book_jiewang_goutong/"></div>
+	<div class="ds-thread" data-thread-key="2018/03/29/google_ml_2/" data-title="Google的《机器学习速成课程》学习笔记二" data-url="http://whlminds.com/2018/03/29/google_ml_2/"></div>
 </section>
 
 
@@ -213,7 +220,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#维系并促进人际关系"><span class="toc-number">1.</span> <span class="toc-text">维系并促进人际关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#达到沟通目标"><span class="toc-number">2.</span> <span class="toc-text">达到沟通目标</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#降低损失"><span class="toc-number">1.</span> <span class="toc-text">降低损失</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#迭代方法"><span class="toc-number">1.1.</span> <span class="toc-text">迭代方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#梯度下降法"><span class="toc-number">1.2.</span> <span class="toc-text">梯度下降法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导数和梯度"><span class="toc-number">1.2.1.</span> <span class="toc-text">导数和梯度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#学习速率"><span class="toc-number">1.3.</span> <span class="toc-text">学习速率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#随机梯度下降法"><span class="toc-number">1.4.</span> <span class="toc-text">随机梯度下降法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#资料"><span class="toc-number">2.</span> <span class="toc-text">资料</span></a></li></ol>
  
   </div>
 
